@@ -101,13 +101,15 @@ const steps = [
 
 <Layout title={title} description={description}>
     {ld.map((d) => <script type="application/ld+json" slot="head" set:html={JSON.stringify(d)} />)}
+    <link rel="preload" as="image" href="/img/hero-m.webp" media="(max-width: 767px)" fetchpriority="high" slot="head" />
+    <link rel="preload" as="image" href="/img/hero.webp" media="(min-width: 768px)" fetchpriority="high" slot="head" />
     <Header />
 
     <main>
       <!-- Hero: fotoğraf arka plan + kategori kartları -->
       <section class="relative isolate overflow-hidden bg-deniz-900">
         <picture>
-          <source media="(max-width: 767px)" srcset="/img/hero-m.webp" />
+          <source media="(max-width: 767px)" srcset="/img/hero-m.webp" width="320" height="610" />
           <img src="/img/hero.webp" alt="" width="1600" height="762" fetchpriority="high" decoding="async" class="absolute inset-0 -z-20 h-full w-full object-cover" />
         </picture>
         <div class="absolute inset-0 -z-10 bg-gradient-to-r from-deniz-900/80 via-deniz-900/45 to-deniz-900/20" aria-hidden="true"></div>
