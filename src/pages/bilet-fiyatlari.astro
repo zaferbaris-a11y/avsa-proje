@@ -1,0 +1,98 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import { TARIFE_KONTROL } from "../data/rehber";
+
+const title = "Avşa Adası Feribot Bilet Fiyatları 2026 | avsaadasi.net";
+const description =
+  "Erdek–Avşa feribot bilet fiyatları 2026: Avşa Adası'na yolcu, otomobil, motosiklet ve minibüs ücretleri. Marmara RoRo ve GESTAŞ tarifeleri, örnek maliyet.";
+
+const galeri = [
+  { src: "/img/bilet-fiyatlari/avsa-plajdan-deniz-otobusu-feribot-1.webp", w: 1600, h: 1060, alt: "Avşa Adası plajından iskeleye yanaşmış deniz otobüsü ve feribotlar", cap: "Plajdan iskeleye yanaşan deniz otobüsü ve feribotlar" },
+  { src: "/img/bilet-fiyatlari/avsa-iskelesi-liman-arac-rihtimi-1.webp", w: 361, h: 281, alt: "Avşa Adası iskelesi, liman ve araç rıhtımı", cap: "İskele, liman ve araç rıhtımı" },
+];
+
+const toc = [
+  { id: "uyari", label: "Önemli not" },
+  { id: "marmara", label: "Marmara RoRo fiyatları" },
+  { id: "gestas", label: "GESTAŞ fiyatları" },
+  { id: "ornek", label: "Örnek hesap" },
+  { id: "ipuclari", label: "Tasarruf ve ipuçları" },
+];
+
+const faq = [
+  { q: "Avşa feribot bileti ne kadar?", a: "Marmara RoRo tarifesinde (27.03.2026) tek yön yolcu 160 TL, otomobil 1.850 TL. GESTAŞ haziran 2026 tarifesinde yolcu 120 TL, otomobil 1.330 TL olarak yayımlanmış. Fiyatlar zamanla değişir." },
+  { q: "Araçla Avşa'ya geçiş ne kadar tutar?", a: "Örneğin 2 yetişkin ve bir otomobil için tek yön Marmara RoRo'da yaklaşık 2.170 TL, GESTAŞ'ta yaklaşık 1.570 TL hesaplanıyor. İskele geçiş ücreti ayrıca eklenir." },
+  { q: "AdaKart nedir?", a: "Marmara RoRo tarifesinde AdaKart sahipleri için yolcu 80 TL, otomobil 750 TL, motosiklet 375 TL gibi indirimli ücretler yayımlanmış; kapsam için şirkete danışın." },
+  { q: "Öğrenci ve 65 yaş üstü indirimi var mı?", a: "GESTAŞ tarifesinde öğrenci ve 65 yaş üstü için yolcu ücreti 60 TL olarak görünüyor. Koşullar için şirketle görüşün." },
+  { q: "Adada LPG var mı?", a: "Adada LPG satışı yok, yalnızca benzin ve dizel bulunuyor. LPG'li araçlarla gelenler Erdek'te doldurmalı." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Feribot Bilet Fiyatları"
+  intro="Erdek–Avşa hattında yolcu, otomobil, motosiklet ve minibüs için tek yön feribot ücretleri ve örnek toplam maliyet."
+  crumb="Bilet Fiyatları"
+  toc={toc}
+  faq={faq}
+  updated={TARIFE_KONTROL}
+>
+  <h2 id="uyari">Önemli not</h2>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Aşağıdaki ücretler tek yön, KDV dahil ve iskele geçiş ücreti hariçtir. Şirketlerin yayımladığı tarifelerden derlenmiştir (son kontrol: {TARIFE_KONTROL}); fiyatlar değişebilir, bilet almadan önce güncel tarifeyi kontrol edin.
+  </div>
+
+  <div class="not-prose my-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="marmara">Marmara RoRo fiyatları (27.03.2026 tarifesi)</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Tür</th><th>Normal</th><th>AdaKart</th></tr></thead>
+    <tbody>
+      <tr><td>Yolcu</td><td>160 TL</td><td>80 TL</td></tr>
+      <tr><td>Otomobil</td><td>1.850 TL</td><td>750 TL</td></tr>
+      <tr><td>Motosiklet</td><td>750 TL</td><td>375 TL</td></tr>
+      <tr><td>Minibüs</td><td>2.450 TL</td><td>—</td></tr>
+      <tr><td>Kamyonet</td><td>2.450 TL</td><td>—</td></tr>
+      <tr><td>Otobüs</td><td>4.400 TL</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="gestas">GESTAŞ fiyatları (Haziran 2026)</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Tür</th><th>Ücret</th></tr></thead>
+    <tbody>
+      <tr><td>Yolcu</td><td>120 TL</td></tr>
+      <tr><td>Öğrenci / 65 yaş üstü</td><td>60 TL</td></tr>
+      <tr><td>Otomobil</td><td>1.330 TL</td></tr>
+      <tr><td>Motosiklet</td><td>630 TL</td></tr>
+      <tr><td>Kamyon</td><td>3.255 TL</td></tr>
+    </tbody>
+  </table></div>
+  <p>Bazı kaynaklarda GESTAŞ yolcu ücreti 160 TL olarak, 120 TL indirimli fiyat olarak geçiyor; ayrıntı için şirketle teyit edin.</p>
+
+  <h2 id="ornek">Örnek hesap: otomobil ve 2 yetişkin (tek yön)</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Şirket</th><th>Hesap</th><th>Toplam</th></tr></thead>
+    <tbody>
+      <tr><td>Marmara RoRo</td><td>1.850 + 2 × 160</td><td>2.170 TL</td></tr>
+      <tr><td>GESTAŞ</td><td>1.330 + 2 × 120</td><td>1.570 TL</td></tr>
+    </tbody>
+  </table></div>
+  <p>Gidiş-dönüş için tutarı iki ile çarpmak gerekir. Seferlerin gün ve saatleri için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasına bakabilirsin.</p>
+
+  <h2 id="ipuclari">Tasarruf ve ipuçları</h2>
+  <ul>
+    <li>Arabasız gelmek, adada minibüs ve kiralık motosiklet kullanmak toplam maliyeti ciddi düşürür.</li>
+    <li>Uzun kalışlarda AdaKart gibi indirimli kartların koşullarını sor.</li>
+    <li>Adada LPG yok; benzin ve dizel dolumu mümkün.</li>
+    <li>Konaklamayı <a href="/#konaklama">tesis listemizden</a> seçip tarih için doğrudan WhatsApp'tan fiyat sorabilirsin.</li>
+  </ul>
+</InfoLayout>

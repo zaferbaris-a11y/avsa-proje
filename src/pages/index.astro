@@ -1,0 +1,440 @@
+---
+import { stays, formatPrice, hasPrice, featuresOf, featureDefs, typeLabels } from "../data/stays";
+import type { StayType } from "../data/stays";
+import Layout from "../layouts/Layout.astro";
+import Logo from "../components/Logo.astro";
+import Header from "../components/Header.astro";
+import { WHATSAPP, INSTAGRAM } from "../data/site";
+import { rehberPages, homeChipPaths } from "../data/rehber";
+const homeChips = homeChipPaths.map((p) => rehberPages.find((r) => r.path === p)).filter((r): r is NonNullable<typeof r> => Boolean(r));
+
+const title = "Avşa Adası: Oteller, Pansiyonlar, Plajlar ve Gezi Rehberi";
+const description =
+  "Avşa Adası'ndaki otel, pansiyon ve apartları karşılaştır. Avşa'da denize yakın konaklama, plajlar, gezilecek yerler ve feribot bilgisi tek sayfada.";
+const origin = "https://www.avsaadasi.net";
+const ld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${origin}/#website`,
+    name: "avsaadasi.net",
+    alternateName: ["Avşa Adası Rehberi", "Avşa Adası"],
+    url: `${origin}/`,
+    inLanguage: "tr-TR",
+    publisher: { "@id": `${origin}/#organization` },
+    about: { "@id": `${origin}/#destination` },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${origin}/#organization`,
+    name: "avsaadasi.net",
+    url: `${origin}/`,
+    logo: `${origin}/logo.svg`,
+    description: "Avşa Adası'ndaki otel, pansiyon ve apartları tanıtan; plaj, gezi ve ulaşım rehberi sunan bağımsız rehber site.",
+    sameAs: [INSTAGRAM],
+    contactPoint: { "@type": "ContactPoint", contactType: "customer support", telephone: "+" + WHATSAPP, availableLanguage: ["Turkish"], areaServed: "TR" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristDestination",
+    "@id": `${origin}/#destination`,
+    name: "Avşa Adası",
+    alternateName: ["Avşa"],
+    description: "Marmara Denizi'nde, Balıkesir'in Marmara ilçesine bağlı adalardan biri; plajları, köyleri, şaraphaneleri ve yaz gece hayatıyla bilinen tatil adası.",
+    url: `${origin}/avsa-adasi/`,
+    containedInPlace: { "@type": "AdministrativeArea", name: "Marmara, Balıkesir", address: { "@type": "PostalAddress", addressRegion: "Balıkesir", addressCountry: "TR" } },
+    touristType: ["Plaj tatili", "Hafta sonu kaçamağı", "Aile tatili"],
+    includesAttraction: [
+      { "@type": "Beach", name: "Altınkum Plajı", url: `${origin}/altinkum-plaji/` },
+      { "@type": "Beach", name: "Çınar Koyu", url: `${origin}/cinar-koyu/` },
+      { "@type": "Beach", name: "Kadınlar Plajı", url: `${origin}/kadinlar-plaji/` },
+    ],
+    image: `${origin}/img/hero.webp`,
+  },
+];
+
+const stats = [
+  { value: "1 gün", label: "Hafta sonu kaçamağı için yeter" },
+  { value: "3+", label: "Farklı koy ve plaj" },
+  { value: String(stays.length), label: "Listelenen işletme" },
+];
+
+const reasons = [
+  { icon: "🌊", title: "Berrak deniz", text: "Marmara'nın en sevilen koylarında sabah kahvesini denize karşı iç, öğleden sonra suya gir." },
+  { icon: "🚲", title: "Yavaş tempo", text: "Bisikletle adayı gez, trafik ve gürültüden uzaklaş. Burada acele eden yok." },
+  { icon: "🐟", title: "Taze lezzetler", text: "Balık, mezeler ve adanın meşhur şarabı. Akşam yemeği başlı başına bir program." },
+  { icon: "👨‍👩‍👧", title: "Çift ve aile dostu", text: "Romantik bir kaçamak da olur, çocuklu bir tatil de. Herkese uygun bir köşe var." },
+];
+
+// Kategori kartları (hero): sayılar stays.ts'ten gelir. Kaydı olmayan tür "Yakında" görünür.
+const categories: { key: StayType; label: string; icon: string; box: string; badge: string }[] = [
+  { key: "otel", label: "Oteller", icon: "🏨", box: "border-deniz-600", badge: "bg-deniz-50" },
+  { key: "apart", label: "Apartlar", icon: "🏢", box: "border-orange-600", badge: "bg-orange-50" },
+  { key: "pansiyon", label: "Pansiyonlar", icon: "🏡", box: "border-emerald-600", badge: "bg-emerald-50" },
+];
+const countOf = (t: string) => stays.filter((s) => s.type === t).length;
+
+// Tür sekmeleri ("Nerede kalmalı?" bölümü): kaydı olmayan tür için düğme çıkmaz
+const allFilters = [
+  { key: "hepsi", label: "Hepsi" },
+  { key: "otel", label: "Oteller" },
+  { key: "pansiyon", label: "Pansiyonlar" },
+  { key: "apart", label: "Apartlar" },
+];
+const filters = allFilters.filter((f) => f.key === "hepsi" || stays.some((s) => s.type === f.key));
+const showFilters = filters.length > 2; // tek tür varsa filtre gereksiz
+
+// Hızlı filtre çipleri: en az bir işletmede bulunan özellikler
+const cards = stays.map((s) => ({ stay: s, features: featuresOf(s) }));
+const mainCards = cards.filter((c) => c.stay.featured !== false); // manşet tesisler
+const otherCards = cards.filter((c) => c.stay.featured === false); // "Diğer tesisler"
+const typeIcon: Record<string, string> = { otel: "🏨", pansiyon: "🏡", apart: "🏢" };
+const chips = featureDefs.filter((f) => cards.some((c) => c.features.some((x) => x.key === f.key)));
+
+const steps = [
+  { from: "İstanbul", text: "Karayoluyla Erdek'e (yaklaşık 3 saat), oradan feribot. Yaz sezonunda İDO'nun araçsız deniz otobüsü seferleri de olabiliyor." },
+  { from: "Bursa", text: "Karayoluyla Erdek'e (yaklaşık 1,5-2 saat), ardından Erdek'ten Avşa'ya feribot." },
+  { from: "Tekirdağ", text: "Tekirdağ Ceyport'tan cuma ve pazar günleri doğrudan Avşa'ya sefer var; diğer günler için Erdek üzerinden planla." },
+];
+---
+
+<Layout title={title} description={description}>
+    {ld.map((d) => <script type="application/ld+json" slot="head" set:html={JSON.stringify(d)} />)}
+    <Header />
+
+    <main>
+      <!-- Hero: fotoğraf arka plan + kategori kartları -->
+      <section class="relative isolate overflow-hidden bg-deniz-900">
+        <picture>
+          <source media="(max-width: 767px)" srcset="/img/hero-m.webp" />
+          <img src="/img/hero.webp" alt="" width="1600" height="762" fetchpriority="high" decoding="async" class="absolute inset-0 -z-20 h-full w-full object-cover" />
+        </picture>
+        <div class="absolute inset-0 -z-10 bg-gradient-to-r from-deniz-900/80 via-deniz-900/45 to-deniz-900/20" aria-hidden="true"></div>
+        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-deniz-900/60 to-transparent" aria-hidden="true"></div>
+
+        <div class="mx-auto max-w-6xl px-5 pb-10 pt-14 md:pb-14 md:pt-20">
+          <p class="mb-4 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/90">
+            <span aria-hidden="true">🌊</span> Avşa Adası · {new Date().getFullYear()}
+          </p>
+          <h1 class="font-display max-w-2xl text-4xl font-bold leading-tight text-white md:text-5xl">
+            Avşa Adası Konaklama Rehberi: Oteller, Pansiyonlar ve Apartlar
+          </h1>
+          <p class="mt-4 max-w-xl text-lg text-white/90">
+            Denize sıfır otellerden bütçe dostu pansiyonlara, geniş apartlardan müstakil evlere kadar aradığınız her şey burada. <strong class="font-semibold text-white">Aracısız, doğrudan iletişimle</strong> hayalinizdeki Avşa tatilini planlayın.
+          </p>
+
+          <!-- Kategori kartları -->
+          <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {categories.map((c) => {
+              const n = countOf(c.key);
+              return n > 0 ? (
+                <a href="#konaklama" data-cat={c.key} class={`cat-card block rounded-2xl border-[3px] bg-white p-4 shadow-lg transition hover:-translate-y-1 hover:shadow-xl ${c.box}`}>
+                  <span class={`flex h-11 w-11 items-center justify-center rounded-xl text-2xl ${c.badge}`} aria-hidden="true">{c.icon}</span>
+                  <span class="mt-5 block text-lg font-bold text-deniz-900">{c.label}</span>
+                  <span class="text-sm text-slate-500">{n} tesis</span>
+                </a>
+              ) : (
+                <div class="rounded-2xl border-[3px] border-dashed border-white/50 bg-white/85 p-4 opacity-90" aria-label={`${c.label}, yakında`}>
+                  <span class={`flex h-11 w-11 items-center justify-center rounded-xl text-2xl ${c.badge}`} aria-hidden="true">{c.icon}</span>
+                  <span class="mt-5 block text-lg font-bold text-deniz-900">{c.label}</span>
+                  <span class="text-sm text-slate-500">Yakında</span>
+                </div>
+              );
+            })}
+            <a href="/kiralik-evler/" class="block rounded-2xl border-[3px] border-violet-600 bg-white p-4 shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-50 text-2xl" aria-hidden="true">🔑</span>
+              <span class="mt-5 block text-lg font-bold text-deniz-900">Kiralık Evler</span>
+              <span class="text-sm text-slate-500">Müstakil ev ve villalar</span>
+            </a>
+          </div>
+
+          <!-- Hızlı filtre çipleri -->
+          {chips.length > 0 && (
+            <div class="mt-5 flex flex-wrap gap-2" id="chips" role="group" aria-label="Hızlı filtreler">
+              {chips.map((f) => (
+                <button type="button" data-feature={f.key} aria-pressed="false" class="chip rounded-full border border-white bg-white px-4 py-2 text-sm font-semibold text-deniz-900 shadow transition hover:scale-105">
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <!-- Avşa rehberi çipleri -->
+      <nav aria-label="Avşa rehberi" class="border-b border-slate-200 bg-white">
+        <div class="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 py-4 sm:flex-wrap sm:justify-center">
+          {homeChips.map((r) => (
+            <a href={r.path + "/"} class="flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-deniz-900 transition hover:border-deniz-600 hover:bg-white hover:shadow">
+              <span aria-hidden="true">{r.icon}</span>{r.label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      <!-- Konaklama -->
+      <section id="konaklama" class="scroll-mt-16 bg-white py-16 md:py-20">
+        <div class="mx-auto max-w-7xl px-5">
+          <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <h2 class="font-display text-3xl font-bold text-deniz-900 md:text-4xl">Nerede kalmalı?</h2>
+              <p class="mt-3 max-w-lg text-slate-600">Bütçene ve tarzına uygun olanı seç. Fiyatlar gecelik başlangıç fiyatlarıdır.</p>
+            </div>
+            {showFilters && <div class="flex flex-wrap gap-2" id="filters">
+              {filters.map((f, i) => (
+                <button
+                  data-filter={f.key}
+                  aria-pressed={i === 0 ? "true" : "false"}
+                  class={`filter-btn rounded-full border px-4 py-2.5 text-sm font-medium transition ${i === 0 ? "border-deniz-600 bg-deniz-600 text-white" : "border-slate-200 bg-white text-slate-600 hover:border-deniz-500"}`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>}
+          </div>
+
+          <p id="result-count" class="mt-6 text-sm text-slate-500" aria-live="polite">{stays.length} işletme listeleniyor</p>
+
+          <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {mainCards.map(({ stay: s, features }) => (
+              <article data-type={s.type} data-features={features.map((f) => f.key).join(" ")} class="stay-card group overflow-hidden rounded-3xl border border-slate-100 bg-kum-50 shadow-sm transition hover:shadow-lg">
+                <div class={`relative h-48 overflow-hidden bg-gradient-to-br ${s.gradient}`}>
+                  {s.images[0] && <img src={s.images[0]} alt="" loading="lazy" decoding="async" width="600" height="400" class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />}
+                  <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold capitalize text-deniz-900">{s.kind ?? s.type}</span>
+                  <span class="absolute bottom-4 right-4 rounded-full bg-deniz-900/80 px-3 py-1 text-xs text-white">{s.tag}</span>
+                </div>
+                <div class="p-5">
+                  <h3 class="text-lg font-semibold text-deniz-900">{s.name}</h3>
+                  <p class="mt-1 text-sm text-slate-500">📍 {s.area}</p>
+                  <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
+                    <p class="text-sm text-slate-500"><span class={`font-bold text-deniz-900 ${hasPrice(s.priceFrom) ? "text-lg" : "text-base"}`}>{formatPrice(s.priceFrom)}</span>{hasPrice(s.priceFrom) && " / gece"}</p>
+                    <a href={`/konaklama/${s.slug}/`} class="rounded-full bg-deniz-50 px-4 py-2.5 text-sm font-semibold text-deniz-600 transition group-hover:bg-deniz-600 group-hover:text-white">
+                      Detayı gör<span class="sr-only">: {s.name}</span>
+                    </a>
+                  </div>
+                  <div class="mt-4 grid grid-cols-2 gap-2">
+                    {s.whatsapp ? (
+                      <a href={`https://wa.me/${s.whatsapp}`} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} WhatsApp ile yaz`} class="flex items-center justify-center gap-1.5 rounded-xl bg-deniz-50 px-3 py-2.5 text-sm font-semibold text-deniz-600 transition hover:bg-deniz-600 hover:text-white">
+                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+                        WhatsApp
+                      </a>
+                    ) : <span></span>}
+                    {s.phone ? (
+                      <a href={`tel:${s.phone.replace(/\s/g, "")}`} aria-label={`${s.name} ara`} class="flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-deniz-900 transition hover:border-deniz-600 hover:text-deniz-600">
+                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+                        Ara
+                      </a>
+                    ) : <span></span>}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {otherCards.length > 0 && (
+            <div class="mt-14" id="other-wrap">
+              <h3 class="font-display text-2xl font-bold text-deniz-900">Diğer tesisler</h3>
+              <p class="mt-2 text-sm text-slate-500">Fiyatlar başlangıç fiyatlarıdır; güncel fiyat ve müsaitlik için işletmeyi ara.</p>
+              <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {otherCards.map(({ stay: s, features }) => (
+                  <li data-type={s.type} data-features={features.map((f) => f.key).join(" ")} class="stay-card relative flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 transition hover:border-deniz-500 hover:shadow-md">
+                    <div class={`relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br text-2xl ${s.gradient}`} aria-hidden="true">
+                      {s.images[0] ? <img src={s.images[0]} alt="" loading="lazy" decoding="async" width="112" height="112" class="absolute inset-0 h-full w-full object-cover" /> : typeIcon[s.type]}
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <a href={`/konaklama/${s.slug}/`} class="block font-semibold leading-snug text-deniz-900 after:absolute after:inset-0 after:content-[''] hover:text-deniz-600">{s.name}</a>
+                      <p class="mt-0.5 text-xs font-semibold text-gunbatimi">{s.priceNote ? `${s.priceNote} ` : ""}<span class="whitespace-nowrap">{formatPrice(s.priceFrom)}</span></p>
+                      <p class="text-xs text-slate-500">{[s.kind ?? typeLabels[s.type], s.tag].filter((v, i, arr) => arr.findIndex((x) => x.toLowerCase() === v.toLowerCase()) === i).join(" · ")}</p>
+                    </div>
+                    {s.whatsapp && (
+                      <a href={`https://wa.me/${s.whatsapp}`} target="_blank" rel="noopener noreferrer" aria-label={`${s.name} WhatsApp ile yaz`} class="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-deniz-50 text-lg transition hover:bg-deniz-600 hover:text-white">💬</a>
+                    )}
+                    {s.phone && (
+                      <a href={`tel:${s.phone.replace(/\s/g, "")}`} aria-label={`${s.name} ara`} class="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-deniz-50 text-lg transition hover:bg-deniz-600 hover:text-white">📞</a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div id="empty" class="mt-10 hidden rounded-3xl border border-dashed border-slate-300 bg-kum-50 p-10 text-center">
+            <p class="font-semibold text-deniz-900">Bu filtrelere uyan işletme bulamadık.</p>
+            <button type="button" id="reset" class="mt-4 rounded-full bg-deniz-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-deniz-900">Filtreleri temizle</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bu hafta sonu şehri bırak (küçültülmüş) -->
+      <section id="hafta-sonu" class="scroll-mt-16 px-5 py-12">
+        <div class="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-deniz-100 via-deniz-50 to-kum-50 px-6 py-10 md:px-12 md:py-12">
+          <div class="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-gunbatimi/20 blur-3xl" aria-hidden="true"></div>
+          <div class="relative grid items-center gap-8 md:grid-cols-[1.4fr_1fr]">
+            <div>
+              <p class="mb-3 inline-block rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-deniz-600">Marmara'nın huzur adası</p>
+              <h2 class="font-display text-3xl font-bold leading-tight text-deniz-900 md:text-4xl">
+                Bu hafta sonu şehri bırak, <span class="text-gunbatimi">Avşa'ya</span> kaç.
+              </h2>
+              <p class="mt-3 max-w-xl text-slate-600">
+                Sen sadece valizini hazırla, gerisi denizin sesi.
+              </p>
+              <div class="mt-6 flex flex-wrap gap-3">
+                <a href="#konaklama" class="rounded-full bg-gunbatimi px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-gunbatimi/30 transition hover:scale-105">Konaklamaları gör</a>
+                <a href={`https://wa.me/${WHATSAPP}`} class="rounded-full border border-deniz-600/30 bg-white px-6 py-2.5 text-sm font-semibold text-deniz-600 transition hover:bg-deniz-50">WhatsApp'tan yaz</a>
+              </div>
+            </div>
+            <dl class="grid grid-cols-3 gap-3">
+              {stats.map((s) => (
+                <div class="rounded-2xl bg-white/80 p-3 text-center">
+                  <dt class="font-display text-xl font-bold text-deniz-900 md:text-2xl">{s.value}</dt>
+                  <dd class="mt-1 text-[11px] leading-tight text-slate-500 md:text-xs">{s.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- Neden Avşa -->
+      <section id="neden" class="mx-auto max-w-6xl scroll-mt-16 px-5 py-16">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="font-display text-3xl font-bold text-deniz-900 md:text-4xl">Neden Avşa?</h2>
+          <p class="mt-3 text-slate-600">İstanbul, Bursa ve Tekirdağ'a yakın; ama sanki çok uzaklarda.</p>
+        </div>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {reasons.map((r) => (
+            <article class="rounded-3xl border border-kum-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+              <div class="text-3xl">{r.icon}</div>
+              <h3 class="mt-4 text-lg font-semibold text-deniz-900">{r.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600">{r.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- Ulaşım -->
+      <section id="ulasim" class="mx-auto max-w-6xl scroll-mt-16 px-5 py-16">
+        <div class="grid items-center gap-12 md:grid-cols-2">
+          <div>
+            <h2 class="font-display text-3xl font-bold text-deniz-900 md:text-4xl">Adaya nasıl gidilir?</h2>
+            <p class="mt-3 text-slate-600">Feribot saatleri sezona göre değişir; yola çıkmadan önce güncel seferleri kontrol etmeni öneririz.</p>
+            <a href="/avsa-adasina-nasil-gidilir/" class="mt-5 inline-block rounded-full bg-deniz-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-deniz-600">Avşa'ya nasıl gidilir? Tüm rehber →</a>
+          </div>
+          <ol class="space-y-4">
+            {steps.map((s, i) => (
+              <li class="flex gap-4 rounded-2xl bg-white p-5 shadow-sm">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gunbatimi font-bold text-white">{i + 1}</span>
+                <div>
+                  <h3 class="font-semibold text-deniz-900">{s.from}'dan</h3>
+                  <p class="mt-1 text-sm text-slate-600">{s.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <!-- Avşa Adası kısa tanıtım (semantik içerik + iç bağlantılar) -->
+      <section id="avsa-adasi-nedir" class="mx-auto max-w-3xl scroll-mt-16 px-5 py-14">
+        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Avşa Adası'nda tatil: kısa rehber</h2>
+        <p class="mt-4 text-slate-600">
+          Avşa, Marmara Denizi'nde Balıkesir'in Marmara ilçesine bağlı bir ada. Eski adı Türkeli olan bu <a class="font-semibold text-deniz-600 hover:underline" href="/avsa-adasi/">Avşa Adası rehberi</a>, tatilini planlarken ihtiyaç duyacağın her şeyi bir araya getiriyor. Adaya <a class="font-semibold text-deniz-600 hover:underline" href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> sayfasındaki adımlarla Erdek'ten, Tekirdağ'dan ya da İstanbul'dan ulaşabilir, güncel seferleri <a class="font-semibold text-deniz-600 hover:underline" href="/feribot-saatleri/">Avşa feribot saatleri</a> sayfasından kontrol edebilirsin.
+        </p>
+        <p class="mt-4 text-slate-600">
+          Tatilde plaj önceliğin ise <a class="font-semibold text-deniz-600 hover:underline" href="/plajlar/">Avşa plajları ve koyları</a>, gezi planı için <a class="font-semibold text-deniz-600 hover:underline" href="/gezilecek-yerler/">Avşa'da gezilecek yerler</a> ve <a class="font-semibold text-deniz-600 hover:underline" href="/avsa-adasi-gezi-rotasi/">Avşa gezi rotası</a> sayfalarına bak. Akşamları için <a class="font-semibold text-deniz-600 hover:underline" href="/gece-hayati/">Avşa gece hayatı</a>, konaklama için <a class="font-semibold text-deniz-600 hover:underline" href="/avsa-otelleri/">Avşa otelleri</a>, <a class="font-semibold text-deniz-600 hover:underline" href="/avsa-pansiyonlari/">Avşa pansiyonları</a> ve <a class="font-semibold text-deniz-600 hover:underline" href="/avsa-apartlari/">Avşa apartları</a> listeleri hazır. Bölge seçerken <a class="font-semibold text-deniz-600 hover:underline" href="/avsa-merkez-konaklama/">Avşa merkez konaklama</a> ve <a class="font-semibold text-deniz-600 hover:underline" href="/yigitler-konaklama/">Yiğitler konaklama</a> rehberleri karar vermene yardımcı olur.
+        </p>
+      </section>
+
+      <!-- İletişim / CTA -->
+      <section id="iletisim" class="scroll-mt-16 px-5 pb-20">
+        <div class="mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-deniz-600 to-deniz-900 px-8 py-14 text-center text-white md:py-20">
+          <h2 class="font-display text-3xl font-bold md:text-4xl">Tatilini birlikte planlayalım</h2>
+          <p class="mx-auto mt-4 max-w-xl text-white">Tarihini ve kaç kişi olduğunu yaz, sana en uygun otel, pansiyon ya da apartı bulalım. İşletme sahibiysen sayfanı birlikte hazırlayalım.</p>
+          <a href={`https://wa.me/${WHATSAPP}`} class="mt-8 inline-block rounded-full bg-white px-8 py-3 font-semibold text-deniz-900 transition hover:scale-105">WhatsApp'tan yaz</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-kum-100 bg-white py-8 text-center text-sm text-slate-500">
+      <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="mb-2 inline-block font-semibold text-deniz-900 hover:text-pink-600">Instagram: @avsaadasi</a><br />
+      © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.
+    </footer>
+
+    <script>
+      const typeBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".filter-btn"));
+      const chipBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".chip"));
+      const catCards = Array.from(document.querySelectorAll<HTMLElement>(".cat-card"));
+      const cards = Array.from(document.querySelectorAll<HTMLElement>(".stay-card"));
+      const countEl = document.getElementById("result-count")!;
+      const emptyEl = document.getElementById("empty")!;
+
+      const active = ["border-deniz-600", "bg-deniz-600", "text-white"];
+      const idle = ["border-slate-200", "bg-white", "text-slate-600"];
+      const chipOn = ["bg-gunbatimi", "text-white", "border-gunbatimi"];
+      const chipOff = ["bg-white", "text-deniz-900", "border-white"];
+
+      let type = "hepsi";
+      const feats = new Set<string>();
+
+      const apply = () => {
+        let shown = 0;
+        cards.forEach((c) => {
+          const have = (c.dataset.features ?? "").split(" ");
+          const show = (type === "hepsi" || c.dataset.type === type) && [...feats].every((f) => have.includes(f));
+          c.classList.toggle("hidden", !show);
+          if (show) shown++;
+        });
+        typeBtns.forEach((b) => {
+          const on = b.dataset.filter === type;
+          b.classList.remove(...(on ? idle : active));
+          b.classList.add(...(on ? active : idle));
+          b.setAttribute("aria-pressed", String(on));
+        });
+        chipBtns.forEach((b) => {
+          const on = feats.has(b.dataset.feature!);
+          b.classList.remove(...(on ? chipOff : chipOn));
+          b.classList.add(...(on ? chipOn : chipOff));
+          b.setAttribute("aria-pressed", String(on));
+        });
+        const otherWrap = document.getElementById("other-wrap");
+        if (otherWrap) {
+          const anyOther = cards.some((c) => c.tagName === "LI" && !c.classList.contains("hidden"));
+          otherWrap.classList.toggle("hidden", !anyOther);
+        }
+        countEl.textContent = `${shown} işletme listeleniyor`;
+        emptyEl.classList.toggle("hidden", shown > 0);
+      };
+
+      const goList = () => document.getElementById("konaklama")!.scrollIntoView({ behavior: "smooth" });
+
+      typeBtns.forEach((b) =>
+        b.addEventListener("click", () => {
+          type = b.dataset.filter ?? "hepsi";
+          apply();
+        })
+      );
+      catCards.forEach((c) =>
+        c.addEventListener("click", (e) => {
+          e.preventDefault();
+          type = c.dataset.cat ?? "hepsi";
+          apply();
+          goList();
+        })
+      );
+      chipBtns.forEach((b) =>
+        b.addEventListener("click", () => {
+          const k = b.dataset.feature!;
+          feats.has(k) ? feats.delete(k) : feats.add(k);
+          apply();
+          if (feats.size > 0) goList();
+        })
+      );
+      document.getElementById("reset")?.addEventListener("click", () => {
+        type = "hepsi";
+        feats.clear();
+        apply();
+      });
+      apply();
+    </script>
+</Layout>

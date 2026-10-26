@@ -1,0 +1,5 @@
+# Netlify / Cloudflare Pages için önbellek ayarı (diğer barındırmalarda yok sayılır)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+/favicon.svg
+  Cache-Control: public, max-age=86400

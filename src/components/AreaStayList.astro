@@ -1,0 +1,28 @@
+---
+// Bölge sayfalarında stays.ts verisinden tesis kartları üretir
+import { typeLabels } from "../data/stays";
+import type { Stay } from "../data/stays";
+interface Props { items: Stay[]; title: string; id?: string }
+const { items, title, id } = Astro.props;
+---
+{items.length > 0 && (
+  <section id={id} class="mt-10 scroll-mt-24">
+    <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">{title}</h2>
+    <ul class="not-prose mt-5 grid gap-4 sm:grid-cols-2">
+      {items.map((s) => (
+        <li class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <p class="text-xs font-semibold uppercase tracking-wide text-deniz-600">{s.kind ?? typeLabels[s.type]} · {s.area}</p>
+          <h3 class="mt-1 text-lg font-bold text-deniz-900"><a href={`/konaklama/${s.slug}/`} class="hover:underline">{s.name}</a></h3>
+          <p class="mt-1 text-sm text-slate-600">{s.tagline}</p>
+          {s.nearby.length > 0 && (
+            <p class="mt-3 text-sm text-slate-700">📍 {s.nearby.slice(0, 3).map((n) => `${n.label}: ${n.distance}`).join(" · ")}</p>
+          )}
+          {s.amenities.length > 0 && (
+            <p class="mt-2 text-sm text-slate-500">✓ {s.amenities.slice(0, 4).join(", ")}</p>
+          )}
+          <a href={`/konaklama/${s.slug}/`} class="mt-4 inline-block text-sm font-semibold text-deniz-600 hover:underline">Tesisi incele →</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

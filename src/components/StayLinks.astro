@@ -1,0 +1,24 @@
+---
+// İlgili konaklamaları kısa kartlarla listeler (ör. Barlar Sokağı'na yakın olanlar)
+import type { Stay } from "../data/stays";
+interface Props { items: { stay: Stay; note?: string }[]; title: string }
+const { items, title } = Astro.props;
+---
+{items.length > 0 && (
+  <section class="mt-12">
+    <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">{title}</h2>
+    <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+      {items.map(({ stay, note }) => (
+        <li>
+          <a href={`/konaklama/${stay.slug}/`} class="flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-deniz-500 hover:shadow">
+            <span>
+              <span class="block font-semibold text-deniz-900">{stay.name}</span>
+              <span class="text-sm text-slate-500">{stay.area}{note ? ` · ${note}` : ""}</span>
+            </span>
+            <span aria-hidden="true" class="text-deniz-600">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

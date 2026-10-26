@@ -1,0 +1,168 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Adası Gezilecek Yerler: 9 Durak | avsaadasi.net";
+const description =
+  "Avşa'da gezilecek yerler: Yiğitler Köyü, köy sahili, Manastır, Tarihi Çınaraltı, şaraphaneler, Değirmenardı ve gün batımı. Avşa Adası gezi rotası dahil.";
+
+const galeri = [
+  { src: "/img/gezilecek-yerler/avsa-yel-degirmeni-1.webp", w: 1337, h: 1400, alt: "Avşa Adası'nda renkli kaideli ahşap yel değirmeni", cap: "Ahşap yel değirmeni", big: true },
+  { src: "/img/gezilecek-yerler/avsa-gun-batimi-1.webp", w: 500, h: 333, alt: "Avşa Adası'nda gün batımı ve rıhtımda olta balıkçısı", cap: "Gün batımı" },
+  { src: "/img/gezilecek-yerler/avsa-deniz-manzarasi-1.webp", w: 820, h: 590, alt: "Avşa Adası kıyısından Marmara Denizi ve küçük kayalık ada manzarası", cap: "Kıyıdan deniz manzarası" },
+  { src: "/img/gezilecek-yerler/avsa-koy-yolu-manzara-1.webp", w: 634, h: 420, alt: "Avşa Adası köy yolundan yerleşim ve deniz manzarası", cap: "Köy yolundan ada manzarası" },
+  { src: "/img/gezilecek-yerler/yigitler-ataturk-aniti-1.webp", w: 550, h: 363, alt: "Avşa Adası Yiğitler'de Atatürk anıtı ve meydan", cap: "Yiğitler'de anıt ve meydan" },
+];
+
+const toc = [
+  { id: "genel-bakis", label: "Avşa'da neler görülür?" },
+  { id: "koyler", label: "Köyler: Yiğitler ve merkeze yakın köy sahili" },
+  { id: "tarihi", label: "Tarihi yerler" },
+  { id: "sarap", label: "Şaraphaneler ve tadım" },
+  { id: "manzara", label: "Manzara ve gün batımı" },
+  { id: "deniz", label: "Denizden ve plajlardan gezmek" },
+  { id: "gezi-yontemleri", label: "Adayı nasıl gezmeli?" },
+  { id: "bir-gunluk-rota", label: "Bir günlük gezi rotası" },
+  { id: "iki-gun", label: "Hafta sonu (2 gün) planı" },
+  { id: "konaklama", label: "Gezi için nerede kalınır?" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const place = { "@type": "Place", name: "Avşa Adası", address: { "@type": "PostalAddress", addressRegion: "Balıkesir", addressCountry: "TR" } };
+const attractions = [
+  { id: "yigitler", name: "Yiğitler Köyü", text: "Eski Rum yapıları ve iki türbesiyle bilinen, adanın sakin köylerinden biri." },
+  { id: "koy-sahili", name: "Merkeze yakın köy sahili", text: "Merkeze yaklaşık 1,5 km uzaklıkta, Rum mirasını yansıtan tarihi yapılarıyla bilinen köy kesimi." },
+  { id: "manastir", name: "Avşa Manastırı (Hagios Georgios)", text: "İskeleden araçla yaklaşık beş dakika uzaklıkta, bugün kalıntıları ayakta olan tarihi manastır alanı." },
+  { id: "cinaralti", name: "Tarihi Çınaraltı", text: "İskele çevresinde, tarihi bir çınar ağacının gölgesindeki kafe." },
+  { id: "degirmenardi", name: "Değirmenardı", text: "İskeleden yaklaşık 1 km uzaklıkta, gün batımı ve fotoğraf için bilinen mevki." },
+  { id: "saraphaneler", name: "Bortaçina ve Büyülübağ şaraphaneleri", text: "Adada üretim yapan, yerinde tadım sunan şaraphaneler." },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası'nda gezilecek yerler",
+  itemListElement: attractions.map((a, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "TouristAttraction",
+      "@id": `${origin}/gezilecek-yerler/#${a.id}`,
+      name: a.name,
+      description: a.text,
+      url: `${origin}/gezilecek-yerler/#${a.id}`,
+      touristType: "Kültür ve doğa gezginleri",
+      containedInPlace: place,
+    },
+  })),
+};
+const destination = {
+  "@context": "https://schema.org",
+  "@type": "TouristDestination",
+  name: "Avşa Adası",
+  description: "Marmara Denizi'nde, Balıkesir'e bağlı Marmara ilçesinin adalarından biri; plajları, köyleri ve şaraplarıyla bilinen tatil adası.",
+  url: `${origin}/gezilecek-yerler/`,
+  touristType: ["Plaj tatili", "Kültür gezisi", "Hafta sonu kaçamağı"],
+  includesAttraction: attractions.map((a) => ({ "@type": "TouristAttraction", name: a.name, url: `${origin}/gezilecek-yerler/#${a.id}` })),
+};
+
+const yigitler = stays.filter((s) => s.area === "Yiğitler").map((stay) => ({ stay, note: "Yiğitler Köyü'nde" }));
+const merkez = stays
+  .filter((s) => s.featured !== false && s.area !== "Yiğitler" && s.nearby.some((n) => /İskele|Barlar|Merkez/.test(n.label)))
+  .slice(0, 4)
+  .map((stay) => ({ stay, note: "Merkezde, iskele ve çarşıya yakın" }));
+
+const faq = [
+  { q: "Avşa'da bir günde hangi yerler gezilir?", a: "Tarihi Çınaraltı'nda kahve, Yiğitler Köyü, bir şaraphane ve gün batımı için Değirmenardı bir günde rahatça görülebilir. Aradaki yüzme molalarını Altınkum veya Çınar Koyu'nda verebilirsin." },
+  { q: "Avşa'daki şaraphaneler gezilebilir mi?", a: "Evet. Bortaçina ve Büyülübağ adada üretim yapan şaraphaneler ve yerinde tadım sunuyorlar. Çalışma saatleri değişebildiği için önceden arayıp yer ayırtmak önerilir." },
+  { q: "Manastır'a nasıl gidilir?", a: "Avşa Manastırı iskeleden araçla yaklaşık 5 dakika, yürüyerek yaklaşık 20 dakika uzaklıkta. Yalnızca kalıntılar kaldığı için açık alanda gezilen bir nokta olarak düşün." },
+  { q: "Avşa'da araç gerekli mi?", a: "Zorunlu değil. Minibüsler, motosiklet, bisiklet ve ATV kiralama seçenekleri adayı gezmek için yeterli; merkezden tekne kiralayıp koyları denizden de görebilirsin." },
+  { q: "Avşa'da gün batımı nerede izlenir?", a: "İskelenin yakınındaki Değirmenardı mevkii gün batımı ve fotoğraf için en bilinen noktalardan biri; iskeleden yaklaşık 1 km uzaklıkta." },
+  { q: "Avşa'da kaç gün kalmak yeter?", a: "Görülecek yerler için bir gün, plaj ve gece hayatını da kapsayan keyifli bir tatil için iki ile üç gün genellikle yeterli oluyor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Gezilecek Yerler"
+  intro="Rum döneminden kalan köy evlerinden şaraphanelere, manastır kalıntılarından gün batımı noktalarına: Balıkesir'in Marmara ilçesindeki Avşa Adası'nda görülecek yerler, tatilde adayı gezme yöntemleri ve örnek rotalar."
+  crumb="Gezilecek Yerler"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld, destination]}
+>
+  <h2 id="genel-bakis">Avşa'da neler görülür?</h2>
+  <p>Avşa, Marmara Denizi'nde yaz tatilinin ilk akla gelen adalarından. Çoğu kişi için plaj ve gece hayatıyla özdeşleşse de ada sakin köyleri, Rum döneminden kalan yapıları, şaraphaneleri ve gün batımı noktalarıyla gezmeye de değer. Ada küçük olduğundan birkaç noktayı tek günde birleştirmek mümkün; bu rehberde köylerden tarihi yerlere, şarap tadımından manzara noktalarına kadar durakları ve nasıl gidileceğini topladık.</p>
+  <p>Yüzmek için koy arıyorsan <a href="/plajlar/">Avşa plajları ve koyları</a> rehberine, adaya nasıl geleceğini planlıyorsan <a href="/feribot-saatleri/">Avşa feribot saatlerine</a> bakabilirsin.</p>
+
+  <figure class="not-prose my-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 md:grid-rows-2 gap-3">
+      {galeri.map((g) => (
+        <figure class={`overflow-hidden rounded-xl bg-slate-100 ${g.big ? "col-span-2 md:col-span-1 md:row-span-2" : ""}`}>
+          <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class={`w-full object-cover ${g.big ? "h-64 md:h-full object-top" : "h-40 md:h-full"}`} />
+          <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+        </figure>
+      ))}
+    </div>
+    <figcaption class="mt-2 text-xs text-slate-500">Avşa Adası'ndan kareler.</figcaption>
+  </figure>
+
+  <h2 id="koyler">Köyler: Yiğitler ve merkeze yakın köy sahili</h2>
+  <h3 id="yigitler">Yiğitler Köyü</h3>
+  <p>Adanın doğu yakasındaki Yiğitler, eski Rum yapıları ve iki türbesiyle bilinir. Köy sakin ve yürüyerek gezmeye uygun; Altınkum ve Karadut koylarına yakınlığı sayesinde gezi ile plaj gününü aynı bölgede birleştirmek kolay. Merkezden minibüsler belediye binası önünden yaklaşık yarım saatte bir kalkıyor ve yolculuk yaklaşık 5-6 dakika sürüyor.</p>
+  <h3 id="koy-sahili">Merkeze yakın köy sahili</h3>
+  <p>Merkeze yaklaşık 1,5 km uzaklıktaki bu köy kesimi, Rum mirasını yansıtan tarihi yapılarıyla ve çok ince kumlu sahiliyle öne çıkıyor. Avşa'nın eski adı Türkeli'dir; adanın geçmişini merak edenler için kısa ve keyifli bir duraktır.</p>
+
+  <h2 id="tarihi">Tarihi yerler</h2>
+  <h3 id="manastir">Avşa Manastırı (Hagios Georgios)</h3>
+  <p>İskeleden araçla yaklaşık beş dakika, yürüyerek yaklaşık yirmi dakika uzaklıkta. Bugün yalnızca bazı kalıntıları ayakta olduğu için düzenli bir ziyaret saati yok; adanın tarihine kısa bir mola vermek ve çevresinde yüzmek için uygun. Manastır hakkında kaynaklarda farklı rakamlar dolaşıyor, bu yüzden kesin bilgi için yerel halka sormak en sağlıklısı.</p>
+  <h3 id="cinaralti">Tarihi Çınaraltı</h3>
+  <p>İskele çevresinde, tarihi bir çınar ağacının gölgesindeki kafe. Çay ya da kahve eşliğinde gelen feribotları izlemek, adaya vardığında ilk durak olabilir.</p>
+  <p>Adanın uzun geçmişi için <a href="/avsa-adasi-tarihi-ve-plajlari/">Avşa Adası tarihi</a> yazımıza göz atabilirsin.</p>
+
+  <h2 id="sarap">Şaraphaneler ve tadım</h2>
+  <p>Avşa şarabıyla tanınan bir ada. <strong>Bortaçina</strong> ve <strong>Büyülübağ</strong> şaraphaneleri adada üretim yapıyor ve yerinde tadım sunuyor. Adaya özgü ada karası üzümünden yapılan şaraplar, yerel bir lezzet olarak öne çıkıyor. Çalışma saatleri ve tadım olanakları sezona göre değişebildiğinden, gitmeden önce arayıp yer ayırtmak iyi olur. Adanın merkezinde ayrıca dev bir üzüm heykeli bulunuyor; fotoğraf için küçük bir durak.</p>
+  <p>Şarap tadımını gün içinde bir yüzme molası ile birleştirmek için öğleden sonra saatlerini önerebiliriz; araç kullanacaksan tadım sonrası yolculuğu planlamayı unutma.</p>
+
+  <h2 id="manzara">Manzara ve gün batımı</h2>
+  <h3 id="degirmenardi">Değirmenardı</h3>
+  <p>İskelenin solundaki Değirmenardı mevkii gün batımı ve fotoğraf için bilinen bir nokta. İskeleden yürüyerek yaklaşık 1 km mesafede; akşamüstü yürüyüşü için ideal.</p>
+  <h3 id="sahintepesi">Şahintepesi</h3>
+  <p>Altınkum çevresindeki Şahintepesi manzarasıyla bilinen bir nokta; çevresinde restoran da var. Kaynaklarda tarifi farklı yapıldığı için gitmeden önce yerel halka yönünü sormanı öneririz.</p>
+
+  <h2 id="deniz">Denizden ve plajlardan gezmek</h2>
+  <p>Avşa'yı gezmenin güzel yollarından biri de kıyıyı denizden görmek. Merkezden tekne kiralayarak ulaşılması zor koylara geçilebiliyor; Kumtur ve Çınar gibi bölgeler tekneyle keşfedilebiliyor. Eğimli iniş nedeniyle Beyazsaray'a ATV ile gitmek öneriliyor. Her koyun karakteri için <a href="/plajlar/">plajlar rehberimize</a> bakabilirsin.</p>
+
+  <h2 id="gezi-yontemleri">Adayı nasıl gezmeli?</h2>
+  <ul>
+    <li><strong>Minibüs:</strong> Yiğitler, Altınkum, Çınar Koyu, Mavi Koy ve Kumtur hatları merkezden kalkar. Çınar Koyu hattı saatlik çalışıyor ve yaklaşık 20:00'ye kadar sefer yapıyor.</li>
+    <li><strong>Motosiklet, bisiklet ve ATV:</strong> Merkezden kiralanabiliyor; eğimli yollarda dikkatli olmak gerekiyor.</li>
+    <li><strong>Tekne:</strong> Merkezden motor tekne kiralayıp koyları denizden gezebilirsin.</li>
+    <li><strong>Yürüyüş:</strong> İskele çevresi, Çınaraltı, Değirmenardı ve Manastır yürüyerek de gezilebilir.</li>
+  </ul>
+  <p>Araçlı gelmek istiyorsan feribot ücretlerine <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfasından bakabilirsin.</p>
+
+  <h2 id="bir-gunluk-rota">Bir günlük gezi rotası</h2>
+  <p>1, 2 ve 3 günlük ayrıntılı programlar için <a href="/avsa-adasi-gezi-rotasi/">Avşa gezi rotası</a> sayfamıza bak.</p>
+  <ul>
+    <li><strong>Sabah:</strong> Tarihi Çınaraltı'nda kahvaltı veya kahve, ardından merkez sahilinde kısa yürüyüş.</li>
+    <li><strong>Öğle:</strong> Yiğitler Köyü gezisi, ardından Altınkum veya Karadut'ta yüzme molası.</li>
+    <li><strong>İkindi:</strong> Bir şaraphanede tadım (önceden rezervasyonla).</li>
+    <li><strong>Akşam:</strong> Değirmenardı'nda gün batımı, sonra iskele çevresinde akşam yemeği.</li>
+  </ul>
+
+  <h2 id="iki-gun">Hafta sonu (2 gün) planı</h2>
+  <h3>1. gün</h3>
+  <p>Merkez ve iskele çevresini gez, öğleden sonra Mavi Koy veya Çınar Koyu'nda yüzme molası ver, akşam gün batımını izleyip <a href="/gece-hayati/">Barlar Sokağı'nda</a> eğlence ya da sakin bir akşam yemeği seç.</p>
+  <h3>2. gün</h3>
+  <p>Sabah köy sahili ve Manastır, öğle Yiğitler ile Altınkum, ikindi şaraphane. Dönüş feribotunun saatini planlamadan önce mutlaka güncel tarifeye bak; ayrıntılar için <a href="/feribot-saatleri/">feribot saatleri</a> sayfamız hazır.</p>
+
+  <div id="konaklama"></div>
+  <StayLinks items={yigitler} title="Köy ve koy gezisine yakın: Yiğitler'de konaklama" />
+  {merkez.length > 0 && <StayLinks items={merkez} title="İskele ve çarşıya yakın: merkezde konaklama" />}
+  <p>Tüm seçenekler için <a href="/#konaklama">Avşa otelleri, apartları ve pansiyonları</a> listemize, müstakil ev arıyorsan <a href="/kiralik-evler/">Avşa kiralık evler</a> sayfasına bakabilirsin.</p>
+</InfoLayout>

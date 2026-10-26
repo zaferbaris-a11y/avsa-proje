@@ -1,0 +1,146 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Adası'na Nasıl Gidilir? İstanbul, Erdek | avsaadasi.net";
+const description =
+  "Avşa Adası'na nasıl gidilir? İstanbul, Bursa, Tekirdağ ve Erdek'ten Avşa'ya araçlı ve araçsız ulaşım, feribot bilet alma adımları ve ipuçları.";
+
+const galeri = [
+  { src: "/img/nasil-gidilir/avsa-iskelesi-deniz-otobusu-1.webp", w: 640, h: 425, alt: "Avşa Adası iskelesinde yolcu indiren deniz otobüsü", cap: "Avşa iskelesinde deniz otobüsü" },
+  { src: "/img/nasil-gidilir/avsa-arac-feribotu-iskele-1.webp", w: 640, h: 425, alt: "Avşa Adası iskelesine yaklaşan araçlı feribot", cap: "Adaya yaklaşan araçlı feribot" },
+  { src: "/img/nasil-gidilir/marmara-denizi-feribot-yolculugu-1.webp", w: 500, h: 375, alt: "Marmara Denizi'nde Avşa Adası feribot yolculuğu", cap: "Marmara'da feribot yolculuğu" },
+  { src: "/img/nasil-gidilir/avsa-sahil-deniz-otobusleri-1.webp", w: 500, h: 333, alt: "Avşa Adası sahilinde iskeleye yanaşmış deniz otobüsleri", cap: "Sahil ve deniz otobüsleri" },
+];
+
+const toc = [
+  { id: "ozet", label: "Kısaca: en kolay yol" },
+  { id: "erdek", label: "Erdek–Avşa: ana hat" },
+  { id: "istanbul", label: "İstanbul'dan Avşa'ya" },
+  { id: "bursa", label: "Bursa'dan Avşa'ya" },
+  { id: "tekirdag", label: "Tekirdağ'dan Avşa'ya" },
+  { id: "diger", label: "Ankara, Eskişehir, İzmir" },
+  { id: "arac-yaya", label: "Araçlı mı, araçsız mı?" },
+  { id: "bilet", label: "Bilet nasıl alınır?" },
+  { id: "ipuclari", label: "Yolculuk ipuçları" },
+  { id: "konaklama", label: "Vardıktan sonra" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const routes = [
+  { name: "İstanbul'dan Avşa'ya (Erdek üzerinden)", text: "İstanbul'dan Erdek'e karayoluyla gidip Erdek'ten Avşa'ya feribotla geçiş." },
+  { name: "Bursa'dan Avşa'ya (Erdek üzerinden)", text: "Bursa'dan Erdek'e karayoluyla gidip Erdek'ten feribota binme." },
+  { name: "Tekirdağ'dan Avşa'ya", text: "Tekirdağ Ceyport'tan sınırlı gün seferle doğrudan Avşa'ya." },
+  { name: "Erdek'ten Avşa'ya", text: "Adaya araçlı ulaşımın ana hattı; Marmara RoRo ve GESTAŞ seferleri." },
+  { name: "İstanbul Avcılar'dan Avşa'ya (yaz sezonunda)", text: "İDO'nun araçsız deniz otobüsü (Yenikapı/Bostancı, yazın Avcılar)." },
+];
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası'na ulaşım seçenekleri",
+  itemListElement: routes.map((r, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: { "@type": "Trip", name: r.name, description: r.text, touristType: "Tatilciler" },
+  })),
+};
+
+const near = stays.filter((s) => s.featured !== false).slice(0, 4).map((stay) => ({ stay, note: "Feribot iskelesine yakın, merkezde" }));
+
+const faq = [
+  { q: "Avşa'ya nereden gidilir?", a: "Araçlı ve en yaygın ulaşım Balıkesir'in Erdek ilçesinden; Marmara RoRo ve GESTAŞ bu hatta sefer yapıyor. Tekirdağ'dan sınırlı gün seferler ve yaz sezonunda İstanbul'dan araçsız deniz otobüsü var." },
+  { q: "İstanbul'dan Avşa'ya direkt feribot var mı?", a: "Araçlı direkt İstanbul feribotu yok. İstanbul'dan gelenler genellikle Erdek'e karayoluyla gidiyor. İstanbul'dan yaz sezonunda İDO'nun araçsız seferi olabiliyor." },
+  { q: "İstanbul'dan Erdek'e kaç saat?", a: "Normal şartlarda yaklaşık 3 saat; Osmangazi Köprüsü ya da Yalova'ya feribot ve Bandırma üzerinden gidilebiliyor. Trafik ve mevsime göre değişir." },
+  { q: "Bursa'dan Avşa'ya nasıl gidilir?", a: "Bursa'dan önce Erdek iskelesine karayoluyla gidilir, ardından Erdek–Avşa feribotuna binilir. Bursa'dan Erdek'e normal şartlarda yaklaşık 1,5-2 saat sürüyor; otobüs bileti de alınabiliyor." },
+  { q: "Avşa'ya arabasız gidilir mi?", a: "Evet. Yaya yolcu olarak feribota binebilir, adada minibüs, motosiklet ve bisikletle ulaşım sağlayabilirsin." },
+  { q: "Feribot bileti nereden alınır?", a: "Marmara RoRo ve GESTAŞ'ın online satış sayfalarından ya da iskele gişelerinden. Yoğun dönemlerde önceden online almak daha güvenli." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası'na Nasıl Gidilir?"
+  intro="İstanbul, Bursa, Tekirdağ ve Erdek'ten Avşa'ya ulaşım seçenekleri, araçlı ve araçsız yolculuk farkları, bilet alma adımları ve yolculuk ipuçları."
+  crumb="Avşa'ya Nasıl Gidilir?"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld]}
+>
+  <h2 id="ozet">Kısaca: en kolay yol</h2>
+  <p>Avşa'ya gitmenin en yaygın yolu Balıkesir'in Erdek ilçesinden feribota binmek. İstanbul, Bursa, Ankara ya da İzmir'den geliyorsan genellikle önce karayoluyla Erdek'e, oradan da Avşa'ya feribotla geçersin. Tekirdağ'dan da sınırlı gün feribot var; İstanbul'dan yaz sezonunda ise araçsız deniz otobüsü seferleri olabiliyor.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Süreler ve sefer saatleri kaynaklara ve mevsime göre değişir. Bu sayfadaki bilgiler kamuya açık yayınlardan derlendi (son kontrol: 24 Ekim 2026); yola çıkmadan önce şirketin güncel tarifesini doğrula.
+  </div>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Nereden</th><th>Önerilen rota</th></tr></thead>
+    <tbody>
+      <tr><td>İstanbul</td><td>Karayoluyla Erdek, sonra feribot (yaz: İDO deniz otobüsü, araçsız)</td></tr>
+      <tr><td>Bursa</td><td>Karayoluyla Erdek, sonra feribot</td></tr>
+      <tr><td>Tekirdağ / Trakya</td><td>Tekirdağ Ceyport'tan feribot (sınırlı gün) ya da Erdek</td></tr>
+      <tr><td>Ankara, Eskişehir, İzmir</td><td>Karayoluyla Erdek, sonra feribot</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="erdek">Erdek–Avşa: ana hat</h2>
+  <p>Avşa'ya araçlı ulaşımın ana hattı Erdek'ten geçiyor. Marmara RoRo ve GESTAŞ bu hatta araba feribotuyla sefer düzenliyor. Yolculuk süresi kaynaklara göre yaklaşık 1 saat ile 2 saat arasında değişiyor; bu fark, gemiye ve uğramalı sefer olup olmamasına bağlı olabiliyor. Gün içinde birkaç sefer var; saatler mevsime göre değiştiği için güncel tarife için <a href="/feribot-saatleri/">Avşa feribot saatleri</a> sayfasına bakmak en doğrusu.</p>
+  <p>Erdek'te iskeleye kalkıştan en az bir saat önce varmak, özellikle yaz aylarında araç kuyruğuna takılmamak için iyi bir fikir.</p>
+
+  <h2 id="istanbul">İstanbul'dan Avşa'ya</h2>
+  <p>İstanbul çıkışlı tüm seçenekleri (İDO, Erdek, Tekirdağ) tek sayfada karşılaştırdık: <a href="/istanbuldan-avsaya/">İstanbul'dan Avşa'ya nasıl gidilir?</a></p>
+  <h3>Erdek üzerinden (en yaygın)</h3>
+  <p>İstanbul'dan Erdek'e karayolu normal şartlarda yaklaşık 3 saat sürüyor. Osmangazi Köprüsü üzerinden ya da Yalova'ya feribotla geçip Bandırma yönünden gidilebiliyor. Trafik, bayram ve hafta sonu yoğunluğuna göre süre uzayabilir. Erdek'e varınca feribota araçlı ya da yaya biniyorsun.</p>
+  <h3>Tekirdağ üzerinden (Avrupa yakası)</h3>
+  <p>Avrupa yakasından gelenler için Tekirdağ Ceyport–Avşa seferi var. İstanbul'dan Tekirdağ Ceyport'a bir kaynakta yaklaşık 1,5-2 saat deniyor. Seferler yalnızca belirli günlerde (cuma ve pazar akşamları) yapılıyor ve yolculuk yaklaşık 3 saat sürüyor. Bu gün ve saatler değişebileceğinden önceden teyit gerekir.</p>
+  <h3>İDO deniz otobüsü (yaz sezonunda)</h3>
+  <p>İDO'nun Avcılar–Avşa deniz otobüsü yalnızca yaz sezonunda çalışıyor ve araç taşımıyor. 2026 yaz tarifesi 29 Haziran–13 Eylül arasındaydı; yolculuk yaklaşık 2 saat 55 dakika sürüyor, fiyatlar dinamik. Gelecek sezon için İDO'nun duyurusunu beklemek gerekiyor. İstanbul'dan Avşa'ya direkt araçlı feribot yok.</p>
+
+  <h2 id="bursa">Bursa'dan Avşa'ya</h2>
+  <p>Bursa'dan gelenlerin yolu Erdek üzerinden. Önce karayoluyla Erdek'e gidilir, sonra Erdek–Avşa feribotuna binilir. Arabasız gelenler için Bursa'dan Erdek'e otobüs bileti alınabiliyor; Erdek'e vardıktan sonra iskele merkeze yakın olduğu için feribota geçmek kolay. Bursa–Erdek yolculuğu normal şartlarda yaklaşık 1,5-2 saat sürüyor; bayram ve yaz hafta sonlarında trafik süreyi uzatabilir.</p>
+
+  <h2 id="tekirdag">Tekirdağ'dan Avşa'ya</h2>
+  <p>Marmara RoRo, Tekirdağ Ceyport'tan Avşa'ya cuma ve pazar günleri 17:00'de kalkan sefer düzenliyor (varış yaklaşık 20:00); dönüş seferi 19:00. Hafta içi ya da başka günlerde Tekirdağ'dan gelmek istiyorsan Erdek üzerinden planlamak gerekebilir. Bu seferler hafta sonu kaçamağı için pratik; ancak sınırlı gün olduğu için bilet planını erkenden yapmak iyi olur.</p>
+
+  <h2 id="diger">Ankara, Eskişehir, İzmir ve diğer şehirlerden</h2>
+  <p>Eskişehir, Bursa ve İzmir gibi illerden gelenler için kaynaklar, önce Erdek iskelesine gidip oradaki feribotlardan birine binmeyi öneriyor. Şehre göre karayolu süresi değişiyor; yola çıkmadan önce güncel rota süresini navigasyondan kontrol etmek en doğrusu.</p>
+
+  <h2 id="arac-yaya">Araçlı mı, araçsız mı?</h2>
+  <p><strong>Araçla geçiş</strong> adada özgürlük sağlıyor ama maliyeti artırıyor: otomobil ücreti yolcu ücretinin birkaç katı. Ayrıca adada LPG satışı olmadığı, yalnızca benzin ve dizel bulunduğu için LPG'li araçlarla gelenlerin Erdek'te doldurması gerekiyor.</p>
+  <p><strong>Araçsız (yaya) geçiş</strong> ise daha ekonomik. Adada merkezden Yiğitler, Altınkum, Çınar Koyu, Mavi Koy ve Kumtur'a minibüs kalkıyor; motosiklet, bisiklet ve ATV kiralamak da mümkün. Kısa bir hafta sonu için çoğu kişi araçsız gelmeyi tercih ediyor. Fiyat farkını görmek için <a href="/bilet-fiyatlari/">feribot bilet fiyatları</a> sayfamıza bakabilirsin.</p>
+
+  <div class="not-prose my-8 grid grid-cols-2 gap-3">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="bilet">Bilet nasıl alınır?</h2>
+  <ol class="list-decimal space-y-1 pl-6">
+    <li>Gidiş ve dönüş tarihini belirle; dönüş seferinin saatini mutlaka kontrol et.</li>
+    <li>Şirketin güncel tarifesine bak: Marmara RoRo (marmararoro.com, bilet.erdekroro.com, +90 541 960 99 33) veya GESTAŞ (online.gdu.com.tr, 444 0 752).</li>
+    <li>Yolcu mu, araçlı mı geçeceğini seç; araç sınıfı ücreti etkiler.</li>
+    <li>Yoğun dönemlerde online al: yaz cuma akşamı seferleri için 7-10 gün, bayramlarda 3-4 hafta önceden.</li>
+    <li>Gidiş-dönüş bilet düşün; özellikle yaz pazar günlerinde dönüş yoğunluğu yaşanıyor.</li>
+  </ol>
+  <p>İptal ve değişiklik kuralları şirkete göre farklı. Marmara RoRo'da 24 saat öncesine kadar iptalde tam iade, sonrasında yüzde 50 iade uygulanıyor; hava koşulları nedeniyle iptal edilen seferlerde ücretsiz değişiklik veya iade yapılıyor.</p>
+
+  <h2 id="ipuclari">Yolculuk ipuçları</h2>
+  <ul>
+    <li><strong>Erken var:</strong> Araçla gidiyorsan iskeleye kalkıştan en az bir saat önce ulaş.</li>
+    <li><strong>Hava durumuna bak:</strong> Fırtına ve lodos seferleri iptal edebiliyor; yola çıkmadan şirketi ara.</li>
+    <li><strong>Dönüşü garantile:</strong> Yaz pazar akşamları dönüş seferleri yoğun; gidiş-dönüşü birlikte planla.</li>
+    <li><strong>Konaklamayı sefere göre ayarla:</strong> Gece geç gelen feribot için tesisine haber ver.</li>
+    <li><strong>Nakit bulundur:</strong> Küçük işletmelerde kart çalışmayabilir.</li>
+  </ul>
+  <p>Adaya vardığında görülecekleri <a href="/avsa-adasi/">Avşa Adası rehberinde</a>, plajları <a href="/plajlar/">plajlar</a> sayfasında, gezi rotalarını <a href="/gezilecek-yerler/">gezilecek yerler</a> sayfasında bulabilirsin.</p>
+
+  <div id="konaklama"></div>
+  <StayLinks items={near} title="İskeleye yakın konaklama" />
+  <p>Tüm seçenekler için <a href="/#konaklama">Avşa otelleri, apartları ve pansiyonları</a> listemize, müstakil ev arıyorsan <a href="/kiralik-evler/">Avşa kiralık evler</a> sayfasına bakabilirsin.</p>
+</InfoLayout>

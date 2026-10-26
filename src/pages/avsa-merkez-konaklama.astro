@@ -1,0 +1,135 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import AreaStayList from "../components/AreaStayList.astro";
+import { stays, defaultSchemaType } from "../data/stays";
+
+const title = "Avşa Merkez Otel, Apart ve Pansiyon | avsaadasi.net";
+const description =
+  "Avşa Adası merkezde nerede kalınır? İskeleye ve Barlar Sokağı'na yakın otel, apart ve pansiyonlar, merkez sahili, gürültü ve rezervasyon ipuçları.";
+
+const origin = "https://www.avsaadasi.net";
+const merkez = stays.filter((s) => s.area === "Merkez");
+const yakin = stays.filter(
+  (s) => s.area !== "Merkez" && s.area !== "Yiğitler" && s.nearby.some((n) => /İskele/.test(n.label) && /(\d+\s*(m\b|dk)|yürüme)/i.test(n.distance)),
+);
+const degirmen = stays.filter((s) => s.area === "Değirmenardı");
+const hepsi = [...merkez, ...yakin, ...degirmen];
+const byType = (arr: typeof stays, t: string) => arr.filter((s) => s.type === t).length;
+
+const galeri = [
+  { src: "/img/merkez-konaklama/avsa-merkez-sahil-kus-bakisi-1.webp", w: 1024, h: 600, alt: "Avşa merkez sahili ve çarşı, kuş bakışı", cap: "Merkez sahili, havadan", href: "/konaklama/avsa-artemis-otel/", by: "Avşa Artemis Otel" },
+  { src: "/img/merkez-konaklama/avsa-merkez-sahil-yolu-manzara-1.webp", w: 600, h: 500, alt: "Avşa merkezde sahil yolu, plaj ve çarşı manzarası", cap: "Sahil yolu ve plaj", href: "/konaklama/cankiri-otel/", by: "Çankırı Otel" },
+  { src: "/img/merkez-konaklama/avsa-merkez-balkondan-deniz-iskele-1.webp", w: 640, h: 428, alt: "Avşa merkezde balkondan deniz, plaj ve iskele manzarası", cap: "Balkondan deniz ve iskele", href: "/konaklama/ayisigi-apart/", by: "Ayışığı Apart" },
+  { src: "/img/merkez-konaklama/avsa-merkez-havuzlu-otel-1.webp", w: 960, h: 640, alt: "Avşa merkezde havuz ve su kaydıraklı otel", cap: "Havuzlu otel", href: "/konaklama/ozkaptan-aqua-otel/", by: "Özkaptan Aqua Otel" },
+];
+
+const toc = [
+  { id: "ozet", label: "Merkez kısaca" },
+  { id: "tesisler", label: "Merkezdeki tesisler" },
+  { id: "iskele-yakin", label: "İskeleye yakın diğer tesisler" },
+  { id: "plaj", label: "Merkez sahili ve plajlar" },
+  { id: "gece", label: "Barlar Sokağı ve gürültü" },
+  { id: "kimler", label: "Kimler için uygun?" },
+  { id: "secim", label: "Merkez mi, Yiğitler mi?" },
+  { id: "ipuclari", label: "Rezervasyon ipuçları" },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa merkezdeki ve iskeleye yakın konaklama tesisleri",
+  numberOfItems: hepsi.length,
+  itemListElement: hepsi.map((s, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `${origin}/konaklama/${s.slug}/`,
+    item: {
+      "@type": s.schemaType ?? defaultSchemaType[s.type],
+      "@id": `${origin}/konaklama/${s.slug}/#tesis`,
+      name: s.name,
+      url: `${origin}/konaklama/${s.slug}/`,
+      address: { "@type": "PostalAddress", addressLocality: "Avşa Adası", addressRegion: "Balıkesir", addressCountry: "TR" },
+    },
+  })),
+};
+
+const faq = [
+  { q: "Avşa'da merkezde mi kalmalıyım?", a: "İskeleye yürüyerek ulaşmak, Barlar Sokağı'na yakın olmak ve minibüse bağımlı olmamak istiyorsan merkez pratik. Sessizlik ve plaj odaklı tatil için Yiğitler daha uygun." },
+  { q: "Merkezde hangi tesisler var?", a: `Sitemizde merkez bölgesinde ${merkez.length} tesis listeleniyor; ayrıca iskeleye yakın ${yakin.length + degirmen.length} tesis daha var.` },
+  { q: "Merkezden iskeleye yürünür mü?", a: "Evet, merkezdeki tesislerin çoğu iskeleye yürüme mesafesinde; örneğin Ados Otel yaklaşık 100 m, Alperen Apart yaklaşık 3 dk. Her tesisin mesafesi kendi sayfasında yazıyor." },
+  { q: "Barlar Sokağı'na yakın kalırsam gürültü olur mu?", a: "Sokağa çok yakın tesislerde yaz akşamlarında müzik duyulabilir. Sessiz bir gece istiyorsan sokaktan daha uzak tesisleri ya da Yiğitler'i tercih edebilirsin." },
+  { q: "Merkez sahilinde denize girilir mi?", a: "Evet, yaklaşık 3 km uzunluğundaki merkez sahilinde denize girilebiliyor; Özkaptan Aqua Otel gibi tesisler sahile çok yakın." },
+  { q: "Merkezden plajlara nasıl gidilir?", a: "Mavi Koy minibüsle yaklaşık 5 dk, Altınkum yaklaşık 10 dk, Çınar Koyu yaklaşık 10-15 dk. Minibüs saatleri sezona göre değişir; dönüş saatini sor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Merkez Konaklama Rehberi"
+  intro="İskeleye ve Barlar Sokağı'na yakın merkezde nerede kalınır? Feribot iskelesinin bulunduğu Avşa merkezde, Balıkesir'in Marmara ilçesine bağlı bu adada tatil için bölgenin karakteri, tesisler, plajlara uzaklık, gürültü ve kimler için uygun olduğu."
+  crumb="Merkez Konaklama"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld]}
+>
+  <h2 id="ozet">Merkez kısaca</h2>
+  <p>Avşa'nın merkezi, feribotla gelenlerin ilk karşılaştığı iskele çevresi: çarşı, kafeler, restoranlar, merkez sahili ve akşamları hareketlenen Barlar Sokağı burada. Ada küçük olduğu için merkezden çoğu noktaya kısa sürede ulaşılıyor; Mavi Koy yaklaşık 5, Altınkum yaklaşık 10, Çınar Koyu yaklaşık 10-15 dakika. Merkezde kalmak, minibüs saatlerine bağımlı olmadan iskele, yemek ve eğlenceye yürüyerek ulaşmak demek.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Mesafeler tesislerin kendi sayfalarındaki bilgilere dayanır ve yaklaşıktır; fiyatlar ve müsaitlik sezona göre değişir (son kontrol: 24 Ekim 2026). Güncel bilgi için tesisle iletişime geç.
+  </div>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Özellik</th><th>Merkez</th></tr></thead>
+    <tbody>
+      <tr><td>Konum</td><td>İskele, çarşı ve sahil çevresi</td></tr>
+      <tr><td>Eğlence</td><td>Barlar Sokağı yürüme mesafesinde (tesise göre)</td></tr>
+      <tr><td>Plaj</td><td>Merkez sahili yakın; diğer koylar minibüsle 5-15 dk</td></tr>
+      <tr><td>Atmosfer</td><td>Canlı, hareketli</td></tr>
+      <tr><td>Tesis sayısı (sitemizde)</td><td>{merkez.length} merkez + {yakin.length + degirmen.length} iskeleye yakın</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap} · <a class="underline" href={g.href}>{g.by}</a></figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <AreaStayList id="tesisler" items={merkez} title="Merkezdeki konaklama tesisleri" />
+  <p class="mt-4 text-sm text-slate-600">Merkezde {byType(merkez, "otel")} otel, {byType(merkez, "apart")} apart ve {byType(merkez, "pansiyon")} pansiyon listeleniyor. Liste, tesis verilerimizden otomatik oluşur.</p>
+
+  <AreaStayList id="iskele-yakin" items={[...yakin, ...degirmen]} title="İskeleye ve merkeze yakın diğer tesisler" />
+  <p class="mt-4 text-sm text-slate-600">Bu tesislerin bölgesi sitemizde "Avşa Adası" ya da Değirmenardı olarak geçiyor; iskele ve merkeze uzaklıkları kendi sayfalarında belirtiliyor.</p>
+
+  <h2 id="plaj">Merkez sahili ve plajlar</h2>
+  <p>Merkez sahili yaklaşık 3 km uzunluğunda ve denize girilebiliyor; merkezde kalıyorsan ilk plaj durağın burası. Özkaptan Aqua Otel sayfasında sahile "50 adım", Ayışığı Apart ve Şebnem Motel'de denize "sıfır" mesafe yazıyor. Daha farklı koylar için merkezden minibüs ya da motosiklet yeterli: restoran ve kafelere yakın <a href="/plajlar/#mavi-koy">Mavi Koy</a> yaklaşık 5, <a href="/altinkum-plaji/">Altınkum</a> yaklaşık 10, <a href="/cinar-koyu/">Çınar Koyu</a> yaklaşık 10-15 dakika. Tüm koylar için <a href="/plajlar/">plajlar rehberi</a>ne bak. Günü yeme-içmeyle tamamlamak için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a> yazımız var.</p>
+
+  <h2 id="gece">Barlar Sokağı ve gürültü</h2>
+  <p>Merkezin en belirgin özelliği <a href="/barlar-sokagi/">Barlar Sokağı</a>. Mekânların çoğunda müzik ve etkinlikler yaz akşamlarında yaklaşık 21:00'de başlayıp 02:00 civarına kadar sürüyor. Tesis sayfalarımızda sokağa mesafe belirtiliyor; örneğin Nehir Deluxe Otel yaklaşık 50 m, Alperen Apart yaklaşık 100 m, Çankırı Otel yaklaşık 500 m, Artemis Otel yaklaşık 600 m. Sokağa çok yakın kalırsan akşam müziğini duyabilirsin; sessiz uyku istiyorsan sokaktan daha uzak bir tesis ya da <a href="/yigitler-konaklama/">Yiğitler</a> daha rahat olur. Sezon dışında birçok mekân kapalı olabilir. Gece planı için <a href="/gece-hayati/">Avşa gece hayatı</a> rehberine bak.</p>
+
+  <h2 id="kimler">Merkez kimler için uygun?</h2>
+  <ul>
+    <li><strong>Arkadaş grupları ve çiftler:</strong> Akşam eğlencesine yürüyerek ulaşmak isteyenler.</li>
+    <li><strong>Arabasız gelenler:</strong> İskele, çarşı ve restoranlar yürüme mesafesinde; minibüse mecbur kalmazsın.</li>
+    <li><strong>Hafta sonu kaçamağı:</strong> Kısa sürede çok şey görmek isteyenler; <a href="/avsa-adasi-gezi-rotasi/">gezi rotası</a> merkezden başlıyor.</li>
+    <li><strong>Feribot saatine bağlı gelenler:</strong> İskeleye yakınlık, geç varış ve erken çıkışı kolaylaştırır.</li>
+  </ul>
+  <p>Çocuklu aileler akşam erken saatlerde sahil ve restoranların tadını çıkarabilir; geç saatte müziğe karşı sakin bir tesis seçmek iyi olur.</p>
+
+  <h2 id="secim">Merkez mi, Yiğitler mi?</h2>
+  <p>Merkezde kalmak iskele, eğlence ve ulaşım rahatlığı sağlar; <a href="/yigitler-konaklama/">Yiğitler</a> ise Altınkum, Karadut ve Kadınlar Plajı'na yakınlığı ve köy sakinliğiyle öne çıkar. İki bölge birbirine araçla 5-8 dakika. Planın karışıksa ilk gece merkezde, sonra plaja yakın bir tesiste kalmak da mümkün. Adaya nasıl geleceğini planlamak için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a>, <a href="/istanbuldan-avsaya/">İstanbul'dan Avşa'ya</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına bak.</p>
+
+  <h2 id="ipuclari">Rezervasyon ipuçları</h2>
+  <ul>
+    <li><strong>Erken rezervasyon:</strong> Yaz hafta sonlarında merkezdeki tesisler hızla doluyor.</li>
+    <li><strong>Sessizlik talebi:</strong> Sokaktan uzak oda ya da üst kat isteyebilirsin; tesise sor.</li>
+    <li><strong>Mesafeleri doğrula:</strong> İskele ve Barlar Sokağı mesafelerini tesis sayfasında kontrol et.</li>
+    <li><strong>Fiyat:</strong> Fiyatlar sezona göre değişir; tesis sayfasındaki WhatsApp ve telefondan sor.</li>
+  </ul>
+  <p>Tür tür seçenekler için <a href="/avsa-otelleri/">Avşa otelleri</a>, <a href="/avsa-pansiyonlari/">pansiyonları</a>, <a href="/avsa-apartlari/">apartları</a> ve <a href="/kiralik-evler/">kiralık evleri</a> inceleyebilirsin.</p>
+</InfoLayout>

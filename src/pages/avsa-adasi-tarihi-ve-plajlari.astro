@@ -1,0 +1,154 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Logo from "../components/Logo.astro";
+import Header from "../components/Header.astro";
+
+const title = "Avşa Adası Tarihi ve Plajları | avsaadasi.net";
+const description =
+  "Avşa Adası'nın Antik Çağ'dan bugüne tarihi ve Altınkum, Çınar Koyu, Mavi Koy gibi plajları. Avşa'da hafta sonu kaçamağı için ipuçları.";
+
+const galeri = [
+  { src: "/img/tarih/eski-avsa-sahil-balikci-tekneleri-1.webp", w: 460, h: 316, alt: "Eski Avşa Adası sahilinde kıyıya çekilmiş balıkçı tekneleri, tarihi siyah-beyaz fotoğraf", cap: "Eski Avşa'da sahil ve balıkçı tekneleri" },
+  { src: "/img/tarih/eski-avsa-tarihi-yapi-1.webp", w: 460, h: 316, alt: "Eski Avşa Adası'ndan sütunlu girişi olan tarihi bir yapı, siyah-beyaz fotoğraf", cap: "Eski bir Avşa yapısı" },
+  { src: "/img/tarih/avsa-tarihi-eski-harita-afisia-1.webp", w: 600, h: 480, alt: "Avşa Adası'nın eski adı Afisia'nın geçtiği Marmara Adaları tarihi haritası", cap: "Marmara Adaları eski haritası: Avşa, Afisia adıyla" },
+];
+
+const toc = [
+  { id: "tarih", label: "Avşa Adası'nın Tarihi" },
+  { id: "plajlar", label: "Avşa Adası Plajları ve Koyları" },
+  { id: "ipuclari", label: "Plaj Gezisi İçin Pratik İpuçları" },
+  { id: "sonuc", label: "Sonuç" },
+];
+
+const origin = Astro.site ?? new URL("https://www.avsaadasi.net"); // astro.config.mjs içindeki `site` kullanılır
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Avşa Adası'nın Tarihi ve Plajları",
+  description,
+  inLanguage: "tr",
+  datePublished: "2026-10-22",
+  mainEntityOfPage: new URL(Astro.url.pathname, origin).href,
+  publisher: { "@type": "Organization", name: "avsaadasi.net" },
+};
+
+const h2 = "mt-12 font-display text-2xl font-bold text-deniz-900 md:text-3xl scroll-mt-24";
+const h3 = "mt-8 text-xl font-semibold text-deniz-900";
+const p = "mt-4 leading-relaxed";
+---
+
+<Layout title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <Header />
+
+  <main class="mx-auto max-w-3xl px-5 py-10">
+    <nav aria-label="breadcrumb" class="mb-4 text-sm text-slate-500">
+      <a href="/" class="hover:underline">Ana sayfa</a> /
+      <span class="text-slate-700">Avşa Adası Tarihi ve Plajları</span>
+    </nav>
+
+    <article>
+      <h1 class="font-display text-3xl font-bold leading-tight text-deniz-900 md:text-5xl">
+        Avşa Adası'nın Tarihi ve Plajları: Marmara'nın Huzurlu Köşesi
+      </h1>
+
+      <p class="mt-6 text-lg leading-relaxed">
+        Marmara Denizi'nde, İstanbul'a deniz yoluyla birkaç saat uzaklıkta yer alan Avşa Adası, hem köklü bir geçmişe hem de birbirinden güzel plajlara sahip. Kalabalık tatil beldelerinin aksine sakin bir ritimle akan ada, hafta sonu kaçamağı arayan çiftler ve aileler için ideal. Bu yazıda Avşa Adası'nın tarihini, en sevilen plajlarını ve adaya gitmeden önce işine yarayacak ipuçlarını bulacaksın.
+      </p>
+
+      <!-- İçindekiler -->
+      <nav aria-label="İçindekiler" class="mt-8 rounded-2xl border border-kum-100 bg-white p-5">
+        <p class="font-semibold text-deniz-900">İçindekiler</p>
+        <ul class="mt-3 space-y-2 text-sm">
+          {toc.map((t) => (
+            <li><a href={`#${t.id}`} class="text-deniz-600 hover:underline">{t.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Tarih -->
+      <h2 id="tarih" class={h2}>Avşa Adası'nın Tarihi</h2>
+      <p class={p}>
+        Avşa'nın geçmişi Antik Çağ'a kadar uzanıyor. Aphousia adıyla tarih sahnesine çıkan ada, Roma'dan Bizans'a, Osmanlı'dan mübadele dönemine kadar her dönemde iz bırakmış. Bu uzun hikâyenin en canlı tanıkları, adanın taş evleri ve eski yapıları.
+      </p>
+      <p class={p}>
+        Adada uzun yıllar Rum nüfus yaşadı. Mübadele sonrasında Rumlar Yunanistan'a gönderildi ve ada tamamen Türkleşti. O dönemden kalan miras bugün de görülebiliyor: Yiğitler Köyü tarihi Rum yapılarıyla dikkat çekiyor, adanın batı kıyısında ise Bizans dönemine ait bir manastırın kalıntıları ziyaretçileri bekliyor.
+      </p>
+      <p class={p}>
+        Adın hikâyesi de ilginç. Cumhuriyet döneminde "Türkeli" olarak anılan ada, 1991'de yeniden Avşa adını aldı ve bugün Avşa (Merkez) ve Yiğitler olmak üzere iki mahalleden oluşuyor. Bu yüzden eski kaynaklarda ya da yaşlıların anlattıklarında Türkeli adını duyabilirsin.
+      </p>
+      <p class={p}>
+        Avşa'nın bir diğer kimliği bağcılık. Ada yüzyıllardır üzüm bağlarıyla biliniyor; "Ada Karası" üzümünden yapılan şaraplar Büyülübağ ve Bortaçina gibi şarap fabrikalarında tadılabiliyor. Turizm ise adaya çok daha sonra geldi: 1960'lı yıllarda küçük pansiyonlarla başladı. Bu yüzden Avşa'da bugün de büyük kompleksler yerine küçük oteller, apart daireler ve pansiyonlar ön planda. Konaklama seçeneklerine göz atmak istersen <a href="/#konaklama" class="font-medium text-deniz-600 underline">otel, pansiyon ve apart sayfalarımıza</a> bakabilirsin.
+      </p>
+
+      <div class="not-prose my-6 grid grid-cols-2 gap-3">
+        <figure class="overflow-hidden rounded-xl bg-slate-100">
+          <img src={galeri[0].src} alt={galeri[0].alt} width={galeri[0].w} height={galeri[0].h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+          <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[0].cap}</figcaption>
+        </figure>
+        <figure class="overflow-hidden rounded-xl bg-slate-100">
+          <img src={galeri[1].src} alt={galeri[1].alt} width={galeri[1].w} height={galeri[1].h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+          <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[1].cap}</figcaption>
+        </figure>
+        <figure class="col-span-2 overflow-hidden rounded-xl bg-slate-100">
+          <img src={galeri[2].src} alt={galeri[2].alt} width={galeri[2].w} height={galeri[2].h} loading="lazy" decoding="async" class="mx-auto max-h-[28rem] w-auto object-contain" />
+          <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[2].cap}</figcaption>
+        </figure>
+      </div>
+
+      <!-- Plajlar -->
+      <h2 id="plajlar" class={h2}>Avşa Adası Plajları ve Koyları</h2>
+      <p class={p}>
+        Avşa, ince kumlu plajları ve berrak deniziyle ünlü. Merkez sahil yaklaşık 3 km uzunluğunda ve denize girmeye uygun. Sezonda hareketli olan bu bölgenin dışında, ada çevresinde sakin koylar da var. En çok sevilenler şunlar:
+      </p>
+
+      <h3 class={h3}>Altınkum Plajı</h3>
+      <p class={p}>
+        Adını altın rengi kumlarından alan Altınkum, merkeze yakın konumuyla adanın en çok tercih edilen plajlarından biri. Yürüyerek ya da minibüsle kolayca ulaşabilirsin.
+      </p>
+
+      <h3 class={h3}>Çınar Koyu</h3>
+      <p class={p}>
+        İncecik kumu ve sığ deniziyle özellikle çocuklu ailelerin gözdesi olan Çınar Koyu, merkeze yaklaşık 10 dakika uzaklıkta. Çocuklarla güvenle denize girebileceğin bir yer arıyorsan ilk tercihin bu olabilir.
+      </p>
+
+      <h3 class={h3}>Mavi Koy</h3>
+      <p class={p}>
+        Adanın kuzeyinde yer alan Mavi Koy, denizinin temizliği ve çevresinin sakinliğiyle dikkat çekiyor ve ada içinde ulaşımı en kolay yerlerden biri. Görüş mesafesinin yüksek olması nedeniyle dalış meraklıları da burayı seviyor.
+      </p>
+
+      <h3 class={h3}>Karadut ve Tavşanlı Koyu</h3>
+      <p class={p}>
+        Kalabalıktan uzak, doğal bir köşe arıyorsan bu iki koya bak. Tavşanlı Koyu adını karşısındaki küçük adacıktan alıyor. Gün batımında sessizce oturmak için güzel noktalar.
+      </p>
+
+      <h3 class={h3}>Manastır Koyu ve Kumtur</h3>
+      <p class={p}>
+        Manastır Koyu hem denize girmek hem de doğa yürüyüşleri yapmak için uygun. Tarih ve plajı aynı güne sığdırmak isteyenler için ideal. Daha da sessiz bir yer isteyenler Kumtur'a gidiyor: adanın en sakin koylarından biri olan Kumtur'a minibüsle yaklaşık 20 dakikada ulaşılıyor.
+      </p>
+
+      <!-- İpuçları -->
+      <h2 id="ipuclari" class={h2}>Plaj Gezisi İçin Pratik İpuçları</h2>
+      <p class={p}>
+        Ada içinde ulaşım kolay. Yaz sezonunda yarım saatte bir kalkan minibüsler Yiğitler Köyü, Çınar Koyu ve Mavi Koy gibi bölgelere gidiyor. Yürüyüş, bisiklet ve elektrikli scooter ile de ada rahatça gezilebiliyor. Sezonda merkez plajlar kalabalıklaşabileceği için sabah erken saatleri ya da daha sakin koyları tercih etmeni öneririz. Yanına güneş kremi, şapka ve su almayı unutma.
+      </p>
+
+      <!-- Sonuç -->
+      <h2 id="sonuc" class={h2}>Sonuç</h2>
+      <p class={p}>
+        Avşa Adası, bir günde hem tarihi gezip hem de plajda dinlenebileceğin nadir yerlerden. Sabah Yiğitler Köyü'nde eski Rum evlerinin arasında yürüyüp öğleden sonra Çınar Koyu'nda denize girebilir, akşam da şarap tadımıyla günü kapatabilirsin.
+      </p>
+
+      <div class="mt-10 rounded-3xl bg-gradient-to-br from-deniz-600 to-deniz-900 p-8 text-center text-white">
+        <p class="font-display text-2xl font-bold">Hafta sonu planını yap</p>
+        <p class="mt-2 text-white">Denize yakın otel, pansiyon ve apart seçeneklerimize göz at.</p>
+        <a href="/#konaklama" class="mt-5 inline-block rounded-full bg-white px-7 py-3 font-semibold text-deniz-900 transition hover:scale-105">Konaklamaları gör</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mt-8 border-t border-kum-100 bg-white py-8 text-center text-sm text-slate-500">
+    © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.
+  </footer>
+</Layout>

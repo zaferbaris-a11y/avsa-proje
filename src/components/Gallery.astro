@@ -1,0 +1,160 @@
+---
+// Fotoğraf galerisi + tam ekran büyütme (lightbox). Kullanım: <Gallery images={stay.images} name={stay.name} gradient={stay.gradient} />
+interface Props {
+  images: string[];
+  name: string;
+  gradient: string; // fotoğraf yokken gösterilen Tailwind gradyanı
+}
+const { images, name, gradient } = Astro.props;
+
+const count = images.length;
+const extra = Math.max(0, count - 5); // mozaikte gösterilmeyen fotoğraf sayısı
+const mosaic = count >= 5;
+
+const btn =
+  "group relative block overflow-hidden rounded-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-deniz-500";
+const imgCls = "absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105";
+const nav =
+  "absolute top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-white/15 text-3xl leading-none text-white backdrop-blur hover:bg-white/30";
+---
+
+<section data-gallery data-images={JSON.stringify(images)} data-name={name} aria-label={`${name} fotoğraf galerisi`}>
+  {/* Fotoğraf yoksa: gradyan yer tutucu */}
+  {count === 0 && (
+    <div class="grid gap-3 md:grid-cols-4 md:grid-rows-2" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <div class:list={["rounded-2xl bg-gradient-to-br", gradient, i === 0 ? "h-72 md:col-span-2 md:row-span-2 md:h-auto" : "h-36"]}></div>
+      ))}
+    </div>
+  )}
+
+  {/* 5 ve üzeri fotoğraf: mozaik */}
+  {mosaic && (
+    <div class="grid gap-3 md:grid-cols-4 md:grid-rows-2">
+      {images.slice(0, 5).map((src, i) => (
+        <button
+          type="button"
+          data-index={i}
+          aria-label={`${name} fotoğraf ${i + 1}, büyüt`}
+          class:list={[btn, i === 0 ? "h-72 md:col-span-2 md:row-span-2 md:h-auto" : "h-36"]}
+        >
+          <img
+            src={src}
+            alt={`${name} fotoğraf ${i + 1}`}
+            width="1200"
+            height="800"
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchpriority={i === 0 ? "high" : "auto"}
+            decoding="async"
+            class={imgCls}
+          />
+          {i === 4 && extra > 0 && (
+            <span class="absolute inset-0 flex items-center justify-center bg-deniz-900/60 text-lg font-semibold text-white">
+              +{extra} fotoğraf
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  )}
+
+  {/* 1-4 fotoğraf: büyük görsel + alt sırada küçükler */}
+  {count > 0 && !mosaic && (
+    <div class="grid gap-3">
+      <button type="button" data-index={0} aria-label={`${name} fotoğraf 1, büyüt`} class:list={[btn, "h-64 md:h-96"]}>
+        <img src={images[0]} alt={`${name} fotoğraf 1`} width="1200" height="800" loading="eager" fetchpriority="high" decoding="async" class={imgCls} />
+      </button>
+      {count > 1 && (
+        <div class="grid gap-3" style={`grid-template-columns: repeat(${count - 1}, minmax(0, 1fr))`}>
+          {images.slice(1).map((src, j) => (
+            <button type="button" data-index={j + 1} aria-label={`${name} fotoğraf ${j + 2}, büyüt`} class:list={[btn, "h-28 md:h-44"]}>
+              <img src={src} alt={`${name} fotoğraf ${j + 2}`} width="1200" height="800" loading="lazy" decoding="async" class={imgCls} />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* Tam ekran büyütme penceresi */}
+  {count > 0 && (
+    <dialog class="m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-black/90" aria-label={`${name} fotoğrafları`}>
+      <div data-backdrop class="relative flex h-full w-full items-center justify-center p-4 md:p-12">
+        <button type="button" data-close class="absolute right-4 top-4 z-10 h-11 w-11 rounded-full bg-white/15 text-2xl leading-none text-white backdrop-blur hover:bg-white/30" aria-label="Kapat">×</button>
+        <button type="button" data-prev class:list={[nav, "left-3 md:left-6"]} aria-label="Önceki fotoğraf">‹</button>
+        <img data-lb-img alt="" class="max-h-full max-w-full rounded-xl object-contain" />
+        <button type="button" data-next class:list={[nav, "right-3 md:right-6"]} aria-label="Sonraki fotoğraf">›</button>
+        <p data-counter class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-4 py-1 text-sm text-white" aria-live="polite"></p>
+      </div>
+    </dialog>
+  )}
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-gallery]");
+  if (root) {
+    const images: string[] = JSON.parse(root.dataset.images ?? "[]");
+    const name = root.dataset.name ?? "";
+    const dialog = root.querySelector<HTMLDialogElement>("dialog");
+    const img = root.querySelector<HTMLImageElement>("[data-lb-img]");
+    const counter = root.querySelector<HTMLElement>("[data-counter]");
+    const prev = root.querySelector<HTMLElement>("[data-prev]");
+    const next = root.querySelector<HTMLElement>("[data-next]");
+
+    if (dialog && img && counter && images.length > 0) {
+      let index = 0;
+
+      const show = (i: number) => {
+        const n = images.length;
+        index = ((i % n) + n) % n;
+        img.src = images[index];
+        img.alt = `${name} fotoğraf ${index + 1}`;
+        counter.textContent = `${index + 1} / ${n}`;
+        // komşu fotoğrafları önceden yükle
+        [index + 1, index - 1].forEach((k) => {
+          const pre = new Image();
+          pre.src = images[((k % n) + n) % n];
+        });
+      };
+
+      const open = (i: number) => {
+        show(i);
+        dialog.showModal();
+        document.body.style.overflow = "hidden";
+      };
+
+      if (images.length < 2) {
+        prev?.setAttribute("hidden", "");
+        next?.setAttribute("hidden", "");
+      }
+
+      root.querySelectorAll<HTMLElement>("[data-index]").forEach((el) => {
+        el.addEventListener("click", () => open(Number(el.dataset.index)));
+      });
+      prev?.addEventListener("click", () => show(index - 1));
+      next?.addEventListener("click", () => show(index + 1));
+      root.querySelector("[data-close]")?.addEventListener("click", () => dialog.close());
+
+      // boş alana tıklayınca kapat
+      root.querySelector("[data-backdrop]")?.addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) dialog.close();
+      });
+
+      dialog.addEventListener("close", () => {
+        document.body.style.overflow = "";
+      });
+      dialog.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") show(index - 1);
+        if (e.key === "ArrowRight") show(index + 1);
+      });
+
+      // telefonda sağa/sola kaydırma
+      let startX = 0;
+      dialog.addEventListener("touchstart", (e) => { startX = e.changedTouches[0].clientX; }, { passive: true });
+      dialog.addEventListener("touchend", (e) => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+    }
+  }
+</script>

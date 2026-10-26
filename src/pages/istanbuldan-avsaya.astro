@@ -1,0 +1,140 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "İstanbul'dan Avşa'ya Nasıl Gidilir? | avsaadasi.net";
+const description =
+  "İstanbul'dan Avşa Adası'na ulaşım: İDO deniz otobüsü (Yenikapı, Bostancı, Avcılar), araçla Erdek veya Tekirdağ üzerinden gidiş, süreler, bilet ve ipuçları.";
+
+const galeri = [
+  { src: "/img/istanbuldan-avsaya/istanbul-avsa-deniz-otobusu-iskele-1.webp", w: 500, h: 333, alt: "İstanbul'dan Avşa Adası'na gelen deniz otobüsü ve yolcu gemisi iskelede", cap: "Avşa iskelesinde deniz otobüsü ve yolcu gemisi" },
+  { src: "/img/istanbuldan-avsaya/avsa-sahil-balikci-teknesi-1.webp", w: 500, h: 334, alt: "Avşa Adası sahili, plaj şemsiyeleri ve açıkta balıkçı teknesi", cap: "Varışta sizi bekleyen Avşa sahili" },
+];
+
+const toc = [
+  { id: "ozet", label: "Kısaca: hangi yol?" },
+  { id: "ido", label: "İDO deniz otobüsü" },
+  { id: "iskeleler", label: "Bostancı, Yenikapı, Ambarlı?" },
+  { id: "erdek", label: "Araçla Erdek üzerinden" },
+  { id: "tekirdag", label: "Tekirdağ üzerinden" },
+  { id: "karsilastirma", label: "Araçlı ve yaya farkı" },
+  { id: "bilet", label: "Bilet nasıl alınır?" },
+  { id: "ipuclari", label: "Pratik ipuçları" },
+  { id: "konaklama", label: "Vardıktan sonra" },
+];
+
+const faq = [
+  { q: "İstanbul'dan Avşa'ya direkt feribot var mı?", a: "İstanbul'dan yaya yolcular için İDO deniz otobüsü seferleri var (Yenikapı, Bostancı ve yaz aylarında Avcılar). Araçla gidecekler için İstanbul çıkışlı güvenilir bir direkt araçlı hat yok; araçlı yolcular Erdek ya da Tekirdağ'dan feribota biniyor." },
+  { q: "İstanbul'dan Avşa'ya kaç saatte gidilir?", a: "Yenikapı veya Bostancı'dan İDO ile kaynaklara göre yaklaşık 3,5-4 saat, Avcılar hattında yaklaşık 2-3 saat sürüyor. Araçla İstanbul'dan Erdek'e yaklaşık 3 saat, ardından Erdek-Avşa feribotu ek olarak yaklaşık 1-2 saat." },
+  { q: "Bostancı'dan Avşa'ya deniz otobüsü var mı?", a: "Kaynaklara göre İDO'nun Avşa seferleri Bostancı'dan da yapılıyor; sefer günleri sınırlı olabiliyor. Gitmeden önce ido.com.tr üzerinden tarihi doğrulamak gerekir." },
+  { q: "Ambarlı veya Bakırköy'den Avşa'ya sefer var mı?", a: "Ambarlı ve Bakırköy'den Avşa'ya düzenli bir yolcu seferi bulamadık. Avrupa yakasından gidenler için Yenikapı, Avcılar (yaz) ya da Tekirdağ üzerinden gitmek daha doğru." },
+  { q: "Arabamla Avşa'ya nasıl geçerim?", a: "En yaygın yol İstanbul'dan Erdek'e karayoluyla gidip Erdek-Avşa feribotuna binmek. Avrupa yakasındaysan Tekirdağ'dan da sefer var; günler ve saatler mevsime göre değişiyor." },
+  { q: "İDO bileti ne kadar?", a: "Kaynaklarda 2026 yaz-sonbahar dönemi için yaklaşık 1.270 TL ile 1.770 TL arasında fiyatlar görülüyor; fiyatlar dinamik ve erken alınan promosyon biletler daha ucuz. Güncel fiyat için İDO'nun sitesine bak." },
+  { q: "Bilet ne zaman alınmalı?", a: "Yaz hafta sonları ve bayramlarda en az 7-10 gün, bayramlarda 3-4 hafta önceden almak önerilir. Hafta içi daha rahat bilet bulunuyor." },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "İstanbul'dan Avşa Adası'na ulaşım seçenekleri",
+  itemListElement: [
+    { name: "İDO deniz otobüsü: Yenikapı / Bostancı - Avşa", text: "Yalnızca yolcu; yaklaşık 3,5-4 saat; nisan-kasım döneminde." },
+    { name: "İDO deniz otobüsü: Avcılar - Avşa", text: "Yalnızca yolcu; yaz sezonunda; Avrupa yakası için daha kısa süre." },
+    { name: "Karayolu + Erdek-Avşa feribotu", text: "İstanbul-Erdek yaklaşık 3 saat; Erdek-Avşa feribotu; araçlı ve yaya." },
+    { name: "Tekirdağ-Avşa feribotu", text: "Avrupa yakasından; sınırlı gün ve saat; araçlı ve yaya." },
+  ].map((r, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: { "@type": "Trip", name: r.name, description: r.text, touristType: "Tatilciler" },
+  })),
+};
+
+const near = stays.filter((s) => s.featured !== false).slice(0, 4).map((stay) => ({ stay, note: "Merkezde, iskeleye yakın" }));
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="İstanbul'dan Avşa'ya Nasıl Gidilir?"
+  intro="İDO deniz otobüsü, araçla Erdek ve Tekirdağ rotaları: süreler, araçlı ve yaya farkı, bilet alma adımları ve pratik ipuçları."
+  crumb="İstanbul'dan Avşa'ya"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld]}
+>
+  <h2 id="ozet">Kısaca: İstanbul'dan Avşa'ya hangi yol?</h2>
+  <p>İstanbul'dan Avşa Adası'na üç temel yol var: İDO deniz otobüsüyle doğrudan adaya, arabayla Erdek'e gidip feribota binmek ya da Avrupa yakasındaysan Tekirdağ'dan feribotla geçmek. Hangisinin sana uygun olduğunu belirleyen şey iki soru: arabanı adaya götürecek misin ve yolculuğa hangi mevsimde çıkıyorsun?</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Sefer günleri, saatleri ve süreler kaynaklarda birbirinden farklı çıkabiliyor ve her sezon değişiyor. Bu sayfa kamuya açık yayınlardan derlendi (son kontrol: 24 Ekim 2026). Yola çıkmadan önce şirketin güncel tarifesini mutlaka doğrula.
+  </div>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yol</th><th>Araç</th><th>Yaklaşık süre</th><th>Kime uygun?</th></tr></thead>
+    <tbody>
+      <tr><td>İDO Yenikapı / Bostancı - Avşa</td><td>Yok (yaya)</td><td>3,5-4 saat</td><td>Arabasız, direkt gitmek isteyenler</td></tr>
+      <tr><td>İDO Avcılar - Avşa (yaz)</td><td>Yok (yaya)</td><td>~2-3 saat</td><td>Avrupa yakasından yaz tatili</td></tr>
+      <tr><td>Karayolu + Erdek feribotu</td><td>Var</td><td>~3 saat yol + feribot</td><td>Araçla gelenler, her mevsim</td></tr>
+      <tr><td>Tekirdağ - Avşa</td><td>Var</td><td>Feribot ~3 saat (kaynaklara göre değişir)</td><td>Trakya ve Avrupa yakası, hafta sonu</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="ido">İDO deniz otobüsüyle İstanbul'dan Avşa'ya</h2>
+  <p>İstanbul'dan arabasız gidecekler için en doğrudan seçenek İDO'nun deniz otobüsü. Kaynaklara göre bu seferler yalnızca yolcu taşıyor; araç alınmıyor (bir kaynakta araçlı tarife görünse de diğerleri 2026'da araçlı sefer olmadığını yazıyor, bu yüzden araçlı planlarda İDO'ya güvenme).</p>
+  <h3>Yenikapı ve Bostancı hattı</h3>
+  <p>Yenikapı ve Bostancı'dan kalkan seferler kaynaklara göre nisan ile kasım arasında yapılıyor. Yolculuk yaklaşık 3,5 ila 4 saat sürüyor. Örnek olarak haziran tarifesinde Yenikapı'dan sabah saatlerinde (08:10 ile 09:40 arası) kalkış, Avşa'dan ise öğleden sonra (12:30 ile 15:30 arası) dönüş seferleri yayımlanmış. Sezon dışında seferler sınırlı günlere iniyor; sonbaharda yalnızca cuma gidiş, pazar dönüş gibi bir düzen görülebiliyor.</p>
+  <h3>Avcılar hattı</h3>
+  <p>Avrupa yakasındaki Avcılar'dan kalkan hat daha kısa; yolculuk kaynaklara göre yaklaşık 2 ile 3 saat arasında veriliyor. Bu hat yaz sezonuyla sınırlı. Hafta içi gün ortası, cumartesi akşamı ve pazar sabahı gibi farklı kalkış saatleri yayımlanmış; bu saatler her yıl değişiyor, o yüzden güncel tarife şart.</p>
+  <p>İDO fiyatları dinamik: erken alınan promosyon biletler ucuz, son dakika biletler pahalı. Kaynaklarda 2026 için yaklaşık 1.270 TL ile 1.770 TL arasında değerler görülüyor.</p>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="iskeleler">Bostancı, Yenikapı, Bakırköy, Ambarlı: hangi iskele?</h2>
+  <p>Bu iskeleler sık karıştırılıyor, o yüzden net yazalım. Avşa'ya İstanbul'dan yolcu seferi yapan iskeleler İDO'nun Yenikapı, Bostancı ve (yazın) Avcılar iskeleleri. Ambarlı ve Bakırköy'den Avşa'ya düzenli bir yolcu seferi bulamadık. Ambarlı daha çok yük ve araç limanı olarak biliniyor; Bakırköy'den kalkış beklemek yanıltıcı olur. Avrupa yakasında yaşıyorsan seçenekler Yenikapı, yaz için Avcılar ya da araçlıysan Tekirdağ.</p>
+  <p>Anadolu yakasından geliyorsan Bostancı en yakın nokta; yine de sefer günlerini önceden kontrol et, çünkü Bostancı seferleri Yenikapı kadar sık olmayabilir.</p>
+
+  <h2 id="erdek">Arabayla Erdek üzerinden</h2>
+  <p>Arabayla gelenler için ana yol İstanbul'dan Erdek'e karayolu, ardından Erdek-Avşa feribotu. İstanbul'dan Erdek'e yol normal şartlarda yaklaşık 3 saat sürüyor. Osmangazi Köprüsü ya da Yalova feribotuyla Marmara'nın güneyine geçip Bandırma ve Erdek yönüne devam ediliyor. Bayram ve yaz hafta sonlarında trafik süreyi belirgin biçimde uzatabilir.</p>
+  <p>Erdek'ten Avşa'ya feribot Marmara RoRo ve GESTAŞ tarafından işletiliyor; yolculuk kaynaklara göre yaklaşık 1 ile 2 saat arasında değişiyor. Güncel saatler için <a href="/feribot-saatleri/">feribot saatleri</a> sayfamıza bak. Kalkıştan en az bir saat önce iskelede olmak, yaz aylarında kuyrukta kalmamak için iyi bir plan.</p>
+  <p>Arabasız ama deniz otobüsü yerine karayolunu seçenler için de seçenek var: İstanbul'dan Bursa veya Bandırma yönüne otobüsle gidip oradan Erdek'e geçmek mümkün. Bu rota aktarma gerektirdiği için toplam süre uzar; ayrıntıları <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> rehberinde bulabilirsin.</p>
+
+  <h2 id="tekirdag">Tekirdağ üzerinden</h2>
+  <p>Avrupa yakasından gelenlerin Tekirdağ'a gitmesi mantıklı olabilir: İstanbul'dan Tekirdağ yaklaşık 160 km, TEM üzerinden yaklaşık 1,5-2 saat. Tekirdağ'dan Avşa'ya araçlı ve yaya feribot seferleri var. Sefer gün ve saatleri şirketlere ve mevsime göre değişiyor; kaynaklarda yolculuk süresi 2,5 ile 3,5 saat arasında veriliyor. Bazı seferler yalnızca cuma ve pazar gibi belirli günlerde yapılıyor, yani hafta sonu kaçamağı için uygun, hafta içi için çoğu zaman uygun değil. Erdek rotasıyla karşılaştırmak için <a href="/avsa-adasina-nasil-gidilir/#tekirdag">Tekirdağ rotası</a> bölümüne de bakabilirsin.</p>
+
+  <h2 id="karsilastirma">Araçlı ve yaya gidiş arasındaki fark</h2>
+  <p><strong>Yaya (arabasız) gidiş</strong> hem daha ucuz hem daha pratik. İDO'yla İstanbul'dan direkt gelebilir, adada ise minibüs, motosiklet, bisiklet ve ATV ile gezebilirsin. Avşa küçük bir ada; araçsız tatil çoğu kişi için yeterli.</p>
+  <p><strong>Araçlı gidiş</strong> bagaj, çocuk ve esneklik açısından rahat ama maliyetli: feribotta otomobil ücreti yolcu ücretinin birkaç katı. Adada LPG satışı da yok; LPG'li araçlarla gelenlerin Erdek'te doldurması gerekiyor. Güncel ücretler için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfamıza bak. Kısa hafta sonları için çoğu kişi arabayı Erdek'te bırakıp yaya geçiyor; otopark imkânını önceden sor.</p>
+
+  <h2 id="bilet">Bilet nasıl alınır?</h2>
+  <ol class="list-decimal space-y-1 pl-6">
+    <li>Gidiş ve dönüş tarihini belirle; dönüş saatini mutlaka kontrol et.</li>
+    <li>Deniz otobüsü için ido.com.tr, İDO mobil uygulaması veya iskele gişeleri; Erdek feribotu için Marmara RoRo ve GESTAŞ'ın online satış sayfaları.</li>
+    <li>Yolcu mu, araçlı mı olduğunu seç; İDO'da araç sınıfı seçeneği yoksa Erdek veya Tekirdağ rotasına yönel.</li>
+    <li>Yoğun dönemlerde en az 7-10 gün önceden al, bayramda 3-4 hafta önceden.</li>
+    <li>Gidiş-dönüşü birlikte planla; pazar akşamı dönüşler çok yoğun olabiliyor.</li>
+  </ol>
+  <p>Ayrıntılı tarifeler ve şirket iletişim bilgileri için <a href="/feribot-saatleri/">feribot saatleri</a>, fiyatlar için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfalarını kullanabilirsin.</p>
+
+  <h2 id="ipuclari">Pratik ipuçları</h2>
+  <ul>
+    <li><strong>İskeleye erken git:</strong> Deniz otobüsü için kalkıştan yaklaşık 45 dakika önce orada ol.</li>
+    <li><strong>Hava durumuna bak:</strong> Lodos ve fırtına seferleri iptal edebilir; yola çıkmadan şirketi kontrol et.</li>
+    <li><strong>Dönüş saatini hesapla:</strong> Deniz otobüsünün Avşa'dan kalkış saatleri öğleden sonra yoğunlaşıyor; son gün plaja çok geç kalma.</li>
+    <li><strong>Bagajı hafif tut:</strong> Yaya geçişte bavulu taşımak ve minibüse binmek kolay olsun.</li>
+    <li><strong>Konaklamaya haber ver:</strong> Geç gelen sefer için tesisinle önceden konuş.</li>
+    <li><strong>Sezon dışında:</strong> Sonbahar ve kışta seferler azalıyor; hafta içi sefer olmayabilir.</li>
+  </ul>
+  <p>Adaya vardığında <a href="/avsa-adasi/">Avşa Adası rehberi</a>, <a href="/plajlar/">plajlar</a> ve <a href="/gezilecek-yerler/">gezilecek yerler</a> sayfalarına göz atabilirsin.</p>
+
+  <div id="konaklama"></div>
+  <StayLinks items={near} title="İskeleye yakın konaklama" />
+  <p>Tüm seçenekler için <a href="/avsa-otelleri/">Avşa otelleri</a>, <a href="/avsa-pansiyonlari/">pansiyonları</a> ve <a href="/avsa-apartlari/">apartları</a> sayfalarına bakabilirsin.</p>
+</InfoLayout>

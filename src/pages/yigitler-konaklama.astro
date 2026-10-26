@@ -1,0 +1,128 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import AreaStayList from "../components/AreaStayList.astro";
+import { stays, typeLabels, defaultSchemaType } from "../data/stays";
+
+const title = "Avşa Yiğitler Otel ve Apart Rehberi | avsaadasi.net";
+const description =
+  "Avşa Adası Yiğitler'de nerede kalınır? Altınkum, Karadut ve Kadınlar Plajı'na yakın otel ve apartlar, merkeze uzaklık ve ipuçları.";
+
+const origin = "https://www.avsaadasi.net";
+const list = stays.filter((s) => s.area === "Yiğitler");
+const byType = (t: string) => list.filter((s) => s.type === t);
+const merkezSayisi = stays.filter((s) => s.area === "Merkez").length;
+
+const galeri = [
+  { src: "/img/yigitler-konaklama/yigitler-havuzlu-otel-balkon-manzarasi-1.webp", w: 960, h: 640, alt: "Yiğitler'de havuzlu otel, balkondan havuz ve bahçe manzarası", cap: "Havuz manzarası", href: "/konaklama/affisia-garden-otel/", by: "Affisia Garden Otel" },
+  { src: "/img/yigitler-konaklama/yigitler-apart-cicekli-bahce-1.webp", w: 1024, h: 683, alt: "Yiğitler'de çiçekli bahçeli apart girişi", cap: "Çiçekli bahçe", href: "/konaklama/hulya-apart/", by: "Hülya Apart" },
+  { src: "/img/yigitler-konaklama/yigitler-havuzlu-su-kaydirakli-otel-kus-bakisi-1.webp", w: 1600, h: 900, alt: "Yiğitler'de havuz ve su kaydıraklı otel, kuş bakışı", cap: "Havuz ve kaydıraklar", href: "/konaklama/bahar-aqua-resort-hotel/", by: "Bahar Aqua Resort Hotel" },
+  { src: "/img/yigitler-konaklama/yigitler-plaji-hasir-semsiye-1.webp", w: 445, h: 355, alt: "Yiğitler plajı Avşa, hasır şemsiyeler ve sahil", cap: "Yiğitler plajı", href: "/plajlar/", by: "Plajlar rehberi" },
+];
+
+const toc = [
+  { id: "ozet", label: "Yiğitler kısaca" },
+  { id: "tesisler", label: "Yiğitler'deki tesisler" },
+  { id: "plajlar", label: "Plajlara uzaklık" },
+  { id: "merkez", label: "Merkeze uzaklık ve ulaşım" },
+  { id: "kimler", label: "Kimler için uygun?" },
+  { id: "secim", label: "Yiğitler mi, merkez mi?" },
+  { id: "ipuclari", label: "Rezervasyon ipuçları" },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Yiğitler Köyü'ndeki konaklama tesisleri",
+  numberOfItems: list.length,
+  itemListElement: list.map((s, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `${origin}/konaklama/${s.slug}/`,
+    item: {
+      "@type": s.schemaType ?? defaultSchemaType[s.type],
+      "@id": `${origin}/konaklama/${s.slug}/#tesis`,
+      name: s.name,
+      url: `${origin}/konaklama/${s.slug}/`,
+      address: { "@type": "PostalAddress", addressLocality: "Yiğitler, Avşa Adası", addressRegion: "Balıkesir", addressCountry: "TR" },
+    },
+  })),
+};
+
+const faq = [
+  { q: "Yiğitler Köyü Avşa'nın neresinde?", a: "Adanın doğu yakasında, Altınkum ve Karadut koylarına yakın bir köy. Merkezden minibüsle yaklaşık 5-6 dakika, araçla yaklaşık 5-8 dakika uzaklıkta." },
+  { q: "Yiğitler'de hangi tesisler var?", a: `Sitemizde Yiğitler'de ${list.map((s) => s.name).join(", ")} listeleniyor.` },
+  { q: "Yiğitler'den plaja yürünür mü?", a: "Tesise göre değişiyor. Kadınlar Plajı bazı tesislerden yürüme mesafesinde; Altınkum ve Karadut için kısa bir yürüyüş ya da minibüs gerekebilir. Tesisin sayfasındaki mesafelere bak." },
+  { q: "Yiğitler sakin mi, kalabalık mı?", a: "Kaynaklara göre merkezdeki Barlar Sokağı'na göre daha sakin, köy havasında bir bölge; yine de yaz sezonunda plajlar kalabalık olabilir." },
+  { q: "Yiğitler'den merkeze nasıl gidilir?", a: "Merkez ile Yiğitler arasında minibüs seferleri var; kaynaklarda yaklaşık yarım saatte bir kalktığı belirtiliyor. Araçla 5-8 dakika sürüyor. Sefer saatleri değişkendir, dönüş saatini sor." },
+  { q: "Çocuklu aileler için Yiğitler uygun mu?", a: "Sığ ve sakin denizi ile bilinen Altınkum ve Karadut'a yakınlığı nedeniyle aileler tercih ediyor. Tesisin çocuk olanaklarını sayfasından kontrol et." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Yiğitler Konaklama Rehberi"
+  intro="Altınkum, Karadut ve Kadınlar Plajı'na yakın, köy havasındaki Yiğitler'de nerede kalınır? Avşa Adası'nın sakin köyü Yiğitler'de tatil planlayanlar için bölgenin karakteri, tesisler, merkeze ve feribot iskelesine uzaklıklar ve kimler için uygun olduğu."
+  crumb="Yiğitler Konaklama"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld]}
+>
+  <h2 id="ozet">Yiğitler kısaca</h2>
+  <p>Yiğitler, Avşa Adası'nın doğu yakasındaki sakin köy. Eski Rum yapıları ve iki türbesiyle bilinen köy, adanın en çok anılan koylarına, Altınkum ve Karadut'a yakın olduğu için plaj odaklı tatilcilerin tercih ettiği bir bölge. Merkezdeki iskele ve Barlar Sokağı'ndan birkaç dakika uzakta olması, "sakin kal, ama akşam isteyince merkeze git" dengesini kuruyor.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Mesafeler ve süreler yaklaşık değerlerdir; minibüs saatleri, fiyatlar ve müsaitlik sezona göre değişir (son kontrol: 24 Ekim 2026). Güncel bilgi için tesisle iletişime geç.
+  </div>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Özellik</th><th>Yiğitler</th></tr></thead>
+    <tbody>
+      <tr><td>Konum</td><td>Adanın doğu yakası, köy</td></tr>
+      <tr><td>Plajlar</td><td>Altınkum, Karadut, Kadınlar Plajı yakın</td></tr>
+      <tr><td>Merkeze</td><td>Minibüsle ~5-6 dk, araçla ~5-8 dk</td></tr>
+      <tr><td>Atmosfer</td><td>Sakin, köy havası</td></tr>
+      <tr><td>Tesis sayısı (sitemizde)</td><td>{list.length}</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap} · <a class="underline" href={g.href}>{g.by}</a></figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <AreaStayList id="tesisler" items={list} title="Yiğitler'deki konaklama tesisleri" />
+  <p class="mt-4 text-sm text-slate-600">Sitemizde Yiğitler'de {byType("otel").length} otel ve {byType("apart").length} apart listeleniyor{byType("pansiyon").length > 0 ? ` ayrıca ${byType("pansiyon").length} pansiyon` : ""}. Yeni tesisler eklendikçe bu liste kendiliğinden güncellenir.</p>
+
+  <h2 id="plajlar">Plajlara uzaklık</h2>
+  <p>Yiğitler'in en büyük avantajı plajlar. <a href="/altinkum-plaji/">Altınkum</a> köyün hemen yanında; ince kumlu ve sığ denizli koyda plaj işletmeleri ve ücretsiz alan bir arada. Uzun sahilli <a href="/plajlar/#karadut">Karadut Koyu</a> ücretsiz ve sığ denizi ile ailelerin favorisi. Yalnızca kadınlara ayrılmış <a href="/kadinlar-plaji/">Kadınlar Plajı</a> da bazı tesislerden yürüme mesafesinde. Adanın en geniş plajı <a href="/cinar-koyu/">Çınar Koyu</a> ise adanın diğer ucunda, merkezden minibüsle 10-15 dakika. Her tesisin denize uzaklığı kendi sayfasında yazıyor; örneğin Bahar Aqua Resort Hotel'in sayfasında Yiğitler Plajı 400 m, Affisia Garden Otel'de deniz yaklaşık 20 m olarak belirtiliyor.</p>
+
+  <h2 id="merkez">Merkeze uzaklık ve ulaşım</h2>
+  <p>Yiğitler'den merkeze araçla yaklaşık 5-8 dakika; Hülya Apart ve Bahar Aqua sayfalarında yaklaşık 5 dakika, Affisia sayfasında yaklaşık 8 dakika yazıyor. Merkezden Yiğitler'e minibüsler belediye binası önünden kalkıyor, kaynaklarda yaklaşık yarım saatte bir ve yolculuğun yaklaşık 5-6 dakika olduğu belirtiliyor. Akşam Barlar Sokağı'na gitmek isteyenler için dönüş saatini önceden planlamak önemli; son minibüs saati sezona göre değişir, <strong>yerel halka sor</strong>. Motosiklet, bisiklet ya da ATV kiralamak bu bölgede özgürlük sağlıyor; adadaki seçenekler için <a href="/avsa-adasi-gezi-rotasi/#ulasim">adada ulaşım ve süreler</a> bölümüne bak.</p>
+
+  <h2 id="kimler">Yiğitler kimler için uygun?</h2>
+  <ul>
+    <li><strong>Plaj odaklı tatilciler:</strong> Altınkum, Karadut ve Kadınlar Plajı yakın.</li>
+    <li><strong>Çocuklu aileler:</strong> Sığ ve sakin koylara yakınlık; bazı tesislerde havuz ve aquapark.</li>
+    <li><strong>Sakinlik arayanlar:</strong> Barlar Sokağı'nın müziğinden uzak, köy atmosferi.</li>
+    <li><strong>Grup ve uzun konaklama:</strong> Apartlarda mutfak ve bahçe olanakları (tesis sayfalarına bak).</li>
+    <li><strong>Kadın gezginler:</strong> Kadınlar Plajı'na yakın tesisler.</li>
+  </ul>
+  <p>Gece hayatını merkezdeki <a href="/barlar-sokagi/">Barlar Sokağı</a>'nda geçirmek isteyenler Yiğitler'de kalıp akşam merkeze inebilir; ancak dönüş ulaşımını baştan planlaması gerekir.</p>
+
+  <h2 id="secim">Yiğitler mi, merkez mi?</h2>
+  <p>Karar çoğu zaman tatilin ağırlığına bağlı: plaj ve sessizlik ağır basıyorsa Yiğitler, eğlence ve iskeleye yakınlık ağır basıyorsa merkez daha pratik. Merkezde bizde {merkezSayisi} tesis listeleniyor; iskeleye yürüyerek ulaşılıyor, Barlar Sokağı yakın ve minibüse bağımlılık düşük. Ayrıntılar için <a href="/avsa-merkez-konaklama/">Avşa merkez konaklama rehberi</a>ne bak. Adaya genel bakış için <a href="/avsa-adasi/">Avşa Adası rehberi</a> yardımcı olur.</p>
+
+  <h2 id="ipuclari">Rezervasyon ipuçları</h2>
+  <ul>
+    <li><strong>Erken rezervasyon:</strong> Yaz hafta sonları ve bayramlarda tesisler hızlı doluyor.</li>
+    <li><strong>Feribot saatini bildir:</strong> Geç gelecekse tesise haber ver; <a href="/feribot-saatleri/">feribot saatleri</a> ve <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> sayfalarına bak.</li>
+    <li><strong>Fiyat ve müsaitlik:</strong> Tesis sayfasındaki WhatsApp ve telefon bilgisinden sor; fiyatlar değişkenlik gösterir.</li>
+    <li><strong>Mesafeyi doğrula:</strong> Denize ve plaja uzaklığı tesis sayfasında kontrol et.</li>
+  </ul>
+  <p>Tür tür seçenekler için <a href="/avsa-otelleri/">Avşa otelleri</a>, <a href="/avsa-pansiyonlari/">pansiyonları</a>, <a href="/avsa-apartlari/">apartları</a> ve <a href="/kiralik-evler/">kiralık evleri</a> inceleyebilirsin. Merkezde kalmayı düşünüyorsan <a href="/avsa-merkez-konaklama/">Avşa merkez konaklama</a> sayfasına geç.</p>
+</InfoLayout>

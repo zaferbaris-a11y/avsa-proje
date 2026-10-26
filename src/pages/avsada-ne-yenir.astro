@@ -1,0 +1,169 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+import { restoranlar } from "../data/restoranlar";
+
+const title = "Avşa'da Ne Yenir? Balık, Meze, Şarap | avsaadasi.net";
+const description =
+  "Avşa'da ne yenir? Avşa Adası'nda taze balık, ahtapot, kalamar, midye, zeytinyağlı mezeler ve ada şarapları. Nerede yenir, nelere dikkat edilir?";
+
+const galeri = [
+  { src: "/img/avsada-ne-yenir/avsa-sahil-yuruyus-yolu-restoranlar-1.webp", w: 1600, h: 1328, alt: "Avşa Adası sahil yürüyüş yolu, restoranlar, büfeler ve plaj şemsiyeleri", cap: "Sahil boyunca restoran ve büfeler" },
+  { src: "/img/avsada-ne-yenir/avsa-sahil-restorani-deniz-manzarasi-1.webp", w: 549, h: 364, alt: "Avşa'da denize sıfır sahil restoranı, deniz manzaralı masalar", cap: "Denize bakan restoran terası" },
+  { src: "/img/avsada-ne-yenir/avsa-serpme-kahvalti-1.webp", w: 516, h: 387, alt: "Avşa'da açık havada serpme kahvaltı sofrası", cap: "Serpme kahvaltı" },
+];
+
+const toc = [
+  { id: "genel", label: "Avşa'nın mutfağına giriş" },
+  { id: "deniz-urunleri", label: "Balık ve deniz ürünleri" },
+  { id: "meze", label: "Zeytinyağlılar ve mezeler" },
+  { id: "sokak", label: "Sokak lezzetleri" },
+  { id: "sarap", label: "Ada şarapları" },
+  { id: "tatli", label: "Tatlılar ve hediyelik ürünler" },
+  { id: "nerede", label: "Nerede yenir?" },
+  { id: "rota", label: "Bir günlük yeme-içme rotası" },
+  { id: "ipuclari", label: "Yemek için ipuçları" },
+  { id: "konaklama", label: "Yemek olanağı sunan konaklama" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const dishes = ["Izgara ve tava balık", "Izgara ahtapot", "Tava kalamar", "Midye tava", "Midye dolma", "Zeytinyağlı Ege otları", "Ada şarapları", "Lokma ve dondurma"];
+const dishLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası'nda denenecek lezzetler",
+  itemListElement: dishes.map((d, i) => ({ "@type": "ListItem", position: i + 1, name: d })),
+};
+const restoranLd = restoranlar.length
+  ? [{
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Avşa Adası'nda önerilen restoranlar",
+      itemListElement: restoranlar.map((r, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Restaurant",
+          name: r.name,
+          ...(r.servesCuisine ? { servesCuisine: r.servesCuisine } : {}),
+          ...(r.phone ? { telephone: r.phone } : {}),
+          address: { "@type": "PostalAddress", addressLocality: r.area, addressRegion: "Balıkesir", addressCountry: "TR" },
+        },
+      })),
+    }]
+  : [];
+
+const yemekli = stays
+  .filter((s) => s.amenities.some((a) => /restoran|a la carte|yarım pansiyon|açık büfe|akşam yemeği/i.test(a)))
+  .slice(0, 6)
+  .map((stay) => ({ stay, note: "Restoran / yemek olanağı" }));
+const mutfakli = stays.filter((s) => s.type === "apart" && s.amenities.some((a) => /mutfak/i.test(a))).length;
+
+const faq = [
+  { q: "Avşa'da en meşhur yemek nedir?", a: "Avşa'da taze balık ve deniz ürünleri öne çıkıyor: mevsimine göre ızgara ya da tava balık, ızgara ahtapot, tava kalamar ve midye tava ile dolma adanın en çok anılan lezzetleri." },
+  { q: "Avşa'da balık fiyatları pahalı mı?", a: "Balık fiyatları türe, mevsime ve restorana göre değişiyor. Balık genellikle kilogram üzerinden fiyatlandırıldığı için siparişten önce kilogram fiyatını ve porsiyon miktarını sormak en doğrusu." },
+  { q: "Avşa şarabı nereden alınır?", a: "Adadaki şaraphanelerde (Bortaçina ve Büyülübağ gibi) tadım yapılıyor ve şişe satın alınabiliyor. Gitmeden önce arayıp çalışma saatlerini öğrenmeni öneririz." },
+  { q: "Avşa'da ucuza nerede yemek yenir?", a: "Merkez çarşıdaki esnaf lokantaları ve arka sokaklardaki ev yemeği sunan yerler genellikle sahil restoranlarından daha ekonomik. Mutfaklı apart ve pansiyonlarda kahvaltı ve basit öğünleri kendin hazırlayarak da tasarruf edebilirsin." },
+  { q: "Plajda yemek bulunur mu?", a: "Altınkum ve Karadut gibi plajlarda büfe, kafeterya ve çay bahçeleri bulunuyor. İşletmesi olmayan Kadınlar Plajı gibi yerlere su ve atıştırmalık götürmen gerekiyor." },
+  { q: "Sezon dışında restoranlar açık mı?", a: "Adadaki restoranların çoğu yaz sezonuna odaklı. Sezon dışında birçoğu kapalı olabiliyor; gitmeden önce arayıp açık olup olmadığını öğrenmek gerekir." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa'da Ne Yenir?"
+  intro="Taze balıktan ahtapota, zeytinyağlı Ege otlarından ada şaraplarına: Marmara Denizi'ndeki Avşa'nın mutfağı, nerede yenir ve yemek için nelere dikkat etmeli."
+  crumb="Avşa'da Ne Yenir?"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[dishLd, ...restoranLd]}
+>
+  <h2 id="genel">Avşa'nın mutfağına giriş</h2>
+  <p>Avşa'nın mutfağı, bir Marmara ve Ege adasından beklediğin gibi deniz ürünleri ve zeytinyağlılar etrafında şekilleniyor. Sabah plajda yüzüp akşam iskele çevresinde bir balık sofrasına oturmak, adada tatilin en sevilen ritimlerinden. Bunun yanında çarşıdaki esnaf lokantaları, plajlardaki büfeler ve adanın şaraphaneleri farklı bütçelere ve zevklere hitap ediyor.</p>
+  <p>Bu rehberde Avşa'da denenecek lezzetleri, yeme-içme için pratik ipuçlarını ve yemek olanağı sunan konaklamaları bulacaksın. Plan yaparken <a href="/avsa-adasi/">Avşa Adası rehberi</a> ve <a href="/gezilecek-yerler/">gezilecek yerler</a> sayfalarına da göz atabilirsin.</p>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    <figure class="col-span-2 overflow-hidden rounded-xl bg-slate-100">
+      <img src={galeri[0].src} alt={galeri[0].alt} width={galeri[0].w} height={galeri[0].h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+      <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[0].cap}</figcaption>
+    </figure>
+    {galeri.slice(1).map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="deniz-urunleri">Balık ve deniz ürünleri</h2>
+  <h3>Izgara ve tava balık</h3>
+  <p>Adanın restoranlarında mevsimine göre lüfer, palamut, istavrit, çinekop ve barbun gibi balıklar ızgara ya da tava olarak sunuluyor; levrek ve çupra da yerel restoranlarda sık tercih edilen balıklar arasında. Hangi balığın o gün taze olduğunu garsona sormak, mevsiminde olmayan bir balığa yönelmemek için iyi bir alışkanlık.</p>
+  <h3>Ahtapot ve kalamar</h3>
+  <p>Izgara ahtapot ve tava kalamar, adanın mutfağının vazgeçilmezleri arasında anılıyor. Genellikle meze ve salata ile birlikte sofraya geliyor; yanında soğuk bir rakı ya da beyaz şarap tercih edenler çok.</p>
+  <h3>Fiyat sormayı unutma</h3>
+  <p>Balık çoğu yerde kilogram üzerinden fiyatlandırılıyor. Sipariş vermeden önce kilogram fiyatını ve porsiyon büyüklüğünü sormak, hesap sürprizi yaşamamanın en kolay yolu. Fiyatlar türe, mevsime ve mekâna göre değiştiği için burada sabit bir rakam vermiyoruz.</p>
+
+  <h2 id="meze">Zeytinyağlılar ve mezeler</h2>
+  <p>Ege mutfağının etkisiyle Avşa sofralarında zeytinyağlılar ve otlar geniş yer tutuyor: deniz börülcesi, cibes, turp otu salatası, zeytinyağlı enginar ve patlıcan salatası gibi mezeler balığın yanına çok yakışıyor. Vejetaryen ya da hafif bir akşam yemeği isteyenler için meze tabağı tek başına doyurucu bir seçenek olabilir.</p>
+
+  <h2 id="sokak">Sokak lezzetleri</h2>
+  <p>Sahilde ve çarşıda midye tava ve midye dolma tezgâhları adanın sokak lezzetlerinin başında geliyor. Baharatlı pilavla doldurulan midye dolma, gezerken hızlıca bir şeyler atıştırmak için ideal. Hijyen için tezgâhın kalabalık ve işleyen bir yer olmasına ve midyelerin soğuk tutulmasına dikkat etmeni öneririz.</p>
+  <p>Ayrıca çarşıdaki esnaf lokantaları ev yemekleri, kebap ve pide gibi geleneksel seçenekler sunarak sahil restoranlarına göre daha ekonomik bir alternatif oluşturuyor.</p>
+
+  <h2 id="sarap">Ada şarapları</h2>
+  <p>Avşa, bağcılığı ve şarabıyla tanınan bir ada. Bortaçina ve Büyülübağ şaraphaneleri adada üretim yapıyor ve yerinde tadım sunuyor; adaya özgü ada karası üzümü de yerel bir lezzet olarak öne çıkıyor. Şarap, zeytinyağlı mezelerle ve balıkla iyi gidiyor. Tadım ve şişe alışverişi için önceden aramanı, çalışma saatlerini öğrenmeni öneririz. Şaraphane ziyaretini gün planına eklemek için <a href="/gezilecek-yerler/#sarap">gezilecek yerler</a> sayfasındaki şaraphane bölümüne bakabilirsin.</p>
+
+  <h2 id="tatli">Tatlılar ve hediyelik ürünler</h2>
+  <p>Şerbetli lokma ve doğal malzemelerle yapılan dondurmalar, plaj dönüşü tatlı bir mola için popüler. Yerel pazarlarda ve küçük dükkânlarda ev yapımı reçeller ve zeytinler de bulunuyor; adadan dönerken hediyelik olarak alınabilecek ürünler arasında. Ürün çeşitleri sezona göre değişebiliyor.</p>
+
+  <h2 id="nerede">Nerede yenir?</h2>
+  <ul>
+    <li><strong>İskele çevresi ve sahil şeridi:</strong> Balık restoranları ve meyhaneler; manzara ve akşam atmosferi için. Akşam eğlencesiyle birleştirmek için <a href="/barlar-sokagi/">Barlar Sokağı</a> yakın.</li>
+    <li><strong>Merkez çarşı ve arka sokaklar:</strong> Esnaf lokantaları, ev yemekleri, kebap ve pide; daha ekonomik.</li>
+    <li><strong>Yiğitler Köyü:</strong> Sakin atmosferde köy lokantaları ve aile işletmeleri.</li>
+    <li><strong>Plajlar:</strong> Altınkum ve Karadut gibi plajlarda büfe, kafeterya ve çay bahçeleri. Koyların ayrıntıları için <a href="/plajlar/">plajlar</a> rehberine bak.</li>
+    <li><strong>Şaraphaneler:</strong> Tadım odaları ve satış noktaları.</li>
+  </ul>
+  {restoranlar.length > 0 && (
+    <>
+      <h3>Önerilen restoranlar</h3>
+      <div class="not-prose mt-4 grid gap-4 sm:grid-cols-2">
+        {restoranlar.map((r) => (
+          <section class="rounded-2xl border border-slate-200 bg-white p-5">
+            <h4 class="text-lg font-bold text-deniz-900">{r.name}</h4>
+            <p class="mt-1 text-sm font-semibold text-deniz-600">{r.kind} · {r.area}</p>
+            <p class="mt-3 text-sm leading-relaxed">{r.note}</p>
+          </section>
+        ))}
+      </div>
+    </>
+  )}
+
+  <h2 id="rota">Bir günlük yeme-içme rotası</h2>
+  <h3>Sabah: kahvaltı ve kahve</h3>
+  <p>Güne kahvaltıyla başlamak için konaklamanın kahvaltısından yararlanabilir ya da iskele çevresindeki kafelere uğrayabilirsin. Tarihi Çınaraltı'nda çay ya da kahve içerek gelen feribotları izlemek, adaya özgü sakin bir başlangıç. Mutfaklı bir apartta kalıyorsan kahvaltıyı kendin hazırlamak hem pratik hem ekonomik.</p>
+  <h3>Öğle: plajda hafif bir mola</h3>
+  <p>Plajdayken öğle yemeği için büfe ve kafeteryalar yeterli oluyor: tost, gözleme, salata ya da midye tava gibi hafif seçenekler sıcakta ağır yemekten daha iyi gidiyor. İşletmesi olmayan koylara gidiyorsan yanına su, meyve ve atıştırmalık al.</p>
+  <h3>İkindi: tatlı ve şarap molası</h3>
+  <p>Dönüş yolunda bir dondurma ya da lokma molası, ardından ilgin varsa bir şaraphanede tadım iyi bir rota oluşturuyor. Tadım için önceden aramayı unutma.</p>
+  <h3>Akşam: balık sofrası</h3>
+  <p>Gün batımından sonra iskele ve sahil şeridinde bir balık sofrasına oturmak adanın klasik akşamı. Mezelerden başlayıp ahtapot ya da kalamarla devam etmek, ardından günün balığını seçmek dengeli bir akşam yemeği oluşturuyor. Yemekten sonra eğlenmek istersen <a href="/gece-hayati/">gece hayatı</a> rehberine bakabilirsin; daha sakin bir akşamı tercih edenler için sahilde yürüyüş de güzel bir son.</p>
+
+  <h2 id="ipuclari">Yemek için ipuçları</h2>
+  <ul>
+    <li><strong>Rezervasyon:</strong> Yaz hafta sonlarında sahil restoranları dolabiliyor; yer ayırtmak iyi olur.</li>
+    <li><strong>Sezon:</strong> Restoranların çoğu yaz sezonuna odaklı; sezon dışında kapalı olabiliyor.</li>
+    <li><strong>Balığın fiyatı:</strong> Sipariş öncesi kilogram fiyatını ve miktarı sor.</li>
+    <li><strong>Nakit:</strong> Küçük işletmelerde kart çalışmayabilir, yanında nakit bulundur.</li>
+    <li><strong>Plajda su:</strong> İşletmesi olmayan plajlara su ve atıştırmalık götür.</li>
+    <li><strong>Mutfaklı konaklama:</strong> {mutfakli} apartın mutfağı var; kahvaltı ve basit öğünlerle bütçeni rahatlatabilirsin.</li>
+  </ul>
+
+  <div id="konaklama"></div>
+  <StayLinks items={yemekli} title="Restoran ya da yemek olanağı sunan konaklama" />
+  <p>Mutfaklı odalar için <a href="/avsa-apartlari/">Avşa apartları</a> ve <a href="/avsa-pansiyonlari/">pansiyonlar ve moteller</a>, otel hizmetleri için <a href="/avsa-otelleri/">Avşa otelleri</a>, akşam eğlencesi için <a href="/gece-hayati/">gece hayatı</a> sayfalarına bakabilirsin. Adaya nasıl geleceğini <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> sayfasında bulabilirsin.</p>
+</InfoLayout>

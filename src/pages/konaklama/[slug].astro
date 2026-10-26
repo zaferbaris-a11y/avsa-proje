@@ -1,0 +1,318 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Logo from "../../components/Logo.astro";
+import Header from "../../components/Header.astro";
+import Gallery from "../../components/Gallery.astro";
+import { stays, typeLabels, formatPrice, hasPrice, defaultSchemaType } from "../../data/stays";
+import type { Stay } from "../../data/stays";
+
+// Her işletme için build sırasında statik sayfa üretir
+export function getStaticPaths() {
+  return stays.map((stay) => ({
+    params: { slug: stay.slug },
+    props: { stay },
+  }));
+}
+
+interface Props {
+  stay: Stay;
+}
+const { stay } = Astro.props;
+
+const similar = stays.filter((s) => s.slug !== stay.slug && s.type === stay.type).slice(0, 3);
+const sameArea = stays.filter((s) => s.slug !== stay.slug && s.area === stay.area && s.area !== "Avşa Adası").slice(0, 6);
+
+// Yerel SEO: ad + konum etiketi (başlık, H1, NAP, şema için ortak)
+const kindLabel = stay.kind ?? typeLabels[stay.type];
+const hasArea = stay.area !== "Avşa Adası";
+const locLabel = hasArea ? `${stay.area}, Avşa` : "Avşa Adası";
+const category = {
+  otel: { href: "/avsa-otelleri/", label: "Avşa Otelleri" },
+  pansiyon: { href: "/avsa-pansiyonlari/", label: "Avşa Pansiyonları" },
+  apart: { href: "/avsa-apartlari/", label: "Avşa Apartları" },
+}[stay.type];
+const generalAddress = stay.addressText ?? `${hasArea ? stay.area + " bölgesi, " : ""}Avşa Adası, Marmara / Balıkesir`;
+const addressLine = stay.streetAddress ? `${stay.streetAddress}, ${generalAddress}` : generalAddress;
+const addressVerified = Boolean(stay.streetAddress);
+const phoneTel = stay.phone?.replace(/\s/g, "");
+const mapQuery = stay.geo ? `${stay.geo.lat},${stay.geo.lng}` : `${stay.name} ${hasArea ? stay.area + " " : ""}Avşa Adası`;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+const osmEmbed = stay.geo
+  ? `https://www.openstreetmap.org/export/embed.html?bbox=${stay.geo.lng - 0.006}%2C${stay.geo.lat - 0.0035}%2C${stay.geo.lng + 0.006}%2C${stay.geo.lat + 0.0035}&layer=mapnik&marker=${stay.geo.lat}%2C${stay.geo.lng}`
+  : undefined;
+// Veriden türetilen, doğrulanabilir özet cümleler (uydurma bilgi yok)
+const nearbyText = stay.nearby.length > 0 ? stay.nearby.slice(0, 3).map((n) => `${n.label} (${n.distance})`).join(", ") : "";
+const summary = [
+  `${stay.name}, ${hasArea ? "Avşa Adası'nın " + stay.area + " bölgesinde" : "Avşa Adası'nda"} hizmet veren bir ${kindLabel.toLowerCase()} tesisidir.`,
+  nearbyText ? `Çevredeki başlıca noktalar: ${nearbyText}.` : "",
+  stay.amenities.length > 0 ? `Başlıca olanakları arasında ${stay.amenities.slice(0, 4).join(", ").toLowerCase()} yer alır.` : "",
+].filter(Boolean).join(" ");
+const waLink = (text: string) => `https://wa.me/${stay.whatsapp}?text=${encodeURIComponent(text)}`;
+
+// Google için yapılandırılmış veri (JSON-LD)
+const origin = Astro.site ?? new URL("https://www.avsaadasi.net"); // astro.config.mjs içindeki `site` kullanılır
+const abs = (path: string) => new URL(path, origin).href;
+const prices = stay.rooms.map((r) => r.price).filter(hasPrice);
+const priceRange =
+  prices.length > 0
+    ? `${Math.min(...prices)} TRY - ${Math.max(...prices)} TRY`
+    : hasPrice(stay.priceFrom)
+      ? `${stay.priceFrom} TRY`
+      : undefined;
+
+// undefined olan alanlar JSON.stringify sırasında otomatik düşer
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": stay.schemaType ?? defaultSchemaType[stay.type],
+  name: stay.name,
+  description: stay.description,
+  url: abs(`/konaklama/${stay.slug}/`),
+  image: stay.images.length > 0 ? stay.images.map(abs) : undefined,
+  "@id": abs(`/konaklama/${stay.slug}/#tesis`),
+  telephone: phoneTel,
+  hasMap: mapsUrl,
+  availableLanguage: "Turkish",
+  contactPoint: phoneTel
+    ? [{ "@type": "ContactPoint", telephone: phoneTel, contactType: "reservations", availableLanguage: "Turkish" }]
+    : undefined,
+  isPartOf: { "@type": "TouristDestination", name: "Avşa Adası", url: abs("/avsa-adasi/") },
+  areaServed: hasArea ? `${stay.area}, Avşa Adası` : "Avşa Adası",
+  priceRange,
+  checkinTime: stay.checkIn,
+  checkoutTime: stay.checkOut,
+  starRating:
+    stay.type === "otel" && stay.starRating
+      ? { "@type": "Rating", ratingValue: String(stay.starRating) }
+      : undefined,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: stay.streetAddress,
+    addressLocality: hasArea ? `${stay.area}, Avşa Adası` : "Avşa Adası",
+    addressSubregion: "Marmara",
+    addressRegion: "Balıkesir",
+    postalCode: stay.postalCode,
+    addressCountry: "TR",
+  },
+  geo: stay.geo
+    ? { "@type": "GeoCoordinates", latitude: stay.geo.lat, longitude: stay.geo.lng }
+    : undefined,
+  amenityFeature: stay.amenities.map((a) => ({
+    "@type": "LocationFeatureSpecification",
+    name: a,
+    value: true,
+  })),
+};
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: abs("/") },
+    { "@type": "ListItem", position: 2, name: category.label, item: abs(category.href) },
+    { "@type": "ListItem", position: 3, name: stay.name, item: abs(`/konaklama/${stay.slug}/`) },
+  ],
+};
+---
+
+<Layout
+  title={stay.seoTitle ?? `${stay.name} - ${locLabel} ${kindLabel} | avsaadasi.net`}
+  description={stay.seoDescription ?? `${stay.name}: ${stay.tagline} ${locLabel}.${hasPrice(stay.priceFrom) ? ` Gecelik ${formatPrice(stay.priceFrom)}'den başlayan fiyatlarla.` : " Fiyat ve müsaitlik için işletmeyle iletişime geç."}`}
+  image={stay.images[0] ? abs(stay.images[0]) : undefined}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+
+  <!-- Üst bar -->
+  <Header />
+
+  <main class="mx-auto max-w-6xl px-5 py-8">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4 text-sm text-slate-500">
+      <a href="/" class="hover:underline">Ana sayfa</a> /
+      <a href={category.href} class="hover:underline">{category.label}</a> /
+      <span class="text-slate-700">{stay.name}</span>
+    </nav>
+
+    <!-- Galeri -->
+    <Gallery images={stay.images} name={stay.name} gradient={stay.gradient} />
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[1fr_340px]">
+      <!-- Sol: içerik -->
+      <div>
+        <div class="flex flex-wrap items-center gap-2 text-sm">
+          <span class="rounded-full bg-deniz-100 px-3 py-1 font-semibold text-deniz-900">{stay.kind ?? typeLabels[stay.type]}</span>
+          <span class="text-slate-500">📍 {stay.area === "Avşa Adası" ? "Avşa Adası" : `${stay.area}, Avşa Adası`}</span>
+        </div>
+        <h1 class="mt-3 font-display text-3xl font-bold text-deniz-900 md:text-4xl">{stay.name} <span class="font-semibold text-slate-500">- {locLabel}</span></h1>
+        <p class="mt-2 text-lg text-gunbatimi">{stay.tagline}</p>
+        <p class="mt-6 leading-relaxed">{stay.description}</p>
+        <p class="mt-3 leading-relaxed">{summary}</p>
+
+        <!-- NAP: İsim - Adres - Telefon -->
+        <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="nap-baslik">
+          <h2 id="nap-baslik" class="font-display text-xl font-bold text-deniz-900">İletişim ve adres</h2>
+          <address class="mt-3 space-y-2 not-italic text-sm text-slate-700">
+            <p><span class="font-semibold text-deniz-900">İşletme:</span> {stay.name}</p>
+            <p>
+              <span class="font-semibold text-deniz-900">Adres:</span> {addressLine}
+              {!addressVerified && <span class="block text-xs text-slate-500">Tam açık adres ve yol tarifi için işletmeyi arayın.</span>}
+            </p>
+            <p>
+              <span class="font-semibold text-deniz-900">Telefon:</span>
+              {stay.phone ? <a href={`tel:${phoneTel}`} class="font-semibold text-deniz-600 hover:underline">{stay.phone}</a> : <span>WhatsApp üzerinden ulaşabilirsiniz</span>}
+            </p>
+            <p><span class="font-semibold text-deniz-900">Giriş / Çıkış:</span> {stay.checkIn} / {stay.checkOut}</p>
+          </address>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="rounded-full bg-deniz-900 px-4 py-2 text-sm font-semibold text-white hover:bg-deniz-600">Haritada aç</a>
+            <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`} target="_blank" rel="noopener noreferrer" class="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-deniz-900 hover:bg-slate-50">Yol tarifi al</a>
+          </div>
+          {osmEmbed && (
+            <iframe src={osmEmbed} title={`${stay.name} harita konumu`} loading="lazy" class="mt-4 h-64 w-full rounded-xl border-0" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          )}
+        </section>
+
+        <!-- Özellikler -->
+        {stay.amenities.length > 0 && (
+          <>
+            <h2 class="mt-12 font-display text-2xl font-bold text-deniz-900">Olanaklar</h2>
+            <ul class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {stay.amenities.map((a) => (
+                <li class="flex items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm shadow-sm">
+                  <span class="text-emerald-500">✓</span> {a}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <!-- Odalar -->
+        {stay.rooms.length > 0 && (
+        <>
+        <h2 class="mt-12 font-display text-2xl font-bold text-deniz-900">
+          {stay.type === "apart" ? "Daire seçenekleri" : "Oda seçenekleri"}
+        </h2>
+        <div class="mt-4 space-y-3">
+          {stay.rooms.map((r) => (
+            <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white p-5 shadow-sm">
+              <div>
+                <h3 class="font-semibold text-deniz-900">{r.name}</h3>
+                <p class="text-sm text-slate-500">{r.capacity} kişilik{r.note ? ` · ${r.note}` : ""}</p>
+              </div>
+              <div class="flex items-center gap-4">
+                <p class="text-sm text-slate-500">
+                  <span class="text-lg font-bold text-deniz-900">{formatPrice(r.price)}</span>{hasPrice(r.price) && " / gece"}
+                </p>
+                <a
+                  href={waLink(`${stay.name} - ${r.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)}
+                  class="rounded-full bg-deniz-50 px-4 py-2 text-sm font-semibold text-deniz-600 hover:bg-deniz-600 hover:text-white"
+                >
+                  Sor
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+        </>
+        )}
+
+        <!-- Yakın yerler -->
+        {stay.nearby.length > 0 && (
+          <>
+            <h2 class="mt-12 font-display text-2xl font-bold text-deniz-900">Çevresinde neler var?</h2>
+            <ul class="mt-4 divide-y divide-kum-100 rounded-2xl bg-white shadow-sm">
+              {stay.nearby.map((n) => (
+                <li class="flex justify-between px-5 py-3 text-sm">
+                  <span>{n.label}</span>
+                  <span class="font-medium text-deniz-900">{n.distance}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+
+      <!-- Sağ: yapışkan rezervasyon kartı -->
+      <aside class="lg:sticky lg:top-6 lg:self-start">
+        <div class="rounded-3xl border border-kum-100 bg-white p-6 shadow-lg">
+          <p class="text-sm text-slate-500">{hasPrice(stay.priceFrom) ? "Gecelik başlangıç" : "Fiyat"}</p>
+          <p class={`font-display font-bold text-deniz-900 ${hasPrice(stay.priceFrom) ? "text-3xl" : "text-2xl"}`}>{formatPrice(stay.priceFrom)}</p>
+
+          <dl class="mt-5 grid grid-cols-2 gap-3 text-sm">
+            <div class="rounded-xl bg-kum-50 p-3">
+              <dt class="text-slate-500">Giriş</dt>
+              <dd class="font-semibold">{stay.checkIn}</dd>
+            </div>
+            <div class="rounded-xl bg-kum-50 p-3">
+              <dt class="text-slate-500">Çıkış</dt>
+              <dd class="font-semibold">{stay.checkOut}</dd>
+            </div>
+          </dl>
+
+          <a
+            href={waLink(`${stay.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)}
+            class="mt-6 block rounded-full bg-gunbatimi py-3 text-center font-semibold text-white shadow-lg shadow-gunbatimi/30 transition hover:scale-[1.02]"
+          >
+            WhatsApp'tan yaz
+          </a>
+          {stay.phone && (
+            <a href={`tel:${stay.phone.replace(/\s/g, "")}`} class="mt-3 block rounded-full border border-deniz-100 py-3 text-center font-semibold text-deniz-600 hover:bg-deniz-50">
+              Ara: {stay.phone}
+            </a>
+          )}
+          <p class="mt-4 text-center text-xs text-slate-500">Fiyatlar sezona ve doluluğa göre değişebilir.</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Akıllı iç bağlantılar -->
+    <section class="mt-16 rounded-3xl bg-white p-6 shadow-sm md:p-8" aria-labelledby="ic-link">
+      <h2 id="ic-link" class="font-display text-2xl font-bold text-deniz-900">Avşa'da konaklamayı keşfet</h2>
+      <ul class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+        <li><a href={category.href} class="font-semibold text-deniz-600 hover:underline">→ Tüm {category.label}</a></li>
+        <li><a href="/avsa-adasi/" class="font-semibold text-deniz-600 hover:underline">→ Avşa Adası rehberi: nerede, nasıl bir yer?</a></li>
+        <li><a href="/avsa-adasina-nasil-gidilir/" class="font-semibold text-deniz-600 hover:underline">→ Avşa'ya nasıl gidilir?</a></li>
+        <li><a href="/feribot-saatleri/" class="font-semibold text-deniz-600 hover:underline">→ Feribot saatleri</a></li>
+        <li><a href="/plajlar/" class="font-semibold text-deniz-600 hover:underline">→ Plajlar ve koylar</a></li>
+        <li><a href="/gezilecek-yerler/" class="font-semibold text-deniz-600 hover:underline">→ Gezilecek yerler</a></li>
+        {stay.nearby.some((n) => /bar|gece/i.test(n.label)) && (
+          <li><a href="/barlar-sokagi/" class="font-semibold text-deniz-600 hover:underline">→ Barlar Sokağı ve gece hayatı</a></li>
+        )}
+      </ul>
+      {sameArea.length > 0 && (
+        <>
+          <h3 class="mt-6 font-semibold text-deniz-900">{stay.area} bölgesindeki diğer konaklama seçenekleri</h3>
+          <ul class="mt-3 flex flex-wrap gap-2">
+            {sameArea.map((s) => (
+              <li><a href={`/konaklama/${s.slug}/`} class="inline-block rounded-full border border-slate-200 px-3 py-1.5 text-sm text-slate-700 hover:border-deniz-500 hover:text-deniz-900">{s.name} <span class="text-slate-400">· {s.kind ?? typeLabels[s.type]}</span></a></li>
+            ))}
+          </ul>
+        </>
+      )}
+    </section>
+
+    <!-- Benzer işletmeler -->
+    {similar.length > 0 && (
+      <section class="mt-16">
+        <h2 class="font-display text-2xl font-bold text-deniz-900">Bunlara da göz at</h2>
+        <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {similar.map((s) => (
+            <a href={`/konaklama/${s.slug}/`} class="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:shadow-lg">
+              <div class={`relative h-36 overflow-hidden bg-gradient-to-br ${s.gradient}`}>
+                {s.images[0] && <img src={s.images[0]} alt="" loading="lazy" decoding="async" width="600" height="400" class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />}
+              </div>
+              <div class="p-5">
+                <h3 class="font-semibold text-deniz-900">{s.name}</h3>
+                <p class="text-sm text-slate-500">📍 {s.area}{hasPrice(s.priceFrom) ? ` · ${formatPrice(s.priceFrom)}'den` : ""}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+
+  <footer class="mt-16 border-t border-kum-100 bg-white py-8 text-center text-sm text-slate-500">
+    © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.
+  </footer>
+</Layout>

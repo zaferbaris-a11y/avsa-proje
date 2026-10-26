@@ -1,0 +1,153 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Altınkum Plajı: Ulaşım ve Beach Club | avsaadasi.net";
+const description =
+  "Avşa Adası Altınkum Plajı: ince altın kum, sığ deniz, plaj işletmeleri, ücretsiz alan, minibüsle ulaşım, aile uygunluğu ve yakın konaklama (Yiğitler).";
+
+const origin = "https://www.avsaadasi.net";
+
+const galeri = [
+  { src: "/img/altinkum-plaji/altinkum-plaji-koy-gun-batimi-1.webp", w: 1600, h: 1138, alt: "Altınkum Plajı Avşa, gün batımında sakin koy, sahil ve şezlonglar", cap: "Altınkum'da gün batımı" },
+  { src: "/img/altinkum-plaji/altinkum-plaji-tepeden-genel-manzara-1.webp", w: 596, h: 335, alt: "Altınkum Plajı Avşa, tepeden sahil ve deniz manzarası", cap: "Tepeden Altınkum" },
+  { src: "/img/altinkum-plaji/altinkum-plaji-iskele-sahil-1.webp", w: 500, h: 375, alt: "Altınkum Plajı Avşa, berrak deniz, ahşap iskele ve sahil işletmesi", cap: "İskele ve sahil" },
+];
+
+const toc = [
+  { id: "ozet", label: "Altınkum Plajı kısaca" },
+  { id: "nerede", label: "Nerede, nasıl gidilir?" },
+  { id: "kum-deniz", label: "Kum, deniz ve rüzgar" },
+  { id: "aileler", label: "Aileler ve çocuklar için" },
+  { id: "isletmeler", label: "Plaj işletmeleri ve ücretsiz alan" },
+  { id: "yeme-icme", label: "Yeme-içme ve olanaklar" },
+  { id: "sezon", label: "Ne zaman gidilir?" },
+  { id: "ipuclari", label: "Plaj günü ipuçları" },
+  { id: "yakin", label: "Yakın plajlar" },
+  { id: "konaklama", label: "Altınkum'a yakın konaklama" },
+];
+
+const beach = {
+  "@context": "https://schema.org",
+  "@type": "Beach",
+  "@id": `${origin}/altinkum-plaji/#altinkum`,
+  name: "Altınkum Plajı (Avşa Adası)",
+  alternateName: ["Altınkum Koyu", "Avşa Altınkum"],
+  description:
+    "Avşa Adası'nda Yiğitler Köyü yanında, ince ve altın renkli kumu, sığ ve sakin denizi ile bilinen; plaj işletmeleri ve ücretsiz halk plajı alanı bulunan koy.",
+  url: `${origin}/altinkum-plaji/`,
+  touristType: ["Aile tatili", "Plaj tatili", "Arkadaş grubu"],
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Altınkum Plajı Yiğitler Avşa Adası")}`,
+  containedInPlace: {
+    "@type": "Place",
+    name: "Yiğitler Köyü, Avşa Adası",
+    address: { "@type": "PostalAddress", addressLocality: "Avşa Adası", addressRegion: "Balıkesir", addressCountry: "TR" },
+  },
+};
+
+// Altınkum'a yakın tesisler: Yiğitler bölgesi ve açıklamasında Altınkum geçenler
+const yigitler = stays
+  .filter((s) => s.area === "Yiğitler" || /Altınkum/.test(s.description))
+  .slice(0, 6)
+  .map((stay) => ({ stay, note: stay.area === "Yiğitler" ? "Yiğitler Köyü'nde" : "Altınkum'a yakın" }));
+
+const faq = [
+  { q: "Altınkum Plajı Avşa'nın neresinde?", a: "Yiğitler Köyü'nün hemen yanında, adanın doğu yakasındaki koylardan biri. Merkezden minibüsle yaklaşık 5-10 dakika, özel araçla yaklaşık 5 dakika uzaklıkta." },
+  { q: "Altınkum'un kumu nasıl?", a: "Kaynaklara göre ince ve yumuşak, altın sarısı renkte bir kumu var; adını da sudaki parlayışından alıyor." },
+  { q: "Altınkum'da deniz sığ mı?", a: "Evet, kaynaklarda deniz sığ ve sakin olarak tarif ediliyor; derinlik yavaş yavaş artıyor. Yine de çocukları suda yalnız bırakmamak gerekir." },
+  { q: "Altınkum Plajı ücretli mi?", a: "Koyda şezlong ve şemsiyenin ücretli olduğu plaj işletmeleri ile ücretsiz halk plajı alanları birlikte bulunuyor. İşletme ücretleri değişkenlik gösterdiği için yerinde sor." },
+  { q: "Altınkum'da hangi plaj işletmeleri var?", a: "Kaynaklarda Safir Beach, Altınkum Beach, Gold Beach ve Kartal Yuvası adları geçiyor. İşletmeler ve çalışma düzenleri sezona göre değişebilir; gitmeden önce teyit et." },
+  { q: "Altınkum çocuklu aileler için uygun mu?", a: "Sığ deniz ve plaj işletmelerinin sunduğu şezlong, şemsiye ve yemek olanakları nedeniyle aileler tarafından sık tercih ediliyor. Daha sakin ve ücretsiz bir seçenek için Karadut Koyu da yakın." },
+  { q: "Altınkum'a merkezden nasıl gidilir?", a: "Merkezdeki iskele çevresinden Yiğitler yönüne minibüs kalkıyor; araçla üzüm heykelinden tabelaları takip ederek yaklaşık 5 dakikada gelinebiliyor. Yürüyerek yaklaşık 20-25 dakika sürebilir." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Altınkum Plajı"
+  intro="Yiğitler Köyü'nün yanındaki Altınkum, Marmara Denizi'ndeki Avşa'nın en çok anılan koylarından biri: ince kumu, sığ denizi, plaj işletmeleri ve ücretsiz alanıyla hem aileler hem arkadaş grupları için."
+  crumb="Altınkum Plajı"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[beach]}
+>
+  <h2 id="ozet">Altınkum Plajı kısaca</h2>
+  <p>Altınkum, Avşa Adası'nın doğu yakasında, Yiğitler Köyü'nün hemen yanında yer alan bir koy. Adı, sudaki kumun altın gibi parlamasından geliyor. Kaynaklara göre kumu ince ve yumuşak, denizi sığ ve sakin; bu yüzden hem çocuklu aileler hem de gün boyu yüzmek, güneşlenmek ve müzik eşliğinde plajda vakit geçirmek isteyen gruplar tarafından tercih ediliyor.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Bu sayfadaki plaj bilgileri kamuya açık yayınlardan derlendi (son kontrol: 24 Ekim 2026). İşletme ücretleri, çalışma saatleri ve minibüs seferleri sezona göre değişir; kesin bilgi için yerel halka ya da işletmeye sor.
+  </div>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Özellik</th><th>Bilgi</th></tr></thead>
+    <tbody>
+      <tr><td>Konum</td><td>Yiğitler Köyü yanı, doğu yakası</td></tr>
+      <tr><td>Kum</td><td>İnce, yumuşak, altın sarısı</td></tr>
+      <tr><td>Deniz</td><td>Sığ ve sakin; derinlik yavaş artıyor</td></tr>
+      <tr><td>Merkezden</td><td>Araçla ~5 dk, minibüsle ~5-10 dk</td></tr>
+      <tr><td>Giriş</td><td>Ücretsiz halk plajı alanı ve ücretli plaj işletmeleri</td></tr>
+      <tr><td>Kime uygun?</td><td>Aileler, arkadaş grupları, canlı plaj günü arayanlar</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    <figure class="col-span-2 overflow-hidden rounded-xl bg-slate-100">
+      <img src={galeri[0].src} alt={galeri[0].alt} width={galeri[0].w} height={galeri[0].h} loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+      <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[0].cap}</figcaption>
+    </figure>
+    {galeri.slice(1).map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="nerede">Altınkum nerede, nasıl gidilir?</h2>
+  <p>Altınkum, Yiğitler Köyü plajından sonra gelen ilk koy olarak tarif ediliyor ve merkeze oldukça yakın. Özel araçla merkezdeki üzüm heykelinden tabelaları takip ederek yaklaşık 5 dakikada ulaşabilirsin. Merkezdeki iskele çevresinden Yiğitler yönüne giden minibüsler de var; kaynaklarda plaja kadar yaklaşık 5-10 dakika veriliyor. Yürümeyi seviyorsan merkezden yaklaşık 20-25 dakikalık bir yürüyüş gerekiyor, ancak yaz sıcağında minibüs ya da motosiklet daha rahat.</p>
+  <p>Yiğitler minibüslerinin belediye binası önünden yaklaşık yarım saatte bir kalktığı bilgisi var; sefer saatleri sezona göre değiştiği için dönüş saatini plajdan ayrılmadan sormak iyi olur. Adadaki tüm ulaşım seçenekleri için <a href="/avsa-adasi-gezi-rotasi/#ulasim">adada ulaşım ve süreler</a> bölümüne bakabilirsin.</p>
+
+  <h2 id="kum-deniz">Kum, deniz derinliği ve rüzgar</h2>
+  <h3>Kum yapısı</h3>
+  <p>Altınkum'un kumu ince taneli, yumuşak ve altın sarısı. Kıyıda iri çakıl ya da kaya yerine kum hâkim olduğu için çıplak ayakla yürümek rahat. Plaj geniş olduğundan yoğun günlerde bile yer bulmak çoğunlukla mümkün oluyor.</p>
+  <h3>Deniz derinliği</h3>
+  <p>Kaynaklarda Altınkum'daki deniz sığ olarak anlatılıyor: kıyıdan birkaç metre açılınca bile su derinliği yavaş yavaş artıyor. Bu, yüzme bilmeyenler ve çocuklar için güven verici; ancak sığ deniz çocuğu gözetimsiz bırakmak için bir neden değil. Çocuklar için yine de kolluk ve gözetim önerilir. Deniz yosunu konusunda da kaynaklar yosunun az olduğunu belirtiyor, yine de gün ve rüzgâra göre değişebilir.</p>
+  <h3>Rüzgar ve dalga</h3>
+  <p>Altınkum kaynaklarda genellikle sakin ve az dalgalı bir koy olarak geçiyor. Bununla birlikte Marmara'da rüzgâr yönü günden güne değişiyor; lodos ya da poyraz günlerinde dalga ve su berraklığı farklılaşabilir. Bu yüzden belirli bir günün rüzgârı için yerel halka sor ya da gitmeden önce hava durumuna bak.</p>
+
+  <h2 id="aileler">Aileler ve çocuklar için</h2>
+  <p>Sığ ve sakin deniz, ince kum ve plaj işletmelerinin sunduğu şezlong, şemsiye, yemek ve içecek hizmetleri Altınkum'u ailelerin sık tercih ettiği bir koy yapıyor. Gölgelik kiralamak ya da kendi şemsiyeni getirmek çocuklu plaj günlerinde önemli; saat 12:00-16:00 arası güneşten korunmak gerekir. Daha sakin ve girişi ücretsiz bir alternatif arıyorsan yakındaki <a href="/plajlar/#karadut">Karadut Koyu</a> ailelerin diğer favorisi.</p>
+  <ul>
+    <li>Güneş kremi, şapka, deniz ayakkabısı ve yeterli su bulundur.</li>
+    <li>Bebek ve küçük çocuklar için gölge alanı önceden ayarla.</li>
+    <li>Yüzme bilmeyen çocuklarda can yeleği ya da kolluk kullan.</li>
+  </ul>
+
+  <h2 id="isletmeler">Plaj işletmeleri ve ücretsiz alan</h2>
+  <p>Altınkum'da hem ücretli plaj işletmeleri hem de ücretsiz halk plajı alanları birlikte bulunuyor. Kaynaklarda Safir Beach, Altınkum Beach, Gold Beach ve Kartal Yuvası adları anılıyor; Şahintepesi restoranı da bu bölgede hizmet veriyor. Bu işletmeler şezlong ve şemsiye kiralama, içecek ve yemek servisi gibi hizmetler sunuyor; müzik ve sosyal ortamı öne çıkan yerler "canlı plaj günü" arayanlar için uygun.</p>
+  <p>Şezlong, şemsiye, duş ve tuvalet ücretleri işletmeye ve sezona göre değişiyor; bu sayfada sabit fiyat vermiyoruz. Bütçeni korumak istiyorsan havlunu ve gölgeliğini alıp ücretsiz alana yerleşebilirsin; ücretsiz alanın tam yeri ve büyüklüğü değişkenlik gösterebileceğinden yerel halka ya da plajdaki görevlilere sor.</p>
+
+  <h2 id="yeme-icme">Yeme-içme ve olanaklar</h2>
+  <p>Altınkum çevresinde kafe, restoran ve atıştırmalık yerleri oldukça fazla; plajdan ayrılmadan yemek yemek mümkün. Kaynaklarda Ege ve Marmara mutfağından yemekler, soğuk içecekler ve atıştırmalıklar sunulduğu belirtiliyor. Yerel lezzetleri tanımak için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a> rehberimize bakabilirsin. Küçük işletmelerde kartlı ödeme çalışmayabileceği için yanında nakit bulundur.</p>
+
+  <h2 id="sezon">Ne zaman gidilir?</h2>
+  <p>Deniz sezonunun mayıs başında, Hıdırellez ile birlikte açıldığı belirtiliyor; plaj işletmelerinin çoğu yaz boyunca hizmet veriyor. En kalabalık dönem temmuz ve ağustos, özellikle hafta sonları. Sakin bir plaj günü için sabah saatleri ya da sezon başı ile eylül daha rahat. Sezon dışında işletmelerin çoğu kapalı olabilir; gitmeden önce aramak en doğrusu.</p>
+
+  <h2 id="ipuclari">Plaj günü ipuçları</h2>
+  <ul>
+    <li><strong>Erken git:</strong> Hafta sonları sabah saatlerinde yer bulmak daha kolay.</li>
+    <li><strong>Dönüşü planla:</strong> Minibüsün son seferini öğren; geç kalırsan taksi ya da motosiklet gerekebilir.</li>
+    <li><strong>Güneşe dikkat:</strong> Öğle saatlerinde gölgelik şart.</li>
+    <li><strong>Atıkları topla:</strong> Ücretsiz alanlarda çöpünü kendin götür.</li>
+    <li><strong>Akşam planı:</strong> Gün batımı için <a href="/gezilecek-yerler/#degirmenardi">Değirmenardı</a>, gece için <a href="/barlar-sokagi/">Barlar Sokağı</a>.</li>
+  </ul>
+
+  <h2 id="yakin">Altınkum'a yakın diğer plajlar</h2>
+  <p>Altınkum'dan sonra sakin bir mola için <a href="/plajlar/#karadut">Karadut Koyu</a> (uzun sahil, ücretsiz giriş, sığ deniz), yalnızca kadınlara ayrılmış <a href="/kadinlar-plaji/">Kadınlar Plajı</a> ve adanın en geniş plajı <a href="/cinar-koyu/">Çınar Koyu</a> sırada. Tüm koylar için <a href="/plajlar/">Avşa plajları ve koyları</a> rehberine bakabilirsin.</p>
+
+  <div id="konaklama"></div>
+  <StayLinks items={yigitler} title="Altınkum'a yakın: Yiğitler'de konaklama" />
+  <p><a href="/yigitler-konaklama/">Yiğitler konaklama rehberi</a>nde tüm seçenekler listeleniyor. Yiğitler çevresi Altınkum, Karadut ve Kadınlar Plajı'na yakın, sakin ve köy havasında bir bölge; merkez ve Barlar Sokağı ise araçla birkaç dakika. Seçenekleri tür tür görmek için <a href="/avsa-otelleri/">Avşa otelleri</a>, <a href="/avsa-pansiyonlari/">pansiyonları</a>, <a href="/avsa-apartlari/">apartları</a> ve <a href="/kiralik-evler/">kiralık evleri</a> inceleyebilirsin. Adaya ulaşım için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına göz at.</p>
+</InfoLayout>

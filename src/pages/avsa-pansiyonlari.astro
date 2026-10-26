@@ -1,0 +1,123 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays, featuresOf } from "../data/stays";
+
+const title = "Avşa Pansiyonları ve Motelleri | avsaadasi.net";
+const description =
+  "Avşa Adası pansiyonları ve motelleri: merkez, Değirmenardı ve sakin bölgelerde bütçeye uygun, mutfaklı, denize yakın konaklamayı karşılaştır.";
+
+const toc = [
+  { id: "genel", label: "Pansiyon ve motel nedir?" },
+  { id: "liste", label: "Tüm pansiyonlar ve moteller" },
+  { id: "bolgeler", label: "Bölgeye göre seçenekler" },
+  { id: "olanaklar", label: "Olanaklara göre seçenekler" },
+  { id: "kimler", label: "Kimler için uygun?" },
+  { id: "nasil-secilir", label: "Seçerken nelere bakılır?" },
+  { id: "rezervasyon", label: "Rezervasyon ve bütçe ipuçları" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const list = stays.filter((s) => s.type === "pansiyon");
+const has = (s: (typeof stays)[number], key: string) => featuresOf(s).some((f) => f.key === key);
+const items = (arr: typeof list, note?: (s: (typeof list)[number]) => string) => arr.map((stay) => ({ stay, note: note ? note(stay) : stay.tagline }));
+
+const merkez = list.filter((s) => s.area === "Merkez");
+const degirmen = list.filter((s) => s.area === "Değirmenardı");
+const digerAlan = list.filter((s) => s.area !== "Merkez" && s.area !== "Değirmenardı");
+const deniz = list.filter((s) => has(s, "deniz"));
+const havuz = list.filter((s) => has(s, "havuz"));
+const cocuk = list.filter((s) => has(s, "cocuk") || s.amenities.some((a) => /oyun park/i.test(a)));
+const mutfak = list.filter((s) => s.amenities.some((a) => /mutfak/i.test(a)));
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası pansiyonları ve motelleri",
+  itemListElement: list.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: `${origin}/konaklama/${s.slug}/` })),
+};
+
+const faq = [
+  { q: "Avşa'da pansiyon mu otel mi tercih etmeliyim?", a: "Bütçeni düşük tutmak, sade ve samimi bir konaklama istiyorsan pansiyon ve motel uygun; havuz, aquapark, otel servisi ve kahvaltı gibi olanaklar için otel daha kapsamlı." },
+  { q: "Avşa'daki pansiyonlarda mutfak var mı?", a: "Birçok pansiyon ve motel odasında mutfak bulunuyor. Her tesisin sayfasında olanaklar listeleniyor; emin olmak için tesise sorabilirsin." },
+  { q: "Denize yakın pansiyon bulabilir miyim?", a: "Evet. Merkezde ve Değirmenardı'nda denize sıfır ya da denize birkaç metre mesafede motel ve pansiyonlar var. 'Olanaklara göre' bölümünde bunları ayrıca listeledik." },
+  { q: "Pansiyon fiyatlarını nasıl öğrenirim?", a: "Fiyatlar sezona, güne ve oda tipine göre değişiyor. Tesisin sayfasındaki WhatsApp düğmesinden doğrudan sorabilirsin." },
+  { q: "Çocuklu aileler için pansiyon uygun mu?", a: "Bazı pansiyon ve motellerde çocuk oyun parkı, bahçe ya da havuz bulunuyor. Çocuklu aileler için bu seçenekleri ayrı listeledik." },
+  { q: "Pansiyonda kahvaltı dahil mi?", a: "Tesise göre değişiyor. Kahvaltı olup olmadığını ve ücretini rezervasyon sırasında sormak en doğrusu." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Pansiyonları ve Motelleri"
+  intro="Bütçeye uygun, sade ve samimi konaklama: Avşa Adası'nda tatil bütçeni zorlamadan Marmara Denizi'ne yakın kalmak için pansiyon ve motelleri bölgelerine ve olanaklarına göre karşılaştır."
+  crumb="Pansiyonlar"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/kategori/avsa-pansiyonlari-kapak.webp"
+  extraLd={[ld]}
+>
+  <figure class="not-prose mb-6">
+    <img src="/img/kategori/avsa-pansiyonlari-kapak.webp" alt="Avşa Adası pansiyon ve motelleri: balkonlu motel binası" width="600" height="316" loading="eager" decoding="async" class="aspect-[16/7] w-full rounded-2xl object-cover" />
+    <figcaption class="mt-2 text-xs text-slate-500">Görsel: <a class="underline" href="/konaklama/ozcan-urun-motel/">Özcan Ürün Motel</a></figcaption>
+  </figure>
+
+  <h2 id="genel">Pansiyon ve motel nedir?</h2>
+  <p>Avşa'da pansiyonlar ve moteller, genellikle daha küçük ölçekli ve aile işletmesi olan, odaları sade ama işlevsel konaklama tesisleri. Otellerde bulunan havuz, aquapark ya da oda servisi gibi geniş hizmetlerden çok, uygun bütçe, samimi ortam ve denize yakınlık öne çıkıyor. Birçok pansiyon ve motel odasında mutfak, klima ve balkon bulunduğundan kendi tempoda bir tatil yapmak mümkün.</p>
+  <p>Sitemizde {list.length} pansiyon ve motel listeleniyor. Her birinin sayfasında odalar, olanaklar, çevredeki mesafeler ve WhatsApp ile ulaşabileceğin iletişim bilgisi yer alıyor.</p>
+
+  <div id="liste"></div>
+  <StayLinks items={items(list)} title={`Avşa pansiyonları ve motelleri (${list.length} tesis)`} />
+
+  <h2 id="bolgeler">Bölgeye göre seçenekler</h2>
+  <h3>Merkez: çarşı, iskele ve eğlence yakınında</h3>
+  <p>Merkezdeki pansiyon ve moteller feribot iskelesine, çarşıya, restoranlara ve <a href="/barlar-sokagi/">Barlar Sokağı</a>'na yürüme mesafesinde. Denize sıfır olanlar da var. Eğlenceyi sevenler ve arabasız gelenler için pratik; akşamları müzik ve kalabalık olabileceğini hesaba katmak gerekiyor.</p>
+  <StayLinks items={items(merkez)} title="Merkezdeki pansiyon ve moteller" />
+  {degirmen.length > 0 && (
+    <>
+      <h3>Değirmenardı: sakin ve gün batımına yakın</h3>
+      <p>İskelenin yakınında, gün batımı noktasıyla bilinen sakin bir bölge. Bahçeli ve deniz manzaralı motel seçenekleri burada bulunuyor.</p>
+      <StayLinks items={items(degirmen)} title="Değirmenardı'ndaki moteller" />
+    </>
+  )}
+  {digerAlan.length > 0 && (
+    <>
+      <h3>Adanın diğer bölgeleri</h3>
+      <p>Bazı pansiyon ve moteller adanın genelinde konumlanıyor; iskeleye ve denize mesafe tesise göre değişiyor. Ayrıntılı konum bilgisi için tesis sayfalarındaki "yakın çevre" bölümüne bakabilirsin.</p>
+      <StayLinks items={items(digerAlan)} title="Adanın diğer bölgelerindeki seçenekler" />
+    </>
+  )}
+  <p>Bölgelerin tamamı için <a href="/avsa-adasi/">Avşa Adası rehberine</a>, plaj seçimi için <a href="/plajlar/">plajlar sayfasına</a> bakabilirsin.</p>
+
+  <h2 id="olanaklar">Olanaklara göre seçenekler</h2>
+  <p>Aşağıdaki listeler tesis sayfalarındaki bilgilerden otomatik hazırlandı. Hizmetler sezona göre değişebilir; rezervasyondan önce teyit etmeni öneririz.</p>
+  <StayLinks items={items(deniz, () => "Denize sıfır / çok yakın")} title="Denize sıfır ve denize yakın" />
+  <StayLinks items={items(mutfak, () => "Mutfaklı oda")} title="Mutfaklı odalar" />
+  <StayLinks items={items(havuz, () => "Havuzlu")} title="Havuzlu pansiyon ve moteller" />
+  <StayLinks items={items(cocuk, () => "Çocuk oyun parkı veya aile dostu")} title="Çocuklu aileler için" />
+
+  <h2 id="kimler">Kimler için uygun?</h2>
+  <h3>Bütçesini kontrol altında tutmak isteyenler</h3>
+  <p>Pansiyon ve moteller, konaklamaya fazla bütçe ayırmak istemeyenler için doğal tercih. Mutfaklı odalarda kahvaltı ve basit öğünleri kendin hazırlayarak yeme-içme masrafını da azaltabilirsin.</p>
+  <h3>Aileler</h3>
+  <p>Bahçesi, çocuk oyun parkı ya da havuzu olan tesisler çocuklar için gün içinde ek bir eğlence alanı sunuyor. Sakin bir konumdaki pansiyonlar uyku düzeni olan aileler için de uygun.</p>
+  <h3>Arkadaş grupları ve gençler</h3>
+  <p>Merkezdeki moteller, eğlenceye yürüyerek ulaşmak isteyen gruplar için pratik. Gece dönüş yolunu düşünmeden eğlenmek için <a href="/gece-hayati/">gece hayatı</a> rehberimizdeki mesafelere bakabilirsin.</p>
+  <h3>Uzun kalış planlayanlar</h3>
+  <p>Mutfaklı pansiyon odaları ve apartlar, bir haftadan uzun kalışlarda esneklik sağlıyor. Daha geniş daire düzeni için <a href="/avsa-apartlari/">apart daireleri</a> da inceleyebilirsin.</p>
+
+  <h2 id="nasil-secilir">Seçerken nelere bakılır?</h2>
+  <ul>
+    <li><strong>Konum:</strong> Denize ve iskeleye mesafe; sakin bölge mi, merkez mi?</li>
+    <li><strong>Oda donanımı:</strong> Klima, mutfak, buzdolabı, balkon ve özel banyo olup olmadığı.</li>
+    <li><strong>Yeme-içme:</strong> Kahvaltı sunuluyor mu, çevrede market ve restoran var mı?</li>
+    <li><strong>Plaj olanakları:</strong> Bazı tesislerde konaklama boyunca ücretsiz şezlong ve şemsiye verilebiliyor; bunu rezervasyonda sor.</li>
+    <li><strong>Ödeme yöntemi:</strong> Kredi kartı geçiyor mu, nakit mi isteniyor; peşinat var mı?</li>
+  </ul>
+
+  <h2 id="rezervasyon">Rezervasyon ve bütçe ipuçları</h2>
+  <p>Küçük işletmelerde oda sayısı sınırlı olduğundan yaz hafta sonları ve bayram dönemlerinde yerler hızla doluyor. Tarihini belirler belirlemez müsaitliği sormanı, ardından feribot biletini almanı öneririz. Fiyatlar sezona, güne ve oda tipine göre değiştiği için güncel fiyatı her tesisin sayfasındaki WhatsApp düğmesinden doğrudan işletmeden öğrenebilirsin; aracı olmadan konuştuğun için pazarlık ve kampanya bilgisi de doğrudan sana ulaşır.</p>
+  <p>Adaya nasıl geleceğini <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> sayfasında, güncel saatleri <a href="/feribot-saatleri/">feribot saatleri</a> sayfasında bulabilirsin. Daha fazla olanak istiyorsan <a href="/avsa-otelleri/">Avşa otelleri</a>, müstakil bir tatil için <a href="/kiralik-evler/">kiralık evler</a> sayfalarına göz atmanı öneririz.</p>
+</InfoLayout>

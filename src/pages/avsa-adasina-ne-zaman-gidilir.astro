@@ -1,0 +1,129 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa Adası'na Ne Zaman Gidilir? Aylara Göre | avsaadasi.net";
+const description =
+  "Avşa'ya ne zaman gidilir? Avşa Adası'nda Mayıs'tan Ekim'e aylara göre hava, deniz suyu sıcaklığı, kalabalık ve rüzgar; Haziran-Eylül ve Temmuz-Ağustos kıyası.";
+
+const galeri = [
+  { src: "/img/ne-zaman-gidilir/avsa-rihtim-gun-batimi-balikcilar-1.webp", w: 500, h: 375, alt: "Avşa Adası rıhtımında gün batımı ve olta balıkçıları", cap: "Rıhtımda gün batımı" },
+  { src: "/img/ne-zaman-gidilir/avsa-plaj-pedalli-botlar-aksam-1.webp", w: 500, h: 333, alt: "Avşa Adası plajında akşamüstü kıyıya çekilmiş pedallı botlar", cap: "Akşamüstü plaj" },
+  { src: "/img/ne-zaman-gidilir/avsa-sahil-mavi-saat-1.webp", w: 640, h: 261, alt: "Avşa Adası sahilinde akşam alacakaranlığı ve kıyı boyunca ışıklar", cap: "Akşam sahil" },
+];
+
+const toc = [
+  { id: "ozet", label: "Kısaca: en iyi zaman" },
+  { id: "tablo", label: "Aylara göre tablo" },
+  { id: "mayis", label: "Mayıs" },
+  { id: "haziran", label: "Haziran" },
+  { id: "temmuz-agustos", label: "Temmuz ve Ağustos" },
+  { id: "eylul", label: "Eylül" },
+  { id: "ekim", label: "Ekim ve sezon dışı" },
+  { id: "karsilastirma", label: "Sezon içi / sezon dışı" },
+  { id: "ruzgar", label: "Rüzgar ve sörf" },
+  { id: "ipuclari", label: "Planlama ipuçları" },
+];
+
+const faq = [
+  { q: "Avşa'ya en iyi hangi ayda gidilir?", a: "Hem deniz sıcaklığı hem de kalabalık dengesi için kaynaklar genellikle Haziran sonu ile Eylül başını öneriyor. Kalabalıktan ve yüksek fiyattan kaçınmak isteyenler için Haziran ve Eylül, canlı bir atmosfer isteyenler için Temmuz ve Ağustos öne çıkıyor." },
+  { q: "Avşa'da Eylül'de denize girilir mi?", a: "Evet. Marmara Denizi'nin Eylül ayı uzun yıllar yüzey suyu ortalaması resmî istatistiklere göre yaklaşık 22,3 °C. Sığ koylarda su daha ılık olabiliyor; hava ve rüzgâra göre değişir." },
+  { q: "Avşa'da Mayıs'ta denize girilir mi?", a: "Deniz sezonu Mayıs başında Hıdırellez ile açılıyor deniliyor, ancak Marmara'nın Mayıs ortalaması yaklaşık 15,4 °C ile soğuk. Çoğu kişi için yüzmeden çok yürüyüş ve gezi ayı." },
+  { q: "Avşa'da deniz suyu en sıcak ne zaman?", a: "Ağustos. Marmara Denizi'nin uzun yıllar Ağustos ortalaması yaklaşık 24,2 °C; kaynaklarda Avşa için 25-27 °C aralığı da geçiyor. Bu rakamlar tahmini ve değişkendir." },
+  { q: "Avşa en kalabalık ne zaman?", a: "Temmuz ve Ağustos, özellikle hafta sonları ve bayram dönemleri. Haziran ve Eylül daha rahat; kaynaklarda bu aylar için 'orta' yoğunluk deniyor." },
+  { q: "Sezon dışında Avşa'ya gidilir mi?", a: "Gidilir ama plaj işletmeleri, restoranlar ve gece hayatı mekânlarının çoğu kapalı olabilir; feribot ve minibüs seferleri de azalır. Gitmeden önce tesis ve ulaşım şirketini ara." },
+  { q: "Avşa'da rüzgar nasıl, sörf yapılır mı?", a: "Marmara'da rüzgâr yönü günden güne değişiyor. Avşa için güvenilir bir sörf ya da rüzgâr sporları verisi bulamadık; bu tür planlarda güncel rüzgâr tahminine ve yerel halka başvur." },
+  { q: "Bayram dönemlerinde Avşa'ya gitmek mantıklı mı?", a: "Bayramlar çok yoğun; konaklama ve feribot biletleri haftalar önceden tükenebilir. Rezervasyonu erken yap, fiyatlar değişkenlik gösterir." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası'na Ne Zaman Gidilir?"
+  intro="Mayıs'tan Ekim'e aylara göre deniz suyu sıcaklığı, hava, kalabalık ve rüzgâr: Marmara Denizi'ndeki Avşa'ya tatil için hangi ayda gideceğini seçmen için tablo, karşılaştırma ve ipuçları."
+  crumb="Ne Zaman Gidilir?"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+>
+  <h2 id="ozet">Kısaca: Avşa'ya en iyi zaman</h2>
+  <p>Avşa bir yaz adası: plaj işletmeleri, restoranlar ve gece hayatı büyük ölçüde Haziran ile Eylül arasında canlanıyor. Denizin yüzmeye uygun olduğu ve adanın hâlâ rahat nefes aldığı en dengeli dönem çoğu kaynakta Haziran sonu ile Eylül başı. Kalabalık, müzik ve en sıcak deniz istiyorsan Temmuz ve Ağustos; sakinlik ve daha ılımlı fiyat istiyorsan Haziran ve Eylül daha uygun.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Hava, deniz suyu sıcaklığı, kalabalık ve fiyat konularında kaynaklar tahmini ve birbirinden farklı değerler veriyor; bu sayfada mümkün olduğunca ortalama aralıklar kullandık, kesin sayı vermedik (son kontrol: 24 Ekim 2026). Her yıl ve her gün değişkenlik gösterebilir; gitmeden önce güncel hava durumuna bak.
+  </div>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    <figure class="overflow-hidden rounded-xl bg-slate-100">
+      <img src={galeri[0].src} alt={galeri[0].alt} width={galeri[0].w} height={galeri[0].h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+      <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[0].cap}</figcaption>
+    </figure>
+    <figure class="overflow-hidden rounded-xl bg-slate-100">
+      <img src={galeri[1].src} alt={galeri[1].alt} width={galeri[1].w} height={galeri[1].h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+      <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[1].cap}</figcaption>
+    </figure>
+    <figure class="col-span-2 overflow-hidden rounded-xl bg-slate-100">
+      <img src={galeri[2].src} alt={galeri[2].alt} width={galeri[2].w} height={galeri[2].h} loading="lazy" decoding="async" class="aspect-[5/2] w-full object-cover" />
+      <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[2].cap}</figcaption>
+    </figure>
+  </div>
+
+  <h2 id="tablo">Aylara göre özet tablo</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Ay</th><th>Hava (kaynaklarda)</th><th>Deniz (Marmara ort.)</th><th>Kalabalık</th><th>Kısa yorum</th></tr></thead>
+    <tbody>
+      <tr><td>Mayıs</td><td>~20-25 °C, ılık</td><td>~15,4 °C</td><td>Düşük</td><td>Sezon açılışı; deniz soğuk, gezi ve yürüyüş ayı</td></tr>
+      <tr><td>Haziran</td><td>~25-30 °C</td><td>~20,2 °C</td><td>Orta</td><td>Yüzülebilir, rahat; işletmeler açılıyor</td></tr>
+      <tr><td>Temmuz</td><td>~30-35 °C, çok sıcak</td><td>~23,4 °C</td><td>Yüksek</td><td>Canlı gece hayatı, yoğun plajlar</td></tr>
+      <tr><td>Ağustos</td><td>~30-35 °C, çok sıcak</td><td>~24,2 °C</td><td>Yüksek</td><td>Deniz en sıcak, en kalabalık dönem</td></tr>
+      <tr><td>Eylül</td><td>~25-30 °C</td><td>~22,3 °C</td><td>Orta, düşüyor</td><td>Ilık deniz, sakin plaj, sezon sonu</td></tr>
+      <tr><td>Ekim</td><td>Daha serin</td><td>~18,8 °C</td><td>Düşük</td><td>Serin; işletmelerin çoğu kapanıyor</td></tr>
+    </tbody>
+  </table></div>
+  <p class="text-sm text-slate-600">Deniz sütunu, Meteoroloji Genel Müdürlüğü'nün yayımladığı Marmara Denizi 1970-2025 uzun yıllar aylık yüzey suyu ortalamalarıdır; Avşa'ya özel ölçüm değildir. Bazı rehber siteler Avşa için daha yüksek tahmini aralıklar veriyor (örneğin Haziran 20-23, Temmuz 23-26, Ağustos 25-27, Eylül 22-25 °C); kaynaklar ölçüm değil tahmin olduğunu belirtiyor. Sığ koylar daha hızlı ısınır. Hava sıcaklığı ve kalabalık sütunları bu rehber sitelerden derlenmiş yaklaşık değerlerdir.</p>
+
+  <h2 id="mayis">Mayıs: sezon açılışı</h2>
+  <p>Kaynaklara göre deniz sezonu Mayıs başında, Hıdırellez ile açılıyor. Ancak Marmara'nın Mayıs ortalaması yaklaşık 15 °C; çoğu kişi için bu yüzmekten çok yürüyüş, köy gezisi, manastır ve fotoğraf için bir ay. Adada kalabalık düşük ve fiyatlar genellikle yaz sezonuna göre daha ılımlı; ancak plaj işletmeleri ve gece hayatı henüz tam açık olmayabilir. Gezi planı için <a href="/gezilecek-yerler/">gezilecek yerler</a> rehberine bak.</p>
+
+  <h2 id="haziran">Haziran: rahat ve yüzülebilir</h2>
+  <p>Haziran'da hava ısınıyor, deniz yaklaşık 20 °C'ye çıkıyor ve çoğu kaynak denize sorunsuz girilebildiğini belirtiyor. Kalabalık orta düzeyde; plajlarda yer bulmak kolay, restoranlarda bekleme yok denecek kadar az. Haziran sonuna doğru işletmelerin çoğu hizmette. Daha serin su sevenler ve kalabalıktan kaçanlar için güçlü bir seçenek. Plaj seçimi için <a href="/plajlar/">plajlar rehberine</a> bak.</p>
+
+  <h2 id="temmuz-agustos">Temmuz ve Ağustos: zirve sezon</h2>
+  <p>Temmuz ve Ağustos'ta hava çok sıcak, deniz yılın en ılık seviyesinde (Marmara ortalaması 23-24 °C, Avşa için kaynaklarda 25-27 °C'ye varan tahminler). Plaj işletmeleri tam kapasite, <a href="/barlar-sokagi/">Barlar Sokağı</a> ve <a href="/gece-hayati/">gece hayatı</a> en canlı dönemini yaşıyor. Karşılığında kalabalık, konaklama ve feribot biletlerinde yoğunluk, yüksek fiyat ve geç saatlere kadar süren müzik de var. Yaz hafta sonları ve bayramlar için bilet ve konaklamayı haftalar öncesinden ayırtmak şart.</p>
+
+  <h2 id="eylul">Eylül: ılık deniz, sakin plajlar</h2>
+  <p>Eylül birçok kişi için Avşa'nın en keyifli ayı. Marmara'nın Eylül ortalaması yaklaşık 22 °C; hava hâlâ sıcak, ama kalabalık azalıyor. Ay ilerledikçe bazı işletmeler kapanabilir; hafta içi gidersen plajlar neredeyse sana ait. Sezon sonu etkileri (kapanan mekânlar, azalan seferler) için gitmeden önce arayıp teyit et. <a href="/feribot-saatleri/">Feribot saatleri</a> sezona göre değişiyor.</p>
+
+  <h2 id="ekim">Ekim ve sezon dışı</h2>
+  <p>Ekim'de deniz yaklaşık 19 °C'ye geriliyor; kaynaklarda ay sonuna kadar denize girenlerden söz edilse de çoğu işletme kapanıyor, minibüs ve feribot seferleri azalıyor. Kış aylarında ada çok sakin: yürüyüş, fotoğraf ve dinlenme isteyenler için uygun, plaj ve eğlence beklentisi olanlar için değil. Sezon dışı gidenler konaklama, yeme-içme ve ulaşım seçeneklerini önceden teyit etmeli; ayrıntı için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> rehberine bak.</p>
+
+  <h2 id="karsilastirma">Sezon içi ve sezon dışı karşılaştırması</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Konu</th><th>Temmuz-Ağustos</th><th>Haziran ve Eylül</th></tr></thead>
+    <tbody>
+      <tr><td>Kalabalık</td><td>Yüksek; hafta sonları çok yoğun</td><td>Orta, Eylül'de düşüyor</td></tr>
+      <tr><td>Deniz</td><td>En ılık (~23-24 °C Marmara ort.)</td><td>~20 °C (Haziran), ~22 °C (Eylül)</td></tr>
+      <tr><td>Fiyat</td><td>Genellikle en yüksek</td><td>Genellikle daha ılımlı</td></tr>
+      <tr><td>Gece hayatı</td><td>Tam açık, çok canlı</td><td>Kısmen açık, daha sakin</td></tr>
+      <tr><td>Rezervasyon</td><td>Haftalar önceden</td><td>Daha esnek</td></tr>
+      <tr><td>Kime uygun?</td><td>Eğlence, kalabalık, sıcak deniz</td><td>Sakinlik, rahat plaj, bütçe</td></tr>
+    </tbody>
+  </table></div>
+  <p>Konaklama fiyat farkı için kaynaklarda net bir yüzde bulamadık; her yıl ve her tesis için değiştiğinden sabit bir oran vermiyoruz. Tesislerin güncel fiyatını tesis sayfasındaki telefon ve WhatsApp'tan sor. Feribot ücretleri için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfasına bak.</p>
+
+  <h2 id="ruzgar">Rüzgar ve sörf</h2>
+  <p>Marmara'da rüzgâr yönü ve şiddeti günden güne değişiyor; fırtına ve lodos günlerinde feribot seferleri aksayabiliyor, dalga ve su berraklığı farklılaşabiliyor. Avşa için aylara göre güvenilir bir rüzgâr istatistiği ya da yerleşik bir sörf / uçurtma sörfü olanağı bilgisi bulamadık; bu nedenle rüzgâr sporları planı yapıyorsan güncel rüzgâr tahminine ve yerel halka başvurmanı öneririz. Tatil planını etkileyen asıl durum seferlerin hava nedeniyle iptali; dönüş gününü tamponla planlamak iyi bir fikir.</p>
+
+  <h2 id="ipuclari">Planlama ipuçları</h2>
+  <ul>
+    <li><strong>Yüzmek öncelikse:</strong> Haziran sonu - Eylül başı arasını hedefle.</li>
+    <li><strong>Sakinlik öncelikse:</strong> Haziran başı ya da Eylül ortası, hafta içi.</li>
+    <li><strong>Eğlence öncelikse:</strong> Temmuz-Ağustos, ama erken rezervasyon yap.</li>
+    <li><strong>Bayramlar:</strong> Çok yoğun; konaklama ve biletleri haftalar önceden ayırt.</li>
+    <li><strong>Dönüşü garantile:</strong> Hava nedeniyle sefer iptali olabilir; esnek dönüş planı yap.</li>
+    <li><strong>Güneşten korun:</strong> Öğle saatlerinde gölgelik, güneş kremi, şapka ve su.</li>
+  </ul>
+  <p>Planını tamamlamak için <a href="/avsa-adasi-gezi-rotasi/">1, 2 ve 3 günlük gezi rotalarına</a>, ulaşım için <a href="/istanbuldan-avsaya/">İstanbul'dan Avşa'ya</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına, adaya genel bakış için <a href="/avsa-adasi/">Avşa Adası rehberine</a> bak. Konaklama için <a href="/yigitler-konaklama/">Yiğitler</a> ve <a href="/avsa-merkez-konaklama/">merkez</a> bölge sayfalarımız ile <a href="/avsa-otelleri/">oteller</a>, <a href="/avsa-pansiyonlari/">pansiyonlar</a>, <a href="/avsa-apartlari/">apartlar</a> ve <a href="/kiralik-evler/">kiralık evler</a> hazır.</p>
+
+  <p class="text-sm text-slate-500">Kaynaklar: Meteoroloji Genel Müdürlüğü, Marmara Denizi deniz suyu sıcaklığı istatistikleri (1970-2025) ve Avşa rehberi niteliğindeki yayınlar. Kesin ve güncel bilgi için MGM tahminini kontrol et.</p>
+</InfoLayout>

@@ -1,0 +1,130 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Kadınlar Plajı: Kimler Girebilir? | avsaadasi.net";
+const description =
+  "Avşa Adası Kadınlar Plajı: yalnızca kadınlara ayrılmış ücretsiz plaj, nerede, nasıl gidilir, tuvalet ve kafe bulunmaması, getirilmesi gerekenler, konaklama.";
+
+const origin = "https://www.avsaadasi.net";
+
+const toc = [
+  { id: "ozet", label: "Kadınlar Plajı kısaca" },
+  { id: "kimler", label: "Kimler girebilir?" },
+  { id: "nerede", label: "Nerede, nasıl gidilir?" },
+  { id: "olanaklar", label: "Olanaklar: tuvalet ve kafe yok" },
+  { id: "kum-deniz", label: "Kum, deniz ve rüzgar" },
+  { id: "hazirlik", label: "Yanına almalıların listesi" },
+  { id: "sezon", label: "Ne zaman gidilir?" },
+  { id: "yakin", label: "Yakın plajlar" },
+  { id: "konaklama", label: "Kadınlar Plajı'na yakın konaklama" },
+];
+
+const beach = {
+  "@context": "https://schema.org",
+  "@type": "Beach",
+  "@id": `${origin}/kadinlar-plaji/#kadinlar-plaji`,
+  name: "Kadınlar Plajı (Avşa Adası)",
+  alternateName: ["Avşa Kadınlar Plajı"],
+  description:
+    "Avşa Adası'nda Yiğitler Köyü çevresinde, yalnızca kadınlara ayrılmış, giriş ücreti alınmayan ve üzerinde tuvalet, kafe gibi işletmesi bulunmayan plaj.",
+  url: `${origin}/kadinlar-plaji/`,
+  isAccessibleForFree: true,
+  touristType: ["Kadın gezginler", "Sakin plaj arayanlar"],
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Kadınlar Plajı Yiğitler Avşa Adası")}`,
+  containedInPlace: {
+    "@type": "Place",
+    name: "Yiğitler Köyü, Avşa Adası",
+    address: { "@type": "PostalAddress", addressLocality: "Avşa Adası", addressRegion: "Balıkesir", addressCountry: "TR" },
+  },
+};
+
+// Kadınlar Plajı'na yakın tesisler: nearby etiketinde ya da açıklamada Kadınlar Plajı geçenler + Yiğitler
+const yakin = stays
+  .filter((s) => s.nearby.some((n) => /Kadınlar Plajı/.test(n.label)) || /Kadınlar Plajı/.test(s.description))
+  .map((stay) => ({ stay, note: "Kadınlar Plajı'na yakın" }));
+const yigitler = stays
+  .filter((s) => s.area === "Yiğitler" && !yakin.some((y) => y.stay.slug === s.slug))
+  .slice(0, 4)
+  .map((stay) => ({ stay, note: "Yiğitler Köyü'nde" }));
+
+const faq = [
+  { q: "Kadınlar Plajı nedir, kimler girebilir?", a: "Kaynaklarda yalnızca kadınlara ayrılmış bir plaj olarak tanıtılıyor. Erkek çocuk giriş kuralı ve yaş sınırı kaynaklarda net değil; bu konuyu yerel halka sor." },
+  { q: "Kadınlar Plajı ücretli mi?", a: "Hayır, kaynaklara göre giriş ücretsiz." },
+  { q: "Kadınlar Plajı'nda tuvalet ve kafe var mı?", a: "Kaynaklarda plajda WC, duş, kafe, bakkal ya da market bulunmadığı belirtiliyor. Su, yiyecek ve gölgelik getirmek gerekir." },
+  { q: "Kadınlar Plajı Avşa'nın neresinde?", a: "Yiğitler Köyü çevresinde, Altınkum ve Tavşanlı yönünde. Kaynaklarda araçla yaklaşık 3 dakika, yürüyerek yaklaşık 15 dakika verilirken mesafe bilgisi kaynaklara göre farklılık gösteriyor." },
+  { q: "Kadınlar Plajı'na nasıl gidilir?", a: "Merkezden Yiğitler-Altınkum minibüsleriyle gidilebiliyor; araçla gelenler genelde üzüm bağlarının yakınında inip kısa bir yürüyüş yapıyor. Minibüs ya da taksinin plaja kadar gelmediği belirtiliyor." },
+  { q: "Kadınlar Plajı'nda giyim kuralı var mı?", a: "Kaynaklarda özel bir giyim kuralı belirtilmiyor. Plajı kullanan diğer kadınlara saygılı davranmak ve kuralları yerel halka sormak en doğrusu." },
+  { q: "Kadınlar Plajı'na yakın konaklama nerede?", a: "Yiğitler Köyü çevresindeki otel, apart ve pansiyonlar plaja yürüme ya da kısa araç mesafesinde. Sayfanın sonunda bu tesislere bağlantılar var." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Kadınlar Plajı"
+  intro="Balıkesir'in Marmara ilçesine bağlı Avşa'da yalnızca kadınlara ayrılmış, ücretsiz ve sakin bir plaj: kimler girebilir, nerede, nasıl gidilir, plajda neler yok ve yanına neler almalısın."
+  crumb="Kadınlar Plajı"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[beach]}
+>
+  <h2 id="ozet">Kadınlar Plajı kısaca</h2>
+  <p>Kadınlar Plajı, Avşa'da Yiğitler Köyü çevresinde yer alan, kaynaklara göre yalnızca kadınlara ayrılmış ve giriş ücreti alınmayan bir plaj. Plaj işletmelerinin kalabalığından uzak, rahat ve serbest bir yüzme günü isteyen kadınlar için tercih ediliyor. Üzerinde işletme olmadığından plajın cazibesi sadeliği; ama bu, hazırlıklı gitmeyi gerektiriyor.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Bu sayfadaki bilgiler kamuya açık yayınlardan derlendi (son kontrol: 24 Ekim 2026) ve kaynaklar birbiriyle tam örtüşmüyor. Kimlerin girebileceği, çocuk kuralları ve güncel durum konusunda yerel halka sor; kuralları ve plajı kullananların hassasiyetini gözet.
+  </div>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Özellik</th><th>Bilgi</th></tr></thead>
+    <tbody>
+      <tr><td>Kimler için?</td><td>Yalnızca kadınlar (kaynaklara göre)</td></tr>
+      <tr><td>Giriş</td><td>Ücretsiz</td></tr>
+      <tr><td>Konum</td><td>Yiğitler Köyü çevresi, Altınkum yönü</td></tr>
+      <tr><td>Olanaklar</td><td>Tuvalet, duş, kafe, market yok (kaynaklara göre)</td></tr>
+      <tr><td>Ulaşım</td><td>Minibüs + kısa yürüyüş ya da araç + kısa yürüyüş</td></tr>
+    </tbody>
+  </table></div>
+
+  <figure class="not-prose my-6 overflow-hidden rounded-xl bg-slate-100">
+    <img src="/img/kadinlar-plaji/kadinlar-plaji-yesil-yamac-sahil-1.webp" alt="Kadınlar Plajı Avşa, yeşil yamaçlarla çevrili sakin sahil ve berrak deniz" width="596" height="335" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+    <figcaption class="px-3 py-2 text-xs text-slate-600">Kadınlar Plajı: yeşil yamaçlarla çevrili sahil (uzaktan görünüm)</figcaption>
+  </figure>
+
+  <h2 id="kimler">Kimler girebilir?</h2>
+  <p>Kaynaklar Kadınlar Plajı'nı yalnızca kadınların kullanımına açık bir plaj olarak anlatıyor ve erkeklerin başka plajları tercih etmesi gerektiğini belirtiyor. Aynı kaynaklarda plaj hem "ücretsiz" hem de "kamuya açık" diye geçtiği için ifadeler birbirine karışıyor. Küçük erkek çocukların girip giremeyeceği, yaş sınırı ya da başka bir kural kaynaklarda net değil; bu yüzden bu konuyu <strong>yerel halka sor</strong> ve plajda o gün geçerli olan kurala uy.</p>
+  <p>Giyim konusunda kaynaklarda özel bir kural belirtilmiyor. Her durumda diğer kullanıcıların rahatlığına saygı göstermek, fotoğraf ve video çekerken başkalarını görüntülemekten kaçınmak gerekir.</p>
+
+  <h2 id="nerede">Kadınlar Plajı nerede, nasıl gidilir?</h2>
+  <p>Plaj Yiğitler Köyü çevresinde, Altınkum ve Tavşanlı yönünde yer alıyor. Kaynaklardan biri araçla yaklaşık 3 dakika ve yürüyerek yaklaşık 15 dakika veriyor; bir başkası Yiğitler köy merkezine yaklaşık 1 km uzaklıktan söz ediyor. Merkezden Yiğitler-Altınkum minibüsleri yaklaşık yarım saatte bir kalkıyor (yaz sezonunda). Minibüs ve taksinin plaja kadar gelmediği, üzüm bağlarının yakınında inip kısa bir yürüyüşle plaja ulaşıldığı belirtiliyor.</p>
+  <p>Dönüş için son minibüs saatini önceden sor. Adadaki diğer ulaşım seçenekleri için <a href="/avsa-adasi-gezi-rotasi/#ulasim">adada ulaşım ve süreler</a> bölümüne göz atabilirsin.</p>
+
+  <h2 id="olanaklar">Olanaklar: tuvalet ve kafe yok</h2>
+  <p>Kaynaklara göre Kadınlar Plajı'nda WC, duş, kabin, kafe, bakkal ya da market bulunmuyor. Bu, gün boyu kalacaksan su, yiyecek, gölgelik ve çöp torbası getirmen gerektiği anlamına geliyor. Tuvalet ihtiyacı için yakındaki Altınkum işletmelerinden yararlanıp yararlanamayacağını ve plajda duş ya da bakkal olup olmadığını <strong>yerel halka sor</strong>; olanaklar sezona göre değişebilir.</p>
+
+  <h2 id="kum-deniz">Kum, deniz derinliği ve rüzgar</h2>
+  <p>Bir kaynak plajı sığ sulu olarak tarif ediyor; ancak kum yapısı, tam derinlik ve rüzgâr durumu konusunda ayrıntılı veri yok. Çevredeki <a href="/altinkum-plaji/">Altınkum</a> ince kumlu ve sakin bir koy olarak biliniyor, fakat Kadınlar Plajı için aynı bilgiyi garanti edemeyiz. Deniz ayakkabısı, güneş kremi ve şapka her zaman işe yarar; rüzgârlı günlerde dalga değişebileceği için yüzmeden önce suyu kontrol et.</p>
+
+  <h2 id="hazirlik">Yanına almalıların listesi</h2>
+  <ul>
+    <li><strong>Su ve yiyecek:</strong> Plajda kafe ya da market olmadığı belirtiliyor.</li>
+    <li><strong>Gölgelik ve şemsiye:</strong> Şezlong kiralama yok; kendi gölgeliğini getir.</li>
+    <li><strong>Çöp torbası:</strong> Plajı temiz bırak.</li>
+    <li><strong>Deniz ayakkabısı, güneş kremi, şapka.</strong></li>
+    <li><strong>Havlu ve değişecek kıyafet:</strong> Kabin olmayabilir.</li>
+    <li><strong>Nakit ve telefon:</strong> Dönüş taksisi ya da minibüs için.</li>
+  </ul>
+
+  <h2 id="sezon">Ne zaman gidilir?</h2>
+  <p>Yaz sezonunda minibüs sıklığı daha yüksek; en rahat saatler sabah ve ikindi. Sezon başı ve eylül daha sakin olabilir. Sezon dışında ulaşım ve çevredeki işletmeler azalır; gitmeden önce teyit et.</p>
+
+  <h2 id="yakin">Yakın diğer plajlar</h2>
+  <p>Daha canlı bir plaj günü için <a href="/altinkum-plaji/">Altınkum</a>, ücretsiz ve sığ bir sahil için <a href="/plajlar/#karadut">Karadut Koyu</a>, adanın en geniş plajı için <a href="/cinar-koyu/">Çınar Koyu</a>. Tüm koylar için <a href="/plajlar/">plajlar rehberi</a>ne bak.</p>
+
+  <div id="konaklama"></div>
+  {yakin.length > 0 && <StayLinks items={yakin} title="Kadınlar Plajı'na yakın konaklama" />}
+  {yigitler.length > 0 && <StayLinks items={yigitler} title="Yiğitler Köyü'nde diğer konaklama seçenekleri" />}
+  <p><a href="/yigitler-konaklama/">Yiğitler konaklama rehberi</a>nde tüm seçenekler listeleniyor. Yiğitler çevresi Altınkum, Karadut ve Kadınlar Plajı'na yakın, sakin bir bölge. Tür tür seçenekler: <a href="/avsa-otelleri/">oteller</a>, <a href="/avsa-pansiyonlari/">pansiyonlar</a>, <a href="/avsa-apartlari/">apartlar</a>, <a href="/kiralik-evler/">kiralık evler</a>. Adaya ulaşım için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına bak.</p>
+</InfoLayout>

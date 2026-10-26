@@ -1,0 +1,148 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Çınar Koyu: Plaj, Deniz ve Ulaşım | avsaadasi.net";
+const description =
+  "Avşa Adası Çınar Koyu rehberi: adanın en geniş plajı, berrak deniz, plaj işletmeleri, ücretsiz alan, minibüsle ulaşım, aile ipuçları ve yakın konaklama.";
+
+const origin = "https://www.avsaadasi.net";
+
+const galeri = [
+  { src: "/img/cinar-koyu/cinar-koyu-tepeden-manzara-1.webp", w: 1600, h: 1100, alt: "Çınar Koyu Avşa, tepeden koy, deniz ve sahile inen yol", cap: "Tepeden Çınar Koyu" },
+  { src: "/img/cinar-koyu/cinar-koyu-sezlong-semsiye-1.webp", w: 1600, h: 1100, alt: "Çınar Koyu Avşa, şezlonglar, şemsiyeler ve kıyıdaki tepeler", cap: "Şezlong ve şemsiyeler" },
+  { src: "/img/cinar-koyu/cinar-koyu-berrak-deniz-sahil-1.webp", w: 640, h: 425, alt: "Çınar Koyu Avşa, berrak deniz ve ahşap iskele ile uzanan sahil", cap: "Berrak deniz" },
+];
+
+const toc = [
+  { id: "ozet", label: "Çınar Koyu kısaca" },
+  { id: "nerede", label: "Nerede, nasıl gidilir?" },
+  { id: "kum-deniz", label: "Kum, deniz ve rüzgar" },
+  { id: "aileler", label: "Aileler ve çocuklar için" },
+  { id: "isletmeler", label: "Plaj işletmeleri ve ücretsiz alan" },
+  { id: "yeme-icme", label: "Yeme-içme ve olanaklar" },
+  { id: "sezon", label: "Ne zaman gidilir?" },
+  { id: "ipuclari", label: "Plaj günü ipuçları" },
+  { id: "yakin", label: "Yakın plajlar" },
+  { id: "konaklama", label: "Çınar Koyu'na yakın konaklama" },
+];
+
+const beach = {
+  "@context": "https://schema.org",
+  "@type": "Beach",
+  "@id": `${origin}/cinar-koyu/#cinar-koyu`,
+  name: "Çınar Koyu (Avşa Adası)",
+  alternateName: ["Çınar Koyu Plajı", "Avşa Çınar Koyu"],
+  description:
+    "Avşa Adası'nın güney-batısında, çam ağaçlarıyla çevrili; berrak ve yosunsuz denizi, ücretsiz halk plajı alanı ve plaj işletmeleriyle bilinen, adanın en geniş plajı.",
+  url: `${origin}/cinar-koyu/`,
+  touristType: ["Aile tatili", "Plaj tatili", "Arkadaş grubu"],
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Çınar Koyu Avşa Adası")}`,
+  containedInPlace: {
+    "@type": "Place",
+    name: "Avşa Adası",
+    address: { "@type": "PostalAddress", addressLocality: "Avşa Adası", addressRegion: "Balıkesir", addressCountry: "TR" },
+  },
+};
+
+// Çınar Koyu'na adanın merkezinden gidildiği için merkez bölgesi tesisleri öne çıkar
+const merkez = stays
+  .filter((s) => s.area !== "Yiğitler" && (s.area === "Merkez" || s.nearby.some((n) => /İskele|Merkez/.test(n.label))))
+  .slice(0, 6)
+  .map((stay) => ({ stay, note: "Merkezde; Çınar Koyu'na minibüsle" }));
+
+const faq = [
+  { q: "Çınar Koyu Avşa'nın neresinde?", a: "Adanın güney-batı yakasında, çam ağaçlarıyla çevrili bir koy. Merkezden minibüsle kaynaklara göre yaklaşık 10-15 dakika." },
+  { q: "Çınar Koyu'nda deniz nasıl?", a: "Kaynaklarda deniz berrak, taşsız ve yosunsuz olarak tarif ediliyor. Derinlik ve rüzgâr konusunda net bilgi yok; o günkü koşulları yerinde sor." },
+  { q: "Çınar Koyu ücretsiz mi?", a: "Koyda ücretsiz halk plajı, piknik alanları ve otopark bulunuyor; ayrıca şezlong ve şemsiyenin ücretli olduğu plaj işletmeleri var. Ücretler değişkenlik gösterir." },
+  { q: "Çınar Koyu'nda hangi plaj işletmeleri var?", a: "Kaynaklarda Ayanya Beach, Mert Restaurant, Deniz Yıldızım Beach ve Tarihi Çınar İsmet'in Yeri adları geçiyor; bir kaynak Ataş Beach'i de sayıyor. İşletme listesi sezona göre değişebilir." },
+  { q: "Çınar Koyu'na minibüs var mı?", a: "Evet, merkezden minibüs kalkıyor. Kaynaklarda seferin yaklaşık yarım saatte bir ya da saatlik olduğu ve akşam 20:00 civarına kadar çalıştığı yazıyor; saatler sezona göre değiştiği için dönüş saatini sor." },
+  { q: "Çınar Koyu'na arabayla nasıl gidilir?", a: "Manastır Yolu tabelalarını takip edebilir ya da Yiğitler Köyü yolundan bağların yanından Çınar Koyu tabelasını izleyebilirsin. Kaynaklara göre ikinci yol, ikinci inişten sonra daha kolay." },
+  { q: "Çınar Koyu çocuklu aileler için uygun mu?", a: "Geniş plajı, ücretsiz alanı ve işletmeleri nedeniyle aileler tercih ediyor; ancak deniz derinliği net bilinmediği için çocukları gözetim altında tut ve işletmedeki cankurtaran bilgisini sor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Çınar Koyu"
+  intro="Çam ağaçlarıyla çevrili, berrak denizi ve geniş plajıyla Çınar Koyu, Marmara Denizi'ndeki Avşa'nın en büyük plajı: ücretsiz halk plajı, plaj işletmeleri ve merkezden minibüsle kolay ulaşım."
+  crumb="Çınar Koyu"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[beach]}
+>
+  <h2 id="ozet">Çınar Koyu kısaca</h2>
+  <p>Çınar Koyu, Avşa Adası'nın güney-batı yakasında, çam ağaçlarıyla çevrili bir koy. Kaynaklarda adanın en geniş plajı olarak anılıyor; denizi berrak, taşsız ve yosunsuz olarak tarif ediliyor. Hem ücretsiz halk plajı ve piknik alanı hem de şezlong, şemsiye ve yemek hizmeti veren plaj işletmeleri bulunduğu için farklı bütçelere ve plaj anlayışlarına uyuyor.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Bu sayfadaki bilgiler kamuya açık yayınlardan derlendi (son kontrol: 24 Ekim 2026); kaynaklar birbirinden farklı süre ve sefer sıklığı veriyor. İşletme ücretleri, çalışma saatleri ve minibüs seferleri değişkenlik gösterir; kesin bilgi için yerel halka ya da işletmeye sor.
+  </div>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Özellik</th><th>Bilgi</th></tr></thead>
+    <tbody>
+      <tr><td>Konum</td><td>Adanın güney-batısı, çam ağaçlarıyla çevrili</td></tr>
+      <tr><td>Deniz</td><td>Berrak, taşsız ve yosunsuz (kaynaklara göre)</td></tr>
+      <tr><td>Boyut</td><td>Adanın en geniş plajı</td></tr>
+      <tr><td>Merkezden</td><td>Minibüsle ~10-15 dk</td></tr>
+      <tr><td>Giriş</td><td>Ücretsiz halk plajı ve ücretli plaj işletmeleri</td></tr>
+      <tr><td>Kime uygun?</td><td>Aileler, gruplar, geniş ve sakin plaj arayanlar</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    <figure class="col-span-2 overflow-hidden rounded-xl bg-slate-100">
+      <img src={galeri[0].src} alt={galeri[0].alt} width={galeri[0].w} height={galeri[0].h} loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+      <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[0].cap}</figcaption>
+    </figure>
+    {galeri.slice(1).map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="nerede">Çınar Koyu nerede, nasıl gidilir?</h2>
+  <p>Koy, adanın güney-batı yakasında yer alıyor. Merkezden minibüsle kaynaklara göre yaklaşık 10 ile 15 dakikada ulaşılıyor. Minibüs sefer sıklığı kaynaklarda yarım saatte bir ile saatlik arasında veriliyor ve seferlerin yaklaşık 20:00'ye kadar sürdüğü belirtiliyor; bu değişken olduğu için dönüş saatini plajdan ayrılmadan sor.</p>
+  <p>Arabayla gidenler iki yol kullanabilir: Manastır Yolu tabelalarını takip etmek ya da Yiğitler Köyü yolundan üzüm bağlarının yanından Çınar Koyu tabelasını izlemek. Kaynaklardan birine göre ikinci yol, ikinci inişten sonra daha kolay. Koyda ücretsiz otopark alanı olduğu belirtiliyor. Adadaki diğer ulaşım seçenekleri için <a href="/avsa-adasi-gezi-rotasi/#ulasim">adada ulaşım ve süreler</a> bölümüne bak.</p>
+
+  <h2 id="kum-deniz">Kum, deniz derinliği ve rüzgar</h2>
+  <h3>Kum yapısı</h3>
+  <p>Bir kaynak Çınar Koyu'nu "taşsız ve çakılsız plaj kumu" ile tarif ederken diğeri yalnızca taşsız ve yosunsuz diyor, kum ya da çakıl bilgisi vermiyor. Bu yüzden kum tipi konusunda kesin konuşmuyoruz; deniz ayakkabısı almak her zaman işe yarar.</p>
+  <h3>Deniz derinliği</h3>
+  <p>Kaynaklarda deniz berrak ve yosunsuz olarak anlatılıyor, ama derinlik bilgisi yok. Altınkum ve Karadut gibi sığ koylar çocuklar için daha bilinen seçenekler; Çınar'da ise çocuklarla suya girerken kıyıdan başlayarak derinliği kendin kontrol et. İşletmelerde cankurtaran olduğu belirtiliyor; plaj işletmesinden bilgi al.</p>
+  <h3>Rüzgar ve dalga</h3>
+  <p>Çınar Koyu güney-batıya baktığı için rüzgâra açık olabilir; Marmara'da lodos günlerinde dalga ve su bulanıklığı değişebiliyor. Kaynaklar rüzgâr konusunda net bilgi vermiyor, o günün durumu için yerel halka sor ya da hava durumuna bak.</p>
+
+  <h2 id="aileler">Aileler ve çocuklar için</h2>
+  <p>Geniş sahili, ücretsiz piknik alanları, otopark ve işletmelerin hizmetleri Çınar Koyu'nu aileler için rahat kılıyor. Şemsiye ya da gölgelik getir, çam ağaçlarının gölgesinden yararlanmak mümkün olabilir. Çok küçük çocuklarla yüzme tercihinde daha sığ bilinen <a href="/altinkum-plaji/">Altınkum</a> ve <a href="/plajlar/#karadut">Karadut</a> alternatif; Çınar'ı ise geniş bir plaj günü için seç.</p>
+
+  <h2 id="isletmeler">Plaj işletmeleri ve ücretsiz alan</h2>
+  <p>Kaynaklarda Çınar Koyu'nda Ayanya Beach, Mert Restaurant, Deniz Yıldızım Beach ve Tarihi Çınar İsmet'in Yeri işletmeleri anılıyor; bir kaynak ayrıca Ataş Beach'i listeliyor. Ayanya Beach ve Deniz Yıldızım Beach'te yüzme için yüzer iskele olduğu, Deniz Yıldızım ve Mert Restaurant plajında cankurtaran bulunduğu belirtiliyor. Bu bilgiler sezona ve işletmeye göre değişebilir.</p>
+  <p>Ücretsiz halk plajı ve piknik alanı da var. Şezlong ve şemsiye ücretleri işletmeye göre değişiyor; bu sayfada sabit fiyat vermiyoruz, plajdaki işletmeden sor. Bütçe için havlunu, gölgeliğini ve yiyeceğini alıp ücretsiz alana yerleşebilirsin.</p>
+
+  <h2 id="yeme-icme">Yeme-içme ve olanaklar</h2>
+  <p>Koyda restoran ve plaj işletmeleri yemek, içecek ve atıştırmalık sunuyor. Yerel lezzetler için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a> rehberine bak. Küçük işletmelerde kartlı ödeme çalışmayabilir; yanında nakit bulundur. Sezon dışında işletmeler kapalı olabilir.</p>
+
+  <h2 id="sezon">Ne zaman gidilir?</h2>
+  <p>Plaj işletmelerinin çoğu yaz sezonunda açık; temmuz ve ağustos en kalabalık dönem. Sakin bir gün için sabah saatleri ya da haziran ve eylül daha uygun. Sezon dışında minibüs ve işletmeler azalır; gitmeden önce teyit et.</p>
+
+  <h2 id="ipuclari">Plaj günü ipuçları</h2>
+  <ul>
+    <li><strong>Dönüşü planla:</strong> Minibüsün son seferini öğren; saatler değişkendir.</li>
+    <li><strong>Gölgelik ve su getir:</strong> Özellikle ücretsiz alanda gün boyu kalacaksan.</li>
+    <li><strong>Deniz ayakkabısı:</strong> Kum-çakıl bilgisi kaynaklarda net olmadığı için faydalı.</li>
+    <li><strong>Çöpünü topla:</strong> Piknik alanlarında temiz bırak.</li>
+    <li><strong>Gün sonu:</strong> Plajdan sonra merkeze dönüp <a href="/gezilecek-yerler/#degirmenardi">Değirmenardı</a>'nda gün batımı izleyebilirsin.</li>
+  </ul>
+
+  <h2 id="yakin">Çınar Koyu'na yakın diğer plajlar</h2>
+  <p>Merkeze yakın yüzme için <a href="/plajlar/#mavi-koy">Mavi Koy</a>, sığ deniz için <a href="/altinkum-plaji/">Altınkum</a> ve <a href="/plajlar/#karadut">Karadut</a>, tarihi atmosfer için <a href="/plajlar/#manastir">Manastır ve Beyazsaray</a>. Tüm koylar için <a href="/plajlar/">plajlar rehberi</a>ne bakabilirsin.</p>
+
+  <div id="konaklama"></div>
+  <StayLinks items={merkez} title="Merkezde konaklama: Çınar Koyu'na minibüsle" />
+  <p>Detaylı liste için <a href="/avsa-merkez-konaklama/">Avşa merkez konaklama rehberi</a>ne bak. Çınar Koyu'na en kolay merkezden ulaşıldığı için iskele ve çarşıya yakın tesisler pratik; adanın doğu yakasındaki sakin köy havası için <a href="/avsa-adasi-gezi-rotasi/#konaklama">Yiğitler'de konaklama</a> seçeneklerine de göz at. Tür tür seçenekler: <a href="/avsa-otelleri/">oteller</a>, <a href="/avsa-pansiyonlari/">pansiyonlar</a>, <a href="/avsa-apartlari/">apartlar</a>, <a href="/kiralik-evler/">kiralık evler</a>. Adaya ulaşım için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına bak.</p>
+</InfoLayout>

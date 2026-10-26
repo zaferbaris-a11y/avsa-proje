@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Logo from "../components/Logo.astro";
+import Header from "../components/Header.astro";
+import { evler } from "../data/evler";
+import { WHATSAPP, INSTAGRAM } from "../data/site";
+
+const title = "Avşa Adası Kiralık Evler | avsaadasi.net";
+const description =
+  "Avşa Adası'nda kiralık müstakil ev, villa ve yazlık seçenekleri. Avşa'da ev sahipleriyle doğrudan iletişime geç; ilanını ücretsiz ekletmek için yaz.";
+
+const tips = [
+  { icon: "📅", title: "Tarihleri netleştir", text: "Yaz sezonunda hafta sonları hızlı doluyor. Giriş-çıkış gününü ve gece sayısını baştan sor." },
+  { icon: "🏖️", title: "Denize mesafeyi sor", text: "Evin plaja yürüme mesafesini, yolun durumunu ve merkeze uzaklığını ev sahibinden öğren." },
+  { icon: "💳", title: "Depozito ve ödeme", text: "Ön ödeme, depozito ve iptal koşullarını rezervasyondan önce yazılı olarak netleştir." },
+  { icon: "🧺", title: "Donanımı kontrol et", text: "Klima, çamaşır makinesi, mutfak eşyası, otopark ve çarşaf-havlu dahil mi, sor." },
+];
+
+const wa = (msg: string) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Avşa Adası Kiralık Evler",
+  description,
+  inLanguage: "tr",
+  url: new URL(Astro.url.pathname, Astro.site ?? "https://www.avsaadasi.net").href,
+};
+---
+
+<Layout title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <Header />
+
+  <main>
+    <section class="bg-gradient-to-br from-deniz-900 to-deniz-600 py-14 text-white md:py-20">
+      <div class="mx-auto max-w-6xl px-5">
+        <nav aria-label="Sayfa yolu" class="text-sm text-white/80"><a href="/" class="hover:underline">Ana sayfa</a> <span aria-hidden="true">/</span> Kiralık Evler</nav>
+        <h1 class="font-display mt-4 max-w-2xl text-4xl font-bold leading-tight md:text-5xl">Avşa Adası kiralık evler</h1>
+        <p class="mt-4 max-w-xl text-lg text-white/90">Müstakil ev, villa ve yazlık seçenekleri. Ev sahibiyle <strong class="text-white">doğrudan</strong> konuş, aracıya komisyon verme.</p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-5 py-14">
+      <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">İlanlar</h2>
+      {evler.length > 0 ? (
+        <ul class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {evler.map((e) => (
+            <li class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              {e.image && <img src={e.image} alt={e.name} loading="lazy" class="aspect-[4/3] w-full object-cover" />}
+              <div class="p-5">
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">{e.area}</p>
+                <h3 class="mt-1 text-lg font-bold text-deniz-900">{e.name}</h3>
+                <p class="mt-1 text-sm text-slate-500">{e.bedrooms} yatak odası · {e.guests} kişilik</p>
+                <p class="mt-3 text-sm leading-relaxed">{e.description}</p>
+                <p class="mt-4 font-bold text-deniz-900">{e.priceFrom > 0 ? `${e.priceFrom.toLocaleString("tr-TR")} ₺ / gece` : "Fiyat için arayın"}</p>
+                <div class="mt-4 flex gap-2">
+                  <a href={`https://wa.me/${e.whatsapp}`} class="flex-1 rounded-full bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-emerald-700">WhatsApp</a>
+                  <a href={`tel:${e.phone.replace(/\s/g, "")}`} class="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-deniz-900 hover:bg-slate-50">Ara</a>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="mt-6 rounded-2xl border-2 border-dashed border-slate-300 bg-white p-8 text-center md:p-12">
+          <p class="text-4xl" aria-hidden="true">🔑</p>
+          <h3 class="mt-3 text-xl font-bold text-deniz-900">Kiralık ev ilanları çok yakında</h3>
+          <p class="mx-auto mt-2 max-w-md text-slate-600">Şu an listelenen ev yok. Aradığın tarih ve kişi sayısını yaz, uygun evleri sana iletelim.</p>
+          <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+            <a href={wa("Merhaba, Avşa Adası'nda kiralık ev arıyorum. Tarih: ... Kişi sayısı: ...")} class="rounded-full bg-emerald-600 px-6 py-3 font-semibold text-white hover:bg-emerald-700">Ev arıyorum, WhatsApp'tan yaz</a>
+            <a href="/#konaklama" class="rounded-full border border-slate-300 px-6 py-3 font-semibold text-deniz-900 hover:bg-slate-50">Otel ve pansiyonlara bak</a>
+          </div>
+        </div>
+      )}
+    </section>
+
+    <section class="bg-white py-14">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Kiralık ev ararken</h2>
+        <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {tips.map((t) => (
+            <div class="rounded-2xl border border-slate-200 p-5">
+              <span class="text-2xl" aria-hidden="true">{t.icon}</span>
+              <h3 class="mt-3 font-bold text-deniz-900">{t.title}</h3>
+              <p class="mt-1 text-sm leading-relaxed">{t.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="py-14">
+      <div class="mx-auto max-w-3xl px-5 text-center">
+        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Evin mi var? İlanını ekleyelim</h2>
+        <p class="mt-3 text-slate-600">Avşa'da kiralık evin varsa fotoğraflarını ve iletişim bilgilerini gönder, sayfamızda yayınlayalım.</p>
+        <a href={wa("Merhaba, Avşa Adası'nda kiralık evimi avsaadasi.net'te yayınlatmak istiyorum.")} class="mt-6 inline-block rounded-full bg-deniz-900 px-6 py-3 font-semibold text-white hover:bg-deniz-600">İlan vermek için WhatsApp'tan yaz</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-kum-100 bg-white py-8 text-center text-sm text-slate-500">
+    <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="mb-2 inline-block font-semibold text-deniz-900 hover:text-pink-600">Instagram: @avsaadasi</a><br />
+    © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.
+  </footer>
+</Layout>

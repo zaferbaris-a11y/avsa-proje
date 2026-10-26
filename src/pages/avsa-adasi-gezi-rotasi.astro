@@ -1,0 +1,206 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Adası Gezi Rotası: 1, 2, 3 Günlük Plan | avsaadasi.net";
+const description =
+  "Avşa Adası gezi rotası: 1, 2 ve 3 günlük program. Avşa'da plajlar, köyler, manastır, şaraphaneler, gün batımı ve Barlar Sokağı; duraklar arası süreler.";
+
+const origin = "https://www.avsaadasi.net";
+
+const galeri = [
+  { src: "/img/gezi-rotasi/avsa-sahil-plaj-panorama-1.webp", w: 500, h: 375, alt: "Avşa Adası sahili, kumsal ve sahil boyunca uzanan yerleşim", cap: "Sahil ve kumsal" },
+  { src: "/img/gezi-rotasi/altinkum-plaji-sezlong-semsiye-1.webp", w: 523, h: 395, alt: "Altınkum Plajı Avşa, hasır şemsiyeler ve şezlonglar", cap: "Altınkum'da şezlong ve şemsiyeler" },
+  { src: "/img/gezi-rotasi/avsa-gun-batimi-yelkenliler-1.webp", w: 640, h: 425, alt: "Avşa Adası'nda gün batımı ve demirli yelkenliler", cap: "Gün batımı ve yelkenliler" },
+  { src: "/img/gezi-rotasi/avsa-pedalli-gun-isigi-1.webp", w: 500, h: 334, alt: "Avşa Adası açıklarında gün ışığında pedallı deniz bisikleti", cap: "Denizde pedallı gezi" },
+];
+
+const toc = [
+  { id: "once", label: "Rotadan önce bilmen gerekenler" },
+  { id: "ulasim", label: "Adada ulaşım ve süreler" },
+  { id: "1-gun", label: "1 günlük rota" },
+  { id: "2-gun", label: "2 günlük rota" },
+  { id: "3-gun", label: "3 günlük rota" },
+  { id: "hangisi", label: "Hangi rota sana uygun?" },
+  { id: "ipuclari", label: "Rota ipuçları" },
+  { id: "konaklama", label: "Rotaya göre nerede kalınır?" },
+];
+
+// Rota adımları: hem sayfada hem JSON-LD'de kullanılır
+const routes = [
+  {
+    id: "1-gun",
+    name: "Avşa 1 günlük gezi rotası",
+    text: "Merkez, Yiğitler Köyü, Altınkum, şaraphane tadımı, Değirmenardı gün batımı ve Barlar Sokağı.",
+    stops: ["Tarihi Çınaraltı", "Yiğitler Köyü", "Altınkum Koyu", "Şaraphane (Bortaçina veya Büyülübağ)", "Değirmenardı", "Barlar Sokağı"],
+  },
+  {
+    id: "2-gun",
+    name: "Avşa 2 günlük hafta sonu rotası",
+    text: "1. gün merkez, Mavi Koy ve Barlar Sokağı; 2. gün köy sahili, Manastır, Yiğitler ve Altınkum.",
+    stops: ["Merkez ve iskele", "Mavi Koy", "Değirmenardı", "Barlar Sokağı", "Merkeze yakın köy sahili", "Avşa Manastırı", "Yiğitler Köyü", "Altınkum Koyu"],
+  },
+  {
+    id: "3-gun",
+    name: "Avşa 3 günlük adayı keşfetme rotası",
+    text: "Adanın merkezini, köylerini, manastırı, şaraphaneleri, koyları ve gün batımı noktalarını üç güne yayan program.",
+    stops: ["Merkez ve Çınaraltı", "Çınar Koyu", "Barlar Sokağı", "Merkeze yakın köy sahili", "Avşa Manastırı", "Beyazsaray Koyu", "Yiğitler Köyü", "Karadut ve Altınkum", "Şahintepesi", "Kumtur", "Şaraphaneler", "Değirmenardı"],
+  },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası gezi rotaları",
+  itemListElement: routes.map((r, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `${origin}/avsa-adasi-gezi-rotasi/#${r.id}`,
+    item: {
+      "@type": "TouristTrip",
+      "@id": `${origin}/avsa-adasi-gezi-rotasi/#${r.id}`,
+      name: r.name,
+      description: r.text,
+      touristType: ["Hafta sonu kaçamağı", "Plaj tatili", "Kültür gezisi"],
+      itinerary: {
+        "@type": "ItemList",
+        itemListElement: r.stops.map((s, j) => ({ "@type": "ListItem", position: j + 1, item: { "@type": "Place", name: s } })),
+      },
+    },
+  })),
+};
+
+const merkez = stays
+  .filter((s) => s.featured !== false && s.area !== "Yiğitler" && s.nearby.some((n) => /İskele|Barlar|Merkez/.test(n.label)))
+  .slice(0, 4)
+  .map((stay) => ({ stay, note: "Merkezde, iskele ve Barlar Sokağı yakınında" }));
+const yigitler = stays.filter((s) => s.area === "Yiğitler").slice(0, 4).map((stay) => ({ stay, note: "Yiğitler Köyü, Altınkum ve Karadut'a yakın" }));
+
+const faq = [
+  { q: "Avşa'yı gezmek için kaç gün yeter?", a: "Ana noktaları görmek için 1 gün, plaj ve gece hayatını da kapsayan keyifli bir hafta sonu için 2 gün, adayı yavaş yavaş keşfetmek için 3 gün genellikle yeterli oluyor." },
+  { q: "Avşa'da bir günde nereler gezilir?", a: "Tarihi Çınaraltı'nda kahve, Yiğitler Köyü, Altınkum'da yüzme molası, bir şaraphane, Değirmenardı'nda gün batımı ve akşam Barlar Sokağı bir günde rahatça sığıyor." },
+  { q: "Avşa'yı araçsız gezebilir miyim?", a: "Evet. Merkezden Yiğitler, Altınkum, Çınar Koyu, Mavi Koy ve Kumtur'a minibüs kalkıyor; ayrıca motosiklet, bisiklet ve ATV kiralanabiliyor. Merkezden tekne kiralayıp koyları denizden de görebilirsin." },
+  { q: "Avşa'da bisikletle gezilir mi?", a: "Merkez, Çınaraltı, Değirmenardı ve merkeze yakın köy sahili gibi yakın noktalar bisikletle rahat; ancak bazı yollar eğimli. Uzak koylar için minibüs veya motosiklet daha pratik." },
+  { q: "Beyazsaray Koyu'na nasıl gidilir?", a: "Manastır'dan sonra gelen Beyazsaray'a iniş eğimli; yürümek yerine merkezden ATV kiralayarak gitmek öneriliyor." },
+  { q: "Çınar Koyu minibüsü kaça kadar çalışıyor?", a: "Çınar Koyu hattı saatlik seferle yaklaşık 20:00'ye kadar çalışıyor. Dönüşü planlarken son seferi önceden sor; saatler sezona göre değişebilir." },
+  { q: "Gezi rotasını feribot saatine göre nasıl ayarlarım?", a: "Dönüş seferinin saatini baştan öğren ve son günün programını bu saate göre kısalt. Güncel saatler için feribot saatleri sayfamıza bak; iskeleye en az bir saat önce var." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Gezi Rotası: 1, 2 ve 3 Günlük Plan"
+  intro="Marmara'nın tatil adası Avşa'da vaktin kısaysa 1 günde, hafta sonu kaçamağındaysan 2 günde, adayı baştan sona keşfedeceksen 3 günde nereleri gezeceğini, duraklar arası süreleri ve ulaşım yöntemlerini bu rehberde bulabilirsin."
+  crumb="Gezi Rotası"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld]}
+>
+  <h2 id="once">Rotadan önce bilmen gerekenler</h2>
+  <p>Avşa küçük bir ada: merkezden çoğu noktaya birkaç dakika ile yarım saat arasında ulaşılıyor. Bu yüzden rotayı planlarken asıl belirleyici olan mesafe değil, sezon, feribot saati ve ne kadar dinlenmek istediğin. Aşağıdaki üç rota birbirinin üzerine kuruldu: 1 günlük rota adanın özeti, 2 günlük rota onu iki güne yayıyor, 3 günlük rota ise köyleri, manastırı ve uzak koyları da ekliyor.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Plaj, şaraphane ve restoran çalışma saatleri ile minibüs seferleri sezona göre değişir (son kontrol: 24 Ekim 2026). Yaz sezonu dışında birçok mekân kapalı olabilir; gitmeden önce aramak en sağlıklısı.
+  </div>
+  <p>Adaya nasıl geleceğini henüz planlamadıysan <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a>, <a href="/istanbuldan-avsaya/">İstanbul'dan Avşa'ya</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına bak. Rotadaki durakların ayrıntıları için <a href="/gezilecek-yerler/">gezilecek yerler</a> ve <a href="/plajlar/">plajlar</a> rehberlerimiz hazır.</p>
+
+  <h2 id="ulasim">Adada ulaşım ve duraklar arası süreler</h2>
+  <p>Rota yapmanın püf noktası, durakları ulaşım şekline göre sıralamak. Adada başlıca seçenekler şunlar:</p>
+  <ul>
+    <li><strong>Minibüs:</strong> Yiğitler, Altınkum, Çınar Koyu, Mavi Koy ve Kumtur hatları merkezden kalkıyor. Yiğitler minibüsleri belediye binası önünden yaklaşık yarım saatte bir, Çınar Koyu hattı ise saatlik seferle yaklaşık 20:00'ye kadar çalışıyor. Arabasız gelenler için en ekonomik yol.</li>
+    <li><strong>Motosiklet ve ATV:</strong> Merkezden kiralanabiliyor. Beyazsaray gibi eğimli inişler için ATV öneriliyor. Eğimli yollarda yavaş sür, alkol aldıktan sonra kesinlikle kullanma.</li>
+    <li><strong>Bisiklet:</strong> Merkez, Çınaraltı, Değirmenardı ve merkeze yakın köy sahili gibi yakın duraklar için keyifli; uzak koylarda eğim yorabilir.</li>
+    <li><strong>Tekne:</strong> Merkezden motor tekne kiralayıp Kumtur ve Çınar gibi bölgeleri denizden görebilirsin.</li>
+    <li><strong>Yürüyüş:</strong> İskele çevresi, Çınaraltı, Değirmenardı ve Manastır yürüyerek de gezilebiliyor.</li>
+  </ul>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Durak</th><th>Merkezden yaklaşık süre / mesafe</th><th>Nasıl gidilir?</th></tr></thead>
+    <tbody>
+      <tr><td>Değirmenardı</td><td>~1 km</td><td>Yürüyerek</td></tr>
+      <tr><td>Merkeze yakın köy sahili</td><td>~1,5 km</td><td>Yürüyerek, bisikletle</td></tr>
+      <tr><td>Avşa Manastırı</td><td>Araçla ~5 dk, yürüyerek ~20 dk</td><td>Motosiklet, ATV, yürüyüş</td></tr>
+      <tr><td>Mavi Koy</td><td>Minibüsle ~5 dk</td><td>Minibüs</td></tr>
+      <tr><td>Yiğitler Köyü</td><td>Minibüsle ~5-6 dk</td><td>Minibüs</td></tr>
+      <tr><td>Altınkum</td><td>Minibüsle ~10 dk</td><td>Minibüs</td></tr>
+      <tr><td>Çınar Koyu</td><td>Minibüsle ~10-15 dk</td><td>Minibüs</td></tr>
+      <tr><td>Kumtur</td><td>Minibüsle ~20 dk</td><td>Minibüs, tekne</td></tr>
+    </tbody>
+  </table></div>
+  <p>Süreler yaklaşık değerlerdir; yolda bekleme ve sezon yoğunluğu eklenebilir. Feribotla araçlı gelirsen adada LPG satılmadığını unutma, ayrıntı için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfamıza bak.</p>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="1-gun">1 günlük rota: adanın özeti</h2>
+  <p>Günübirlik ya da çok kısa kalacaklar için. Bu rotada merkezi, bir köyü, bir plajı, şarabı, gün batımını ve Barlar Sokağı'nı birleştiriyorsun.</p>
+  <ol class="list-decimal space-y-2 pl-6">
+    <li><strong>Sabah (iskele):</strong> Tarihi Çınaraltı'nda kahvaltı ya da kahve, ardından merkez sahilinde kısa yürüyüş.</li>
+    <li><strong>Öğleye doğru (Yiğitler):</strong> Minibüsle Yiğitler Köyü'ne geç; eski Rum yapıları ve türbeler arasında yürü.</li>
+    <li><strong>Öğle (Altınkum):</strong> Altınkum'da yüzme ve öğle yemeği. Daha sakin bir deniz için Karadut'u seçebilirsin.</li>
+    <li><strong>İkindi (şaraphane):</strong> Bortaçina veya Büyülübağ'da tadım; önceden aramayı unutma.</li>
+    <li><strong>Gün batımı (Değirmenardı):</strong> İskelenin yakınında yürüyüş ve fotoğraf.</li>
+    <li><strong>Akşam:</strong> İskele çevresinde yemek, ardından <a href="/barlar-sokagi/">Barlar Sokağı</a>'nda bir müzik ve içecek molası.</li>
+  </ol>
+  <p>Bu rotada dönüş feribotunun saati belirleyici. Son seferden önce iskelede ol; ayrıntılar için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasına bak.</p>
+
+  <h2 id="2-gun">2 günlük rota: hafta sonu kaçamağı</h2>
+  <p>Cuma akşamı ya da cumartesi sabahı gelip pazar günü dönenler için ideal. Birinci gün merkez ve eğlence, ikinci gün köyler ve plaj üzerine kurulu.</p>
+  <h3>1. gün: merkez, plaj ve gece</h3>
+  <ul>
+    <li><strong>Sabah:</strong> Feribotla gel, tesisine yerleş, Çınaraltı'nda kahve.</li>
+    <li><strong>Öğleden sonra:</strong> Mavi Koy veya Çınar Koyu'nda yüzme; Mavi Koy restoran ve kafelere yakın olduğu için kolay bir seçim.</li>
+    <li><strong>Gün batımı:</strong> Değirmenardı'nda yürüyüş.</li>
+    <li><strong>Akşam:</strong> Akşam yemeği ve Barlar Sokağı. Sokağa yakın kalıyorsan dönüş yürüyerek kolay olur.</li>
+  </ul>
+  <h3>2. gün: köyler, manastır ve Altınkum</h3>
+  <ul>
+    <li><strong>Sabah:</strong> Merkeze yakın köy sahilinde ince kumlu kıyı ve eski yapılar, ardından Avşa Manastırı kalıntıları.</li>
+    <li><strong>Öğle:</strong> Yiğitler Köyü'nde yürüyüş, sonra Altınkum veya Karadut'ta yüzme ve öğle yemeği.</li>
+    <li><strong>İkindi:</strong> Şaraphane tadımı ya da son bir yüzme molası.</li>
+    <li><strong>Akşam:</strong> Dönüş feribotuna göre erken çıkış; eşyalarını toplamayı ve iskeleye varış süresini hesaba kat.</li>
+  </ul>
+
+  <h2 id="3-gun">3 günlük rota: adayı baştan sona keşfet</h2>
+  <p>Acele etmeden gezmek, her koyda vakit geçirmek ve manastır, köyler, uzak koylar ve gün batımı noktalarını da görmek isteyenler için. Bu rotada tempo düşük, her gün bir bölgeye odaklanıyor.</p>
+  <h3>1. gün: merkez, Çınar Koyu ve Barlar Sokağı</h3>
+  <p>Sabah iskele ve Çınaraltı, ardından adanın en geniş plajı olan Çınar Koyu'nda uzun bir plaj günü. Akşamüstü merkeze dön, gün batımında Değirmenardı'na yürü, akşam yemeğinden sonra Barlar Sokağı'na çık.</p>
+  <h3>2. gün: Köy sahili, Manastır ve Beyazsaray</h3>
+  <p>Sabah merkeze yakın köy sahiline yürü ya da bisikletle git. Oradan Avşa Manastırı kalıntılarına geç ve çevresinde yüzmeyi dene. Manastır'dan sonra Beyazsaray Koyu'na iniş eğimli; merkezden ATV kiralayarak gitmek en pratik yol. Akşam daha sakin bir yemek ve erken uyku, ertesi gün enerjin kalsın.</p>
+  <h3>3. gün: Yiğitler, Altınkum, Şahintepesi, Kumtur</h3>
+  <p>Sabah Yiğitler Köyü'ne minibüsle çık, köyü gez. Öğle Karadut ve Altınkum'da yüzme ve yemek; yakındaki Şahintepesi'ne manzara için uğra (yönü yerel halka sor, kaynaklarda tarifi farklı). İkindi Bortaçina ya da Büyülübağ'da tadım. Vaktin kalırsa Kumtur'a minibüsle ya da tekneyle sessiz bir son mola ver; denizin orada daha derin olduğunu unutma. Son akşam gün batımını Değirmenardı'nda izleyip dönüş feribotunu kaçırmayacak şekilde planı kapat.</p>
+
+  <h2 id="hangisi">Hangi rota sana uygun?</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Rota</th><th>Kime uygun?</th><th>Öne çıkanlar</th></tr></thead>
+    <tbody>
+      <tr><td>1 gün</td><td>Günübirlik gelenler, ilk kez görenler</td><td>Çınaraltı, Yiğitler, Altınkum, şaraphane, Değirmenardı</td></tr>
+      <tr><td>2 gün</td><td>Hafta sonu kaçamağı, arkadaş grubu, çift</td><td>Mavi Koy, Barlar Sokağı, köy sahili, Manastır</td></tr>
+      <tr><td>3 gün</td><td>Adayı yavaş keşfetmek isteyenler, aileler</td><td>Çınar Koyu, Beyazsaray, Şahintepesi, Kumtur</td></tr>
+    </tbody>
+  </table></div>
+  <p>Sadece plaj istiyorsan <a href="/plajlar/">plajlar rehberine</a>, akşam eğlencesi arıyorsan <a href="/gece-hayati/">gece hayatı</a> sayfasına, ada hakkında genel bilgi için <a href="/avsa-adasi/">Avşa Adası rehberine</a> göz at. Yemek molaları için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a> yazımız yardımcı olabilir.</p>
+
+  <h2 id="ipuclari">Rota ipuçları</h2>
+  <ul>
+    <li><strong>Önce dönüş feribotunu belirle:</strong> Programı bu saate göre kur, son günü sıkı tutma.</li>
+    <li><strong>Sıcak saatlerde yüz:</strong> Öğle ve ikindi plaj için, sabah ve akşamüstü yürüyüş için ideal.</li>
+    <li><strong>Şaraphane için ara:</strong> Çalışma saatleri sezona göre değişiyor; tadım için önceden yer ayırt.</li>
+    <li><strong>Nakit taşı:</strong> Küçük işletmelerde kart çalışmayabilir.</li>
+    <li><strong>Su ve gölgelik al:</strong> Kadınlar Plajı gibi olanaksız koylarda su ve atıştırmalık gerekir.</li>
+    <li><strong>Sezon dışı:</strong> Sonbahar ve kışta minibüs ve mekânlar azalır; gezi öncesi mutlaka teyit et.</li>
+  </ul>
+
+  <div id="konaklama"></div>
+  <StayLinks items={merkez} title="Barlar Sokağı ve iskeleye yakın: merkezde konaklama" />
+  <StayLinks items={yigitler} title="Köy ve koy rotası için: Yiğitler'de konaklama" />
+  <p>Tüm seçenekler için <a href="/avsa-otelleri/">Avşa otelleri</a>, <a href="/avsa-pansiyonlari/">pansiyonları</a>, <a href="/avsa-apartlari/">apartları</a> ve <a href="/kiralik-evler/">kiralık evleri</a> inceleyebilirsin.</p>
+</InfoLayout>

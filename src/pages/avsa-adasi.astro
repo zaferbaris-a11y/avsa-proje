@@ -1,0 +1,137 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Adası Rehberi: Plaj, Ulaşım, Konaklama | avsaadasi.net";
+const description =
+  "Avşa Adası rehberi: adaya nasıl gidilir, plajlar, gezilecek yerler, gece hayatı, feribot ve nerede kalınır? Avşa tatil planın için tek sayfa.";
+
+const galeri = [
+  { src: "/img/avsa-nerede/avsa-plaj-sahil-tekne-1.webp", w: 500, h: 333, alt: "Avşa Adası plajında şemsiyeler, gezi teknesi ve sahil yerleşimi", cap: "Plaj, şemsiyeler ve sahil yerleşimi" },
+  { src: "/img/avsa-nerede/avsa-plaj-yuzme-alani-1.webp", w: 500, h: 333, alt: "Avşa Adası'nda yaz sezonunda denizde yüzenler ve plaj kenarındaki binalar", cap: "Yaz sezonunda plaj ve deniz" },
+  { src: "/img/avsa-nerede/avsa-pedalli-deniz-bisikleti-1.webp", w: 500, h: 334, alt: "Avşa Adası plajında pedallı deniz bisikleti ile deniz turu", cap: "Pedallı deniz bisikleti" },
+  { src: "/img/avsa-nerede/avsa-deniz-sporlari-jet-ski-1.webp", w: 500, h: 334, alt: "Avşa Adası'nda jet-ski ile deniz sporları ve kalabalık plaj", cap: "Deniz sporları" },
+];
+
+const toc = [
+  { id: "avsa-nedir", label: "Avşa Adası nerede, nasıl bir yer?" },
+  { id: "ulasim", label: "Avşa'ya nasıl gidilir?" },
+  { id: "plajlar", label: "Plajlar ve koylar" },
+  { id: "gezilecek", label: "Gezilecek yerler" },
+  { id: "gece", label: "Gece hayatı ve akşam planı" },
+  { id: "konaklama", label: "Nerede kalınır?" },
+  { id: "ne-zaman", label: "Avşa'ya ne zaman gidilir?" },
+  { id: "adada-ulasim", label: "Adada ulaşım" },
+  { id: "ipuclari", label: "Planlama ipuçları" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const spokes = [
+  { path: "/plajlar/", name: "Avşa Adası plajları ve koyları" },
+  { path: "/gezilecek-yerler/", name: "Avşa Adası gezilecek yerler" },
+  { path: "/gece-hayati/", name: "Avşa Adası gece hayatı" },
+  { path: "/avsa-adasina-nasil-gidilir/", name: "Avşa Adası'na nasıl gidilir" },
+  { path: "/feribot-saatleri/", name: "Avşa feribot saatleri" },
+  { path: "/bilet-fiyatlari/", name: "Avşa feribot bilet fiyatları" },
+  { path: "/avsa-adasi-tarihi-ve-plajlari/", name: "Avşa Adası tarihi" },
+  { path: "/kiralik-evler/", name: "Avşa kiralık evler" },
+];
+const destination = {
+  "@context": "https://schema.org",
+  "@type": "TouristDestination",
+  "@id": `${origin}/avsa-adasi/#destination`,
+  name: "Avşa Adası",
+  alternateName: ["Avşa"],
+  description: "Marmara Denizi'nde, Balıkesir'in Marmara ilçesine bağlı adalardan biri; plajları, köyleri, şaraphaneleri ve yaz gece hayatıyla bilinen tatil adası.",
+  url: `${origin}/avsa-adasi/`,
+  containedInPlace: { "@type": "AdministrativeArea", name: "Marmara, Balıkesir", address: { "@type": "PostalAddress", addressRegion: "Balıkesir", addressCountry: "TR" } },
+  touristType: ["Plaj tatili", "Hafta sonu kaçamağı", "Aile tatili"],
+};
+const list = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası rehber sayfaları",
+  itemListElement: spokes.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: origin + s.path })),
+};
+
+const featured = stays.filter((s) => s.featured !== false).slice(0, 4).map((stay) => ({ stay, note: stay.area }));
+const yigitler = stays.filter((s) => s.area === "Yiğitler").map((stay) => ({ stay, note: "Yiğitler Köyü" }));
+
+const faq = [
+  { q: "Avşa Adası nerede?", a: "Avşa, Marmara Denizi'nde yer alan ve Balıkesir'in Marmara ilçesine bağlı bir ada. Araçlı ulaşım ağırlıklı olarak Erdek limanından yapılıyor." },
+  { q: "Avşa'ya nasıl gidilir?", a: "En yaygın yol Erdek'ten feribot. Tekirdağ'dan sınırlı gün seferler var; İstanbul'dan yaz sezonunda İDO deniz otobüsü araçsız yolcu taşıyor. Güncel saatler için feribot saatleri sayfamıza ve şirketlere bakılmalı." },
+  { q: "Avşa'da kaç gün kalmak yeter?", a: "Görülecek yerler için bir gün, plaj ve gece hayatı dahil keyifli bir tatil için iki ile üç gün genellikle yeterli oluyor." },
+  { q: "Avşa'da araca ihtiyaç var mı?", a: "Zorunlu değil. Minibüsler, motosiklet, bisiklet, ATV ve tekne kiralama seçenekleriyle ada rahatça gezilebiliyor." },
+  { q: "Avşa'da denize girme sezonu ne zaman?", a: "Plaj işletmelerinin çoğu yaz sezonunda hizmet veriyor; tarihler işletmeye göre değiştiği için gitmeden önce aramak iyi olur." },
+  { q: "Avşa'da nerede kalınır?", a: "Merkez, iskele ve Barlar Sokağı çevresi hareketli; Yiğitler Köyü ve Altınkum çevresi daha sakin. Otel, apart, pansiyon ve kiralık ev seçenekleri sitemizde listeleniyor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Rehberi"
+  intro="Marmara'nın en sevilen tatil adası Avşa'ya gitmeden bilmen gerekenler: ulaşım, plajlar, gezilecek yerler, gece hayatı ve konaklama tek sayfada."
+  crumb="Avşa Adası"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[destination, list]}
+>
+  <h2 id="avsa-nedir">Avşa Adası nerede, nasıl bir yer?</h2>
+  <p>Avşa, Marmara Denizi'nde Balıkesir'in Marmara ilçesine bağlı bir ada. Eski adı Türkeli olan ada, yazın plajları, berrak denizi, sakin köyleri ve canlı akşamlarıyla hem hafta sonu kaçamağı hem de uzun tatil için tercih ediliyor. Ada küçük olduğundan çoğu noktaya merkezden birkaç dakika ile yarım saat arasında ulaşılıyor; bu da tek bir tatilde plaj, köy, şaraphane ve gece hayatını birlikte yaşamayı mümkün kılıyor.</p>
+  <figure class="not-prose mt-6">
+    <img src="/img/hero.webp" alt="Avşa Adası'nda deniz kenarı ve plaj manzarası" width="1600" height="762" loading="eager" class="w-full rounded-2xl object-cover" />
+    <figcaption class="mt-2 text-center text-sm text-slate-500">Avşa Adası'nda deniz ve plaj manzarası</figcaption>
+  </figure>
+  <p>Bu sayfa, Avşa'yı ilk kez planlayanlar için bir başlangıç noktası. Her bölümün sonunda daha ayrıntılı rehber sayfalarına bağlantılar var.</p>
+
+  <h2 id="ulasim">Avşa'ya nasıl gidilir?</h2>
+  <p>Araçlı ulaşım ağırlıklı olarak Balıkesir'in Erdek ilçesinden yapılıyor. Marmara RoRo ve GESTAŞ Erdek–Avşa hattında sefer düzenliyor; yolculuk kaynaklara göre yaklaşık bir saat ile bir saat yirmi dakika arasında sürüyor. Tekirdağ'dan sınırlı gün seferler, İstanbul'dan ise yaz sezonunda İDO'nun araçsız deniz otobüsü var. İstanbul'dan direkt araçlı feribot bulunmuyor; İstanbul'dan gelenler genellikle Erdek'e araçla gidiyor.</p>
+  <p>Sefer saatleri mevsime göre değiştiği için gitmeden önce şirketin güncel tarifesine bakmak gerekiyor. Şehirlere göre rota ve bilet adımları için <a href="/avsa-adasina-nasil-gidilir/">Avşa Adası'na nasıl gidilir</a> rehberine, ayrıntılar için <a href="/feribot-saatleri/">Avşa feribot saatleri</a>, ücretler için <a href="/bilet-fiyatlari/">feribot bilet fiyatları</a> sayfalarımıza göz atabilirsin. Yaz aylarında cuma akşamı seferleri için biletleri 7-10 gün, bayramlarda 3-4 hafta önceden almak öneriliyor.</p>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="plajlar">Plajlar ve koylar</h2>
+  <p>Avşa'nın en güçlü yanı plajları. Altınkum ve Karadut sığ ve sakin, Çınar Koyu adanın en geniş plajı, Mavi Koy restoran ve kafelere yakın, Kumtur ise en sessiz bölge. Yalnızca kadınlara ayrılmış, ücretsiz bir plaj da var: Kadınlar Plajı. Çocuklu aileler için sığ denizli koylar, canlı bir plaj günü isteyenler için plaj kulüpleri öne çıkıyor.</p>
+  <p>Her koyun karakteri, ulaşım süresi ve kime uygun olduğu için <a href="/plajlar/">Avşa Adası plajları ve koyları</a> rehberimize bakabilirsin.</p>
+
+  <h2 id="gezilecek">Gezilecek yerler</h2>
+  <p>Plaj dışında da yapılacak çok şey var. Yiğitler Köyü ve merkeze yakın köy kesiminde Rum döneminden kalan yapılar görülebilir; Manastır kalıntıları ve Tarihi Çınaraltı adanın geçmişine kısa bir bakış sunuyor. Bortaçina ve Büyülübağ şaraphanelerinde yerinde tadım yapılabiliyor, gün batımı için ise Değirmenardı sevilen bir nokta.</p>
+  <p>Durakların tamamı ve örnek gezi rotaları için <a href="/gezilecek-yerler/">Avşa Adası gezilecek yerler</a> sayfasına, adanın geçmişi için <a href="/avsa-adasi-tarihi-ve-plajlari/">Avşa Adası tarihi</a> yazımıza bakabilirsin.</p>
+
+  <h2 id="gece">Gece hayatı ve akşam planı</h2>
+  <p>Yemek planı için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a> rehberimize göz atabilirsin.</p>
+  <p>Gece hayatının merkezi iskele çevresindeki Barlar Sokağı. Barlar, kulüpler ve diskolar yaz akşamlarında genellikle 21:00 civarı başlayıp 02:00'ye kadar sürüyor. Daha sakin bir akşam isteyenler için sahil boyunca restoranlar, çay bahçeleri ve gün batımı yürüyüşleri var. Gece hayatı yaz sezonuna odaklı olduğu için sezon dışında birçok mekân kapalı olabiliyor. Ayrıntılar için <a href="/gece-hayati/">Avşa gece hayatı</a> ve <a href="/barlar-sokagi/">Barlar Sokağı</a> rehberlerimiz hazır.</p>
+
+  <h2 id="konaklama-bolum">Nerede kalınır?</h2>
+  <p>Konaklama tercihin tatil tarzına göre değişiyor. <strong>Merkez</strong> iskeleye, çarşıya ve Barlar Sokağı'na yakın; <strong>Yiğitler Köyü</strong> ve Altınkum çevresi daha sakin ve plaja yakın. Otel konforu, apart esnekliği, pansiyon bütçesi ya da müstakil ev özgürlüğü arasında seçim yapabilirsin. Sitemizde tüm tesisler için iletişim bilgileri ve konum yer alıyor; fiyat ve müsaitlik için tesisle doğrudan WhatsApp üzerinden görüşebilirsin.</p>
+  <div id="konaklama"></div>
+  <StayLinks items={featured} title="Öne çıkan oteller" />
+  <StayLinks items={yigitler} title="Sakin bölge: Yiğitler Köyü'nde konaklama" />
+  <p>Tüm seçenekleri <a href="/#konaklama">Avşa otelleri, apartları ve pansiyonları</a> listesinde görebilir, müstakil ev arıyorsan <a href="/kiralik-evler/">Avşa kiralık evler</a> sayfasına bakabilirsin.</p>
+
+  <h2 id="ne-zaman">Avşa'ya ne zaman gidilir?</h2>
+  <p>Plaj işletmeleri, restoranlar ve gece hayatı yaz sezonunda en canlı. Sezon açılış ve kapanış tarihleri işletmeye göre değişiyor; sezon dışında birçok işletme kapalı olabiliyor. Yaz ayları bu yüzden hem denize girmek hem de eğlence için en uygun dönem. Tatil planlamadan önce feribot saatlerini ve konaklama müsaitliğini kontrol etmek iyi olur.</p>
+
+  <h2 id="adada-ulasim">Adada ulaşım</h2>
+  <p>Adada ulaşım minibüs, motosiklet, bisiklet ve ATV ile yapılıyor; merkezden tekne de kiralanabiliyor. Minibüsler Yiğitler, Altınkum, Çınar Koyu, Mavi Koy ve Kumtur hatlarında çalışıyor. Çınar Koyu hattı saatlik seferle yaklaşık 20:00'ye kadar hizmet veriyor. Arabasız gelip adada minibüs ve kiralık motosiklet kullanmak, feribot maliyetini düşürmek isteyenler için pratik bir yol. Adada LPG satışı olmadığı, yalnızca benzin ve dizel bulunduğu unutulmamalı.</p>
+
+  <h2 id="ipuclari">Planlama ipuçları</h2>
+  <ul>
+    <li><strong>Önce feribotu planla:</strong> Dönüş seferini bilmeden konaklama tarihi belirleme.</li>
+    <li><strong>Nakit bulundur:</strong> Küçük işletmelerde kart çalışmayabilir.</li>
+    <li><strong>İşletmeleri ara:</strong> Plaj, şaraphane ve restoran çalışma saatleri sezona göre değişir.</li>
+    <li><strong>Erken rezervasyon yap:</strong> Yaz hafta sonları ve bayramlarda konaklama ve bilet çabuk doluyor.</li>
+  </ul>
+  <p>Tüm rehberlerimiz: <a href="/plajlar/">plajlar</a>, <a href="/gezilecek-yerler/">gezilecek yerler</a>, <a href="/gece-hayati/">gece hayatı</a>, <a href="/feribot-saatleri/">feribot saatleri</a> ve <a href="/bilet-fiyatlari/">bilet fiyatları</a>.</p>
+</InfoLayout>

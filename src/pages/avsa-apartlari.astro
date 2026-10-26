@@ -1,0 +1,124 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays, featuresOf } from "../data/stays";
+
+const title = "Avşa Apartları: Mutfaklı, Denize Yakın | avsaadasi.net";
+const description =
+  "Avşa Adası apartları: aileler ve gruplar için mutfaklı, denize yakın, bahçeli daireleri bölgeye ve olanaklara göre karşılaştır; işletmeyle doğrudan görüş.";
+
+const toc = [
+  { id: "genel", label: "Apart nedir, kimlere uygun?" },
+  { id: "liste", label: "Tüm apartlar" },
+  { id: "bolgeler", label: "Bölgeye göre apartlar" },
+  { id: "olanaklar", label: "Olanaklara göre apartlar" },
+  { id: "kimler", label: "Kimler için uygun?" },
+  { id: "nasil-secilir", label: "Apart seçerken nelere bakılır?" },
+  { id: "rezervasyon", label: "Rezervasyon ve kalış ipuçları" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const list = stays.filter((s) => s.type === "apart");
+const has = (s: (typeof stays)[number], key: string) => featuresOf(s).some((f) => f.key === key);
+const items = (arr: typeof list, note?: (s: (typeof list)[number]) => string) => arr.map((stay) => ({ stay, note: note ? note(stay) : stay.tagline }));
+
+const merkez = list.filter((s) => s.area === "Merkez");
+const yigitler = list.filter((s) => s.area === "Yiğitler");
+const digerAlan = list.filter((s) => s.area !== "Merkez" && s.area !== "Yiğitler");
+const deniz = list.filter((s) => has(s, "deniz"));
+const havuz = list.filter((s) => has(s, "havuz"));
+const bahce = list.filter((s) => s.amenities.some((a) => /bahçe|barbekü|mangal/i.test(a)));
+const sezlong = list.filter((s) => s.amenities.some((a) => /şezlong/i.test(a)));
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası apartları",
+  itemListElement: list.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: `${origin}/konaklama/${s.slug}/` })),
+};
+
+const faq = [
+  { q: "Avşa'da apart mı otel mi daha uygun?", a: "Kalabalık gruplar, çocuklu aileler ve uzun kalışlar için apart genellikle daha esnek ve ekonomik; kahvaltı, oda servisi ve havuz/aquapark gibi olanaklar için otel daha kapsamlı." },
+  { q: "Apartlarda mutfak var mı?", a: "Sitemizdeki apartların çoğunda mutfak, buzdolabı, klima ve balkon gibi olanaklar bulunuyor. Her apartın sayfasındaki olanak listesine bakabilir ve emin olmak için tesise sorabilirsin." },
+  { q: "Denize yakın apart bulabilir miyim?", a: "Evet. Merkezde ve çevresinde denize sıfır ya da denize birkaç metre mesafede apartlar var. Aşağıda bunları ayrıca listeledik." },
+  { q: "Apart fiyatlarını nasıl öğrenirim?", a: "Fiyatlar sezona, daire tipine ve kişi sayısına göre değişiyor. Apartın sayfasındaki WhatsApp düğmesinden doğrudan işletmeye sorabilirsin." },
+  { q: "Apart daireler çocuklu aileler için uygun mu?", a: "Mutfak ve ayrı oturma alanı çocukla seyahat edenler için pratik. Bahçeli ya da havuzlu apartlar çocuklara ek alan sağlıyor." },
+  { q: "Kaç kişilik daireler var?", a: "Daire tipleri tesise göre değişiyor; 1+1'den 2+1'e kadar farklı kapasitelerde daireler bulunuyor. Kapasite bilgisi her apartın oda bölümünde yer alıyor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Apartları"
+  intro="Aileler ve gruplar için esnek, mutfaklı ve denize yakın apart daireleri: Avşa Adası'nda tatil için feribotla adaya gelen aileler ve gruplar, Avşa apartlarını bölgelerine ve olanaklarına göre karşılaştırabilir."
+  crumb="Apartlar"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/kategori/avsa-apartlari-kapak.webp"
+  extraLd={[ld]}
+>
+  <figure class="not-prose mb-6">
+    <img src="/img/kategori/avsa-apartlari-kapak.webp" alt="Avşa Adası apart daireleri: akşam ışıklarıyla balkonlu apart binası" width="640" height="336" loading="eager" decoding="async" class="aspect-[16/7] w-full rounded-2xl object-cover" />
+    <figcaption class="mt-2 text-xs text-slate-500">Görsel: <a class="underline" href="/konaklama/seref-apart/">Şeref Apart</a></figcaption>
+  </figure>
+
+  <h2 id="genel">Apart nedir, kimlere uygun?</h2>
+  <p>Apart daireler, otel odasından farklı olarak kendi mutfağı, oturma alanı ve çoğu zaman balkonu olan konaklama birimleri. Avşa'da apartlar, hem otellerin sunduğu rahatlığı biraz daha özgür bir düzenle birleştirmek isteyenler hem de uzun kalış planlayanlar için sevilen bir seçenek. Kahvaltını kendin hazırlayabilir, akşam yemeğini evde yapabilir ya da plaj dönüşü kendi saatlerinde dinlenebilirsin.</p>
+  <p>Sitemizde {list.length} apart listeleniyor. Her birinin sayfasında daire tipleri, olanaklar, çevredeki mesafeler ve WhatsApp üzerinden doğrudan ulaşabileceğin iletişim bilgileri yer alıyor.</p>
+
+  <div id="liste"></div>
+  <StayLinks items={items(list)} title={`Avşa apartları (${list.length} tesis)`} />
+
+  <h2 id="bolgeler">Bölgeye göre apartlar</h2>
+  <h3>Merkez: iskele ve çarşıya yürüme mesafesinde</h3>
+  <p>Merkezdeki apartlar iskeleye, markete, restoranlara ve <a href="/barlar-sokagi/">Barlar Sokağı</a>'na yakın. Arabasız gelenler için en pratik bölge; plaja ve çarşıya yürüyerek ulaşabilirsin. Merkezde havuzlu, bahçeli ve villa konseptli daireler de bulunuyor.</p>
+  <StayLinks items={items(merkez)} title="Merkezdeki apartlar" />
+  {yigitler.length > 0 && (
+    <>
+      <h3>Yiğitler Köyü: sakin ve plajlara yakın</h3>
+      <p>Altınkum ve Karadut'a yakınlığıyla bilinen, sakin bir köy. Bahçeli ve mutfaklı daireler, gürültüden uzak bir tatil isteyenler için uygun. Çevredeki plajlar için <a href="/plajlar/#altinkum">Altınkum</a> ve <a href="/plajlar/#karadut">Karadut</a> bölümlerine bakabilirsin.</p>
+      <StayLinks items={items(yigitler)} title="Yiğitler'deki apartlar" />
+    </>
+  )}
+  {digerAlan.length > 0 && (
+    <>
+      <h3>Adanın diğer bölgeleri</h3>
+      <p>Bazı apartlar adanın genelinde yer alıyor; denize ve iskeleye mesafe tesise göre değişiyor. Konum ve yakın çevre bilgisi için ilgili tesis sayfasına bakabilirsin.</p>
+      <StayLinks items={items(digerAlan)} title="Adanın diğer bölgelerindeki apartlar" />
+    </>
+  )}
+  <p>Bölgelerin karakteri için <a href="/avsa-adasi/">Avşa Adası rehberine</a> göz atabilirsin.</p>
+
+  <h2 id="olanaklar">Olanaklara göre apartlar</h2>
+  <p>Aşağıdaki listeler tesis sayfalarındaki bilgilerden otomatik hazırlandı. Olanaklar sezona göre değişebilir; rezervasyondan önce teyit etmeni öneririz.</p>
+  <StayLinks items={items(deniz, () => "Denize sıfır / deniz manzaralı")} title="Denize sıfır ve deniz manzaralı apartlar" />
+  <StayLinks items={items(havuz, () => "Havuzlu")} title="Havuzlu apartlar" />
+  <StayLinks items={items(bahce, () => "Bahçe, barbekü veya mangal alanı")} title="Bahçeli ve barbekülü apartlar" />
+  <StayLinks items={items(sezlong, () => "Ücretsiz şezlong ve şemsiye")} title="Plajda ücretsiz şezlong ve şemsiye sunanlar" />
+
+  <h2 id="kimler">Kimler için uygun?</h2>
+  <h3>Aileler</h3>
+  <p>Mutfak ve ayrı oturma alanı, çocuk mamasından uyku düzenine kadar birçok küçük ihtiyacı kolaylaştırıyor. Bahçeli ya da havuzlu apartlar çocuklara ek oyun alanı sunuyor.</p>
+  <h3>Arkadaş grupları</h3>
+  <p>Birden fazla kişi bir daireyi paylaşarak hem maliyeti bölüşebilir hem de ortak mutfak ve oturma alanından yararlanabilir. Eğlence için merkezdeki apartlar yürüme mesafesinde.</p>
+  <h3>Uzun kalış planlayanlar</h3>
+  <p>Bir haftayı aşan kalışlarda mutfaklı apart, dışarıda yemek masrafını azaltıyor. Alışveriş için merkezdeki market ve çarşıya yakın apartları tercih edebilirsin.</p>
+  <h3>Kendi tempoda tatil yapmak isteyenler</h3>
+  <p>Oda servisi ve sabit kahvaltı saati beklemeden kendi düzeninde tatil yapmak isteyenler için apartlar ideal.</p>
+
+  <h2 id="nasil-secilir">Apart seçerken nelere bakılır?</h2>
+  <ul>
+    <li><strong>Kapasite ve daire tipi:</strong> 1+1 mi, 2+1 mi? Kişi sayısına uygun yatak düzenini kontrol et.</li>
+    <li><strong>Mutfak donanımı:</strong> Buzdolabı, ocak ve temel mutfak gereçleri var mı, tesise sor.</li>
+    <li><strong>Klima ve Wi-Fi:</strong> Yaz sıcağında klima, uzaktan çalışacaksan Wi-Fi önemli.</li>
+    <li><strong>Konum:</strong> Denize, iskeleye ve markete mesafe; sessizlik için sokağa uzaklık.</li>
+    <li><strong>Temizlik ve çamaşır:</strong> Kalış boyunca temizlik hizmeti ve çamaşır imkânı var mı?</li>
+    <li><strong>Giriş-çıkış:</strong> Feribot saatlerine göre geç giriş ya da erken çıkışı önceden bildir.</li>
+  </ul>
+
+  <h2 id="rezervasyon">Rezervasyon ve kalış ipuçları</h2>
+  <p>Apart daireler sınırlı sayıda olduğundan yaz hafta sonları ve bayramlarda hızla doluyor. Tarihini belirledikten sonra önce apartın müsaitliğini sorup ardından feribot biletini almak güvenli yol. Fiyat; daire tipine, kişi sayısına ve sezona göre değişiyor, bu yüzden her apartın sayfasındaki WhatsApp düğmesinden işletmeyle doğrudan konuşarak güncel fiyatı öğrenebilirsin.</p>
+  <p>Adaya ulaşım için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a>, <a href="/feribot-saatleri/">feribot saatleri</a> ve <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfalarına bakabilirsin. Daha fazla hizmet için <a href="/avsa-otelleri/">Avşa otelleri</a>, bütçe dostu seçenekler için <a href="/avsa-pansiyonlari/">pansiyonlar</a>, müstakil tatil için <a href="/kiralik-evler/">kiralık evler</a> sayfalarını inceleyebilirsin. Gün planı için <a href="/plajlar/">plajlar</a> ve <a href="/gezilecek-yerler/">gezilecek yerler</a> rehberleri hazır.</p>
+</InfoLayout>

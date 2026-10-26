@@ -1,0 +1,123 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Adası Gece Hayatı: Bar ve Kulüpler | avsaadasi.net";
+const description =
+  "Avşa gece hayatı: Barlar Sokağı, kulüpler ve diskolar, saatler, giriş kuralları, sakin akşam seçenekleri ve Avşa Adası'nda eğlenceye yakın ya da uzak konaklama.";
+
+const galeri = [
+  { src: "/img/gece-hayati/avsa-barlar-sokagi-gece-1.webp", w: 960, h: 638, alt: "Avşa Adası Barlar Sokağı'nda gece, neon tabelalar ve yürüyen kalabalık", cap: "Barlar Sokağı'nda gece" },
+  { src: "/img/gece-hayati/avsa-gece-kulubu-dans-pisti-1.webp", w: 575, h: 374, alt: "Avşa Adası'nda gece kulübü dans pisti ve ışık gösterisi", cap: "Kulüplerde dans pisti" },
+];
+
+const toc = [
+  { id: "genel", label: "Avşa'da gece hayatı nasıl?" },
+  { id: "barlar-sokagi", label: "Barlar Sokağı" },
+  { id: "kulupler", label: "Kulüpler ve diskolar" },
+  { id: "saatler", label: "Saatler ve sezon" },
+  { id: "giris", label: "Giriş kuralları" },
+  { id: "sakin-aksam", label: "Sakin akşam seçenekleri" },
+  { id: "gunduz-gece", label: "Gündüz plaj, akşam eğlence" },
+  { id: "ipuclari", label: "Gece için ipuçları" },
+  { id: "konaklama", label: "Eğlenceye yakın ve uzak konaklama" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const withDist = (re: RegExp, prefix: string) =>
+  stays.flatMap((stay) => {
+    const n = stay.nearby.find((x) => re.test(x.label));
+    return n ? [{ stay, note: `${prefix}: ${n.distance}` }] : [];
+  });
+const barlar = withDist(/Barlar Sokağı/, "Barlar Sokağı");
+const yakin = barlar.filter((x) => /(^|[^\d.])(50|100|500|600) m|Yürüme/.test(x.note));
+const disko = withDist(/Disko|Discolar/, "Disko bölgesi");
+const sakin = stays.filter((s) => s.area === "Yiğitler").map((stay) => ({ stay, note: "Yiğitler Köyü, sakin bölge" }));
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa gece hayatına yakın konaklama",
+  itemListElement: barlar.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.stay.name,
+    url: `${origin}/konaklama/${b.stay.slug}/`,
+  })),
+};
+
+const faq = [
+  { q: "Avşa'da gece hayatı nerede?", a: "Gece hayatının merkezi, merkezde iskele ve sahil çevresindeki Barlar Sokağı. Bunun yanında disko bölgesi ve discolar mevkii olarak anılan noktalar da var." },
+  { q: "Avşa'da barlar ve kulüpler ne zamana kadar açık?", a: "Mekânların çoğunda müzik ve etkinlikler yaz akşamlarında yaklaşık 21:00 ile 02:00 arasında sürüyor. Saatler mekâna ve sezona göre değişebilir." },
+  { q: "Gece hayatı yılın hangi döneminde canlı?", a: "Yaz sezonuna odaklı. Sezon dışında birçok mekân kapalı olabilir; gitmeden önce açık olup olmadığını sormak gerekir." },
+  { q: "Kulüplere giriş kuralları var mı?", a: "Bazı mekânların kendi giriş politikaları olabiliyor; kaynaklar bazı yerlerin yalnız gelen erkeklere giriş vermediğini belirtiyor. Grupla gitmek ya da kapıda sormak en kolayı." },
+  { q: "Sakin bir akşam geçirebilir miyim?", a: "Evet. Sahil restoranları, çay bahçeleri ve gün batımı yürüyüşleri daha sakin akşam seçenekleri sunuyor; Yiğitler Köyü gibi bölgelerde konaklamak gürültüden uzak kalmayı kolaylaştırır." },
+  { q: "Gece hayatına yürüyerek ulaşılan otel hangisi?", a: "Konaklama sayfalarımızdaki bilgilere göre Nehir Deluxe Otel yaklaşık 50 m, Alperen Apart yaklaşık 100 m uzaklıkta; Ados Otel Barlar Sokağı'na yürüme mesafesinde." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Gece Hayatı"
+  intro="Yaz akşamlarında denizin kenarında barlar, kulüpler ve müzik: Marmara'nın yaz tatili adası Avşa'nın gece hayatı nasıl işliyor, nerede, ne zaman ve hangi konaklama eğlenceye yakın ya da uzak?"
+  crumb="Gece Hayatı"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld]}
+>
+  <h2 id="genel">Avşa'da gece hayatı nasıl?</h2>
+  <p>Avşa, gündüz plaj ve deniz tatili yapılan bir ada olarak bilinse de akşam saatlerinde bambaşka bir yüzü var. Yaz sezonunda iskele çevresinde barlar, kulüpler ve restoranlar canlanıyor, müzik sahile yayılıyor. Gece hayatı adanın merkezinde yoğunlaştığı için merkezde konaklayanlar eğlenceye yürüyerek ulaşabiliyor; daha sakin bir tatil isteyenler ise Yiğitler gibi bölgeleri tercih edebiliyor.</p>
+  <p>Bu rehber adanın genel gece hayatını anlatıyor. Eğlence sokağının ayrıntıları için <a href="/barlar-sokagi/">Avşa Barlar Sokağı</a> sayfamıza, adaya genel bakış için <a href="/avsa-adasi/">Avşa Adası rehberine</a> göz atabilirsin.</p>
+
+  <h2 id="barlar-sokagi">Barlar Sokağı</h2>
+  <p>Avşa'nın gece hayatının kalbi, merkezde sahile paralel uzanan Barlar Sokağı. Sokakta bar, kulüp ve restoranlar sıralanıyor; yaz akşamlarında müzik ve etkinliklerle hareketleniyor. Konumu, saatleri ve yakın konaklama seçenekleri için ayrıntılı <a href="/barlar-sokagi/">Barlar Sokağı rehberini</a> hazırladık.</p>
+
+  <h2 id="kulupler">Kulüpler ve diskolar</h2>
+  <p>Barlar Sokağı'nın yanında disko bölgesi ya da discolar mevkii olarak anılan noktalar da var; dans etmek ve geç saatlere kadar eğlenmek isteyenler burada vakit geçiriyor. Konaklama sayfalarımızda bu bölgelere mesafe ayrıca belirtiliyor. Mekânların adları, programları ve giriş koşulları sezondan sezona değişebiliyor; bu yüzden bu sayfada tek tek mekân adı vermek yerine gitmeden önce güncel durumu sormanı öneriyoruz.</p>
+
+  <div class="not-prose my-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="saatler">Saatler ve sezon</h2>
+  <p>Mekânların çoğunda müzik ve etkinlikler yaz akşamlarında yaklaşık 21:00'de başlayıp 02:00 civarına kadar sürüyor. Saatler mekâna, güne ve sezona göre değişebiliyor. Gece hayatı yaz sezonuna odaklı olduğundan sezon başında ve sonunda birçok mekân kapalı olabiliyor. Eylül sonrası bir tatil planlıyorsan, hangi mekânların açık olduğunu önceden öğrenmek gerekiyor.</p>
+
+  <h2 id="giris">Giriş kuralları</h2>
+  <p>Bazı mekânların kendi giriş politikaları var. Kaynaklar, bazı yerlerin yalnız gelen erkeklere giriş vermediğini belirtiyor. Karma grupla gitmek ya da kapıda sormak en kolayı. Mekânların yaş sınırı ve kıyafet kuralları da olabilir; kimliğini yanında bulundur.</p>
+
+  <h2 id="sakin-aksam">Sakin akşam seçenekleri</h2>
+  <p>Gece hayatı herkes için "bar ve kulüp" demek değil. Avşa'da sakin akşam geçirmek de kolay:</p>
+  <ul>
+    <li><strong>Sahil yürüyüşü ve akşam yemeği:</strong> İskele çevresindeki restoranlar ve kafeler akşam saatlerinde canlı.</li>
+    <li><strong>Gün batımı:</strong> <a href="/gezilecek-yerler/#manzara">Değirmenardı</a> akşamüstü için sevilen bir nokta.</li>
+    <li><strong>Çay bahçeleri:</strong> Tarihi Çınaraltı ve Karadut'taki çay bahçeleri sakin bir akşam çayı için uygun.</li>
+    <li><strong>Erken uyumak:</strong> Sabah plaja erken gitmek isteyenler için sakin bölgede konaklamak avantaj.</li>
+  </ul>
+
+  <h2 id="gunduz-gece">Gündüz plaj, akşam eğlence</h2>
+  <p>Avşa'da popüler tatil ritmi şöyle: sabah ve öğleden sonra plajda, akşamüstü dinlenme ve duş, akşam yemeği ve gece eğlenceye geçiş. Gün içinde hangi koya gideceğini <a href="/plajlar/">Avşa plajları</a> rehberimizden seçebilirsin. Plajda tüm günü geçirip akşam yorgun dönecekseniz, konaklamanın eğlenceye yakınlığı önem kazanıyor.</p>
+
+  <h2 id="ipuclari">Gece için ipuçları</h2>
+  <ul>
+    <li><strong>Dönüş yolunu planla:</strong> Konaklama uzaksa gece dönüşünü önceden düşün. Minibüs hatlarının son seferleri akşam erken saatlerde bitebilir (örneğin Çınar Koyu hattı yaklaşık 20:00'ye kadar).</li>
+    <li><strong>Alkol ve araç:</strong> Motosiklet ya da ATV kullanacaksan alkol alma.</li>
+    <li><strong>Nakit bulundur:</strong> Küçük işletmelerde kart çalışmayabilir.</li>
+    <li><strong>Mekânı önceden sor:</strong> Sezon dışında açık olup olmadığını öğren.</li>
+    <li><strong>Feribotu unutma:</strong> Ertesi gün dönüyorsan <a href="/feribot-saatleri/">feribot saatlerini</a> kontrol et.</li>
+  </ul>
+
+  <div id="konaklama"></div>
+  <StayLinks items={yakin} title="Eğlenceye yürüyerek ulaşılan konaklama" />
+  {disko.length > 0 && <StayLinks items={disko} title="Disko bölgesine yakın konaklama" />}
+  <StayLinks items={sakin} title="Daha sakin bir gece için: Yiğitler Köyü" />
+  <p>Tüm seçenekler için <a href="/#konaklama">Avşa otelleri, apartları ve pansiyonları</a> listemize, adaya nasıl geleceğini planlamak için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> sayfamıza bakabilirsin.</p>
+</InfoLayout>

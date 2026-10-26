@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --color-deniz-50: #eefaff;
+  --color-deniz-100: #d8f2ff;
+  --color-deniz-500: #1a8fc4;
+  --color-deniz-600: #0f74a6;
+  --color-deniz-900: #0b3a55;
+  --color-kum-50: #fffaf2;
+  --color-kum-100: #fdf0da;
+  --color-gunbatimi: #c2410c; /* beyaz yazıyla AA kontrast (5:1+) */
+}
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,109 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa Barlar Sokağı: Saatler ve İpuçları | avsaadasi.net";
+const description =
+  "Avşa Adası Barlar Sokağı nerede, kaçta başlar, nasıl eğlenilir? Yakın oteller, mesafeler, güvenlik ve gürültü ipuçları ile Avşa akşam planı.";
+
+const toc = [
+  { id: "nerede", label: "Barlar Sokağı nerede?" },
+  { id: "atmosfer", label: "Sokağın atmosferi" },
+  { id: "saatler", label: "Saatler ve sezon" },
+  { id: "plan", label: "Örnek bir akşam planı" },
+  { id: "kimler", label: "Kimler için uygun?" },
+  { id: "guvenlik", label: "Güvenlik ve sorumlu eğlence" },
+  { id: "gurultu", label: "Gürültü: yakın mı, uzak mı kalmalı?" },
+  { id: "konaklama", label: "Barlar Sokağı'na yakın konaklama" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const attraction = {
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  "@id": `${origin}/barlar-sokagi/#barlar-sokagi`,
+  name: "Barlar Sokağı",
+  alternateName: "Avşa Barlar Sokağı",
+  description: "Avşa Adası merkezinde, iskele ve sahil çevresinde bar, kulüp ve restoranların toplandığı, yaz akşamlarının merkezi olan eğlence sokağı.",
+  url: `${origin}/barlar-sokagi/`,
+  touristType: ["Gece hayatı", "Arkadaş grubu", "Çiftler"],
+  containedInPlace: { "@type": "Place", name: "Avşa Adası", address: { "@type": "PostalAddress", addressRegion: "Balıkesir", addressCountry: "TR" } },
+};
+
+const withDist = (re: RegExp) =>
+  stays.flatMap((stay) => {
+    const n = stay.nearby.find((x) => re.test(x.label));
+    return n ? [{ stay, note: `Barlar Sokağı: ${n.distance}` }] : [];
+  });
+const yakin = withDist(/Barlar Sokağı/).filter((x) => /(^|[^\d.])(50|100|500|600) m|Yürüme/.test(x.note));
+const uzak = withDist(/Barlar Sokağı/).filter((x) => /1\.[05]00 m/.test(x.note));
+
+const faq = [
+  { q: "Avşa Barlar Sokağı nerede?", a: "Barlar Sokağı adanın merkezinde, iskele ve sahil şeridi çevresinde yer alıyor. Merkezde kalan birçok tesise yürüme mesafesinde." },
+  { q: "Barlar Sokağı kaçta başlıyor, kaça kadar açık?", a: "Mekânların çoğunda müzik ve etkinlikler yaz akşamlarında yaklaşık 21:00'de başlayıp 02:00 civarına kadar sürüyor. Saatler mekâna ve sezona göre değişebilir." },
+  { q: "Barlar Sokağı sezon dışında açık mı?", a: "Gece hayatı yaz sezonuna odaklı. Sezon dışında birçok mekân kapalı olabiliyor; gitmeden önce açık olup olmadığını öğrenmek gerekir." },
+  { q: "Barlar Sokağı'na yakın otel hangisi?", a: "Konaklama sayfalarımızdaki mesafe bilgisine göre Nehir Deluxe Otel yaklaşık 50 m, Alperen Apart yaklaşık 100 m uzaklıkta; Ados Otel yürüme mesafesinde." },
+  { q: "Gürültüden rahatsız olur muyum?", a: "Sokağa çok yakın tesislerde akşam müziği duyulabilir. Sessiz bir gece istiyorsan sokaktan daha uzak tesisleri ya da Yiğitler Köyü'nü tercih edebilirsin." },
+  { q: "Barlar Sokağı ailelere uygun mu?", a: "Akşamın erken saatlerinde sahil ve restoranlar aileler için uygun; gece ilerledikçe müzik yükseliyor. Çocuklu ailelere daha sakin bir bölgede kalmayı öneririz." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Barlar Sokağı Rehberi"
+  intro="Marmara'nın yaz tatili adası Avşa'nın akşamlarının merkezi: Barlar Sokağı'nın nerede olduğu, ne zaman hareketlendiği, nasıl bir akşam geçirilebileceği ve yakın konaklama seçenekleri."
+  crumb="Barlar Sokağı"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[attraction]}
+>
+  <h2 id="nerede">Barlar Sokağı nerede?</h2>
+  <p>Barlar Sokağı, Avşa'nın merkezinde iskele ve sahil çevresinde uzanıyor. Feribotla gelenlerin ilk gördüğü bölgeye yakın olduğu için ada ziyaretçilerinin çoğu için akşamın kendiliğinden buluşma noktası. Merkezde konaklayanlar için yürüme mesafesinde; tesislerimizin sayfalarında sokağa mesafe metre cinsinden belirtiliyor, örneğin <a href="/konaklama/nehir-deluxe-otel/">Nehir Deluxe Otel</a> yaklaşık 50 m, <a href="/konaklama/alperen-apart/">Alperen Apart</a> yaklaşık 100 m uzaklıkta.</p>
+  <p>Adanın genel gece hayatı için <a href="/gece-hayati/">Avşa gece hayatı</a> rehberine, adaya genel bakış için <a href="/avsa-adasi/">Avşa Adası rehberine</a> göz atabilirsin.</p>
+
+  <h2 id="atmosfer">Sokağın atmosferi</h2>
+  <p>Barlar Sokağı gündüz sahile bakan sakin bir yürüyüş hattı, akşam ise barların, kulüplerin ve restoranların ışıklandığı canlı bir eğlence alanına dönüşüyor. Yaz akşamlarında müzik ve etkinlikler öne çıkıyor; kalabalık sezon yoğunluğuna göre artıyor. Konaklama sayfalarımızda ayrıca "disko bölgesi" ve "discolar mevkii" olarak anılan noktalar da var; bu bölgeler Barlar Sokağı'ndan ayrı bir konum olarak anılıyor, bu yüzden gece planı yaparken hangi tesisin hangi noktaya yakın olduğunu bilmek faydalı.</p>
+  <h3>Gündüz ve akşam farkı</h3>
+  <p>Sabahları kafeler ve sahil yürüyüşü, öğleden sonra plaj dönüşü kahve molaları öne çıkıyor. Akşamüstü gün batımından sonra masalar dolmaya başlıyor. Gece yarısına doğru ise müzik ve dans pistleri hareketleniyor.</p>
+
+  <figure class="not-prose my-6 overflow-hidden rounded-xl bg-slate-100">
+    <img src="/img/barlar-sokagi/avsa-barlar-sokagi-neon-bar-gece-1.webp" alt="Avşa Adası Barlar Sokağı'nda gece, neon ışıklı bar ve dışarıdaki oturma alanı" width="1600" height="971" loading="lazy" decoding="async" class="w-full object-cover" />
+    <figcaption class="px-3 py-2 text-xs text-slate-600">Barlar Sokağı'nda neon ışıklı bir bar</figcaption>
+  </figure>
+
+  <h2 id="saatler">Saatler ve sezon</h2>
+  <p>Mekânların çoğunda müzik ve etkinlikler yaz akşamlarında yaklaşık 21:00'de başlayıp 02:00 civarına kadar sürüyor. Bu saatler mekâna, güne ve sezona göre değişebiliyor. Gece hayatı yaz sezonuna odaklı olduğu için sezon başında ve sonunda birçok mekânın kapalı olabileceğini hesaba katmak gerekiyor. Eylül sonu ve sonrası için gitmeden önce mekânları aramak en doğrusu.</p>
+
+  <h2 id="plan">Örnek bir akşam planı</h2>
+  <ul>
+    <li><strong>Gün batımı:</strong> <a href="/gezilecek-yerler/#manzara">Değirmenardı</a>'nda yürüyüş ve fotoğraf.</li>
+    <li><strong>Akşam yemeği:</strong> İskele çevresinde bir restoran; yoğun günlerde yer ayırtmak iyi olur.</li>
+    <li><strong>21:00 sonrası:</strong> Barlar Sokağı'nda bir mekânda içecek ve müzik.</li>
+    <li><strong>Gece yarısı:</strong> Dans etmek isteyenler için kulüp ve diskolar.</li>
+    <li><strong>Dönüş:</strong> Konaklama yakınsa yürüyerek; uzaksa dönüş yolunu önceden planla.</li>
+  </ul>
+
+  <h2 id="kimler">Kimler için uygun?</h2>
+  <p>Arkadaş grupları, çiftler ve eğlence odaklı tatilciler için Barlar Sokağı ideal. Gün boyu plajda vakit geçirip akşam eğlenceye yürüyerek ulaşmak isteyenler için merkezdeki tesisler pratik. Çocuklu aileler akşamın erken saatlerinde sahil ve restoranların tadını çıkarabilir, ancak geç saatlerde müzik ve kalabalık nedeniyle sakin bir bölgede kalmak daha rahat olur.</p>
+
+  <h2 id="guvenlik">Güvenlik ve sorumlu eğlence</h2>
+  <ul>
+    <li><strong>Alkol ve araç:</strong> Motosiklet ya da ATV kullanacaksan alkol almamalısın; gece dönüşünü yürüyerek ya da başka şekilde planla.</li>
+    <li><strong>Giriş kuralları:</strong> Bazı mekânların giriş politikaları var; kaynaklar bazı yerlerin yalnız gelen erkeklere giriş vermediğini belirtiyor. Kapıda sormak ya da grupla gitmek en kolayı.</li>
+    <li><strong>Eşyalarına dikkat et:</strong> Telefon ve cüzdanı kalabalıkta yanında tut.</li>
+    <li><strong>Nakit ve kart:</strong> Küçük işletmelerde kart çalışmayabilir; yanında bir miktar nakit bulundur.</li>
+    <li><strong>Su iç:</strong> Gün boyu güneşte kaldıysan akşam yeterince su içmeyi unutma.</li>
+  </ul>
+
+  <h2 id="gurultu">Gürültü: yakın mı, uzak mı kalmalı?</h2>
+  <p>Eğlenceye yürüyerek ulaşmak ile sessiz uyumak arasında bir denge kurmak gerekiyor. Sokağa çok yakın tesislerde akşam müziği duyulabilir; bu, eğlenceyi sevenler için avantaj, erken uyuyanlar için dezavantaj olabilir. Orta mesafeli tesisler (500-600 m) hem yürüyerek ulaşmaya imkân veriyor hem de müzikten bir miktar uzak kalıyor. Sessizlik için ise sokaktan daha uzak tesisler veya Yiğitler Köyü daha uygun.</p>
+
+  <div id="konaklama"></div>
+  <StayLinks items={yakin} title="Barlar Sokağı'na yürüme mesafesinde" />
+  {uzak.length > 0 && <StayLinks items={uzak} title="Daha sakin: sokaktan uzak tesisler" />}
+  <p>Tüm seçenekler için <a href="/#konaklama">Avşa otelleri, apartları ve pansiyonları</a> listemize bakabilir, gündüz için <a href="/plajlar/">plajlar</a> rehberini inceleyebilirsin. Adaya nasıl geleceğini planlamak için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> sayfamız hazır.</p>
+</InfoLayout>

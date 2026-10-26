@@ -1,0 +1,119 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "../components/StayLinks.astro";
+import { stays, featuresOf } from "../data/stays";
+
+const title = "Avşa Otelleri: Denize Sıfır, Havuzlu | avsaadasi.net";
+const description =
+  "Avşa Adası otelleri rehberi: merkez, Yiğitler ve Değirmenardı'daki otelleri konum ve olanaklarına göre karşılaştır. Denize sıfır, havuzlu, kahvaltı dahil.";
+
+const toc = [
+  { id: "genel", label: "Avşa'da otel seçimi" },
+  { id: "liste", label: "Tüm oteller" },
+  { id: "bolgeler", label: "Bölgeye göre oteller" },
+  { id: "olanaklar", label: "Olanaklara göre oteller" },
+  { id: "tatil-tipi", label: "Tatil tarzına göre seçim" },
+  { id: "nasil-secilir", label: "Otel seçerken nelere bakılır?" },
+  { id: "rezervasyon", label: "Rezervasyon ipuçları" },
+];
+
+const origin = "https://www.avsaadasi.net";
+const otels = stays.filter((s) => s.type === "otel");
+const has = (s: (typeof stays)[number], key: string) => featuresOf(s).some((f) => f.key === key);
+const items = (arr: typeof otels, note?: (s: (typeof otels)[number]) => string) => arr.map((stay) => ({ stay, note: note ? note(stay) : stay.tagline }));
+
+const merkez = otels.filter((s) => s.area === "Merkez");
+const yigitler = otels.filter((s) => s.area === "Yiğitler");
+const degirmen = otels.filter((s) => s.area === "Değirmenardı");
+const deniz = otels.filter((s) => has(s, "deniz"));
+const havuz = otels.filter((s) => has(s, "havuz"));
+const kahvalti = otels.filter((s) => has(s, "kahvalti") || has(s, "yarim"));
+const cocuk = otels.filter((s) => has(s, "cocuk"));
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası otelleri",
+  itemListElement: otels.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: `${origin}/konaklama/${s.slug}/` })),
+};
+
+const faq = [
+  { q: "Avşa'da hangi bölgede otel tutmalıyım?", a: "Eğlenceye, iskeleye ve çarşıya yakın olmak istiyorsan merkez; daha sakin, plajlara yakın bir tatil için Yiğitler Köyü ve çevresi; sakin ve kumsala yakın bir köşe için Değirmenardı tercih edilebilir." },
+  { q: "Avşa'da denize sıfır otel var mı?", a: "Evet. Merkezde ve Değirmenardı'nda denize sıfır ya da denize çok yakın oteller var; Yiğitler'deki bazı oteller de denize yalnızca birkaç metre mesafede. Listedeki 'Denize sıfır' filtresi bunları gösterir." },
+  { q: "Avşa'da havuzlu ve aquaparklı otel var mı?", a: "Evet. Sitemizde havuzlu, aquaparklı ve kaydıraklı havuza sahip oteller bulunuyor; çocuklu aileler için bu otelleri 'Olanaklara göre' bölümünde ayrıca listeledik." },
+  { q: "Kahvaltı dahil ya da yarım pansiyon otel bulabilir miyim?", a: "Evet. Bazı oteller açık büfe kahvaltı, bazıları yarım pansiyon sunuyor. Dahil olan hizmetler sezona göre değişebileceği için otele sormak en doğrusu." },
+  { q: "Otel fiyatlarına nasıl ulaşırım?", a: "Fiyatlar sezona, tarihe ve oda tipine göre değişiyor. Her otelin sayfasındaki WhatsApp düğmesinden işletmeyle doğrudan görüşebilirsin." },
+  { q: "Otelden feribot iskelesine nasıl gidilir?", a: "Merkezdeki otellerin çoğu iskeleye yürüme mesafesinde. Yiğitler ve Değirmenardı için minibüs, motosiklet ya da taksi seçeneklerini otele sorabilirsin. Adaya ulaşım için 'Avşa'ya nasıl gidilir' sayfamıza bak." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Otelleri"
+  intro="Merkezde denize sıfır olanlardan Yiğitler'deki bahçeli butik otellere: Marmara Denizi'ndeki Avşa Adası'nda, Balıkesir'in Marmara ilçesine bağlı bu tatil adasında otel seçerken Avşa otellerini konumlarına ve olanaklarına göre karşılaştır."
+  crumb="Oteller"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/kategori/avsa-otelleri-kapak.webp"
+  extraLd={[ld]}
+>
+  <figure class="not-prose mb-6">
+    <img src="/img/kategori/avsa-otelleri-kapak.webp" alt="Avşa Adası otelleri: havuz, su kaydırağı ve deniz manzarası" width="1024" height="538" loading="eager" decoding="async" class="aspect-[16/7] w-full rounded-2xl object-cover" />
+    <figcaption class="mt-2 text-xs text-slate-500">Görsel: <a class="underline" href="/konaklama/avsa-artemis-otel/">Avşa Artemis Otel</a></figcaption>
+  </figure>
+
+  <h2 id="genel">Avşa'da otel seçimi</h2>
+  <p>Avşa Adası'nda konaklama seçenekleri otelden pansiyona, apart dairelerden kiralık evlere kadar geniş. Oteller bu seçenekler içinde servis, kahvaltı ve olanaklar bakımından en kapsamlı olanlar: bazılarında havuz ya da aquapark, bazılarında yarım pansiyon, bazılarında özel kumsal ya da bahçe bulunuyor. Sitemizde {otels.length} otel listeleniyor; her birinin sayfasında odalar, olanaklar, çevredeki mesafeler ve iletişim bilgileri yer alıyor.</p>
+  <p>Otel seçimi çoğunlukla üç soruya bağlı: <strong>nerede</strong> kalmak istiyorsun, <strong>hangi olanaklar</strong> senin için önemli ve <strong>kimlerle</strong> gidiyorsun? Aşağıda bu üç soruya göre otelleri gruplandırdık.</p>
+
+  <div id="liste"></div>
+  <StayLinks items={items(otels)} title={`Avşa otelleri (${otels.length} tesis)`} />
+
+  <h2 id="bolgeler">Bölgeye göre oteller</h2>
+  <h3>Merkez: iskele, çarşı ve eğlence yakınında</h3>
+  <p>Avşa merkezi, feribot iskelesine, çarşıya, restoranlara ve <a href="/barlar-sokagi/">Barlar Sokağı</a>'na yakın olduğu için ilk kez gelenlerin ve eğlenceyi sevenlerin favorisi. Merkezdeki otellerin birçoğu denize sıfır ya da denize birkaç adım mesafede; plaja ya da iskeleye yürüyerek ulaşabiliyorsun. Akşamları müzik ve kalabalık beklemek gerekiyor; sessizlik arayanlar için bu bölgedeki tesislerin sokağa uzaklığını kontrol etmek faydalı.</p>
+  <StayLinks items={items(merkez)} title="Merkezdeki oteller" />
+  <h3>Yiğitler Köyü: sakin, bahçeli ve plajlara yakın</h3>
+  <p>Adanın doğu yakasındaki Yiğitler Köyü, Altınkum ve Karadut koylarına yakınlığıyla bilinir. Köy sakin; akşam eğlence yoğunluğu merkezdekinden çok daha az. Burada hem büyük, çok olanaklı oteller hem de bahçeli, havuzlu butik aile otelleri var. Gün boyu plajda vakit geçirmek ve akşamları dinlenmek isteyenler için ideal.</p>
+  <StayLinks items={items(yigitler)} title="Yiğitler Köyü'ndeki oteller" />
+  {degirmen.length > 0 && (
+    <>
+      <h3>Değirmenardı: kumsal ve gün batımı</h3>
+      <p>İskelenin yakınındaki Değirmenardı, gün batımı noktasıyla bilinen sakin bir bölge. Burada özel kumsallı, deniz manzaralı bir aile oteli bulunuyor.</p>
+      <StayLinks items={items(degirmen)} title="Değirmenardı'ndaki oteller" />
+    </>
+  )}
+  <p>Bölgelerin karakterini daha ayrıntılı görmek için <a href="/avsa-adasi/">Avşa Adası rehberine</a> ve plajları incelemek için <a href="/plajlar/">plajlar sayfasına</a> bakabilirsin.</p>
+
+  <h2 id="olanaklar">Olanaklara göre oteller</h2>
+  <p>Aşağıdaki listeler, otel sayfalarındaki olanak bilgilerine göre otomatik hazırlandı. Hizmetler sezona göre değişebilir; rezervasyondan önce otele sormanı öneririz.</p>
+  <StayLinks items={items(deniz, (s) => "Denize sıfır / çok yakın")} title="Denize sıfır ve denize çok yakın oteller" />
+  <StayLinks items={items(havuz, () => "Havuz, aquapark ya da jakuzi")} title="Havuzlu oteller" />
+  <StayLinks items={items(kahvalti, () => "Kahvaltı dahil / yarım pansiyon")} title="Kahvaltı dahil ve yarım pansiyon oteller" />
+  <StayLinks items={items(cocuk, () => "Çocuk ve aile dostu")} title="Çocuklu aileler için oteller" />
+
+  <h2 id="tatil-tipi">Tatil tarzına göre seçim</h2>
+  <h3>Çocuklu aileler</h3>
+  <p>Havuzu, aquaparkı ya da çocuk oyun alanı olan otelleri tercih etmek gün içi eğlenceyi kolaylaştırıyor. Plajı sığ olan koylara yakın otelleri seçersen çocuklarla deniz keyfi de rahat geçer; hangi koyun çocuklar için uygun olduğunu <a href="/plajlar/#aileler">plajlar rehberinde</a> bulabilirsin.</p>
+  <h3>Arkadaş grupları ve eğlence</h3>
+  <p>Gece hayatına yakın olmak istiyorsan merkezdeki oteller doğru yer. Konaklama tesislerinin <a href="/gece-hayati/">gece hayatı</a> sayfamızdaki mesafelerine bakarak yürüyerek dönebileceğin bir otel seçebilirsin.</p>
+  <h3>Çiftler ve sakin tatil</h3>
+  <p>Yiğitler Köyü ve Değirmenardı gibi sakin bölgeler, gün batımı ve sahil yürüyüşü isteyen çiftler için uygun. Bahçeli ve butik otellerde daha dingin bir tatil geçirebilirsin.</p>
+  <h3>Bütçeye göre alternatifler</h3>
+  <p>Bütçen otel fiyatlarının altındaysa <a href="/avsa-pansiyonlari/">pansiyonlar ve moteller</a>, mutfaklı ve esnek bir konaklama istiyorsan <a href="/avsa-apartlari/">apart daireler</a>, müstakil tatil için <a href="/kiralik-evler/">kiralık evler</a> iyi seçenekler.</p>
+
+  <h2 id="nasil-secilir">Otel seçerken nelere bakılır?</h2>
+  <ul>
+    <li><strong>Konum:</strong> Denize, iskeleye ve eğlence bölgesine mesafe; sessizlik istiyorsan sokaktan uzaklık.</li>
+    <li><strong>Olanaklar:</strong> Havuz, aquapark, otopark, klima, Wi-Fi ve oda servisi gibi ihtiyaçlar.</li>
+    <li><strong>Yeme-içme:</strong> Açık büfe kahvaltı, yarım pansiyon ya da restoran; çevredeki restoranlarla karşılaştır.</li>
+    <li><strong>Oda tipi:</strong> Aile odası, suit ya da standart oda; kişi sayısına uygun kapasiteyi kontrol et.</li>
+    <li><strong>Giriş-çıkış saatleri:</strong> Feribot saatlerine göre geç giriş ya da erken çıkış gerekebilir; otele önceden haber ver.</li>
+  </ul>
+
+  <h2 id="rezervasyon">Rezervasyon ipuçları</h2>
+  <p>Yaz hafta sonları ve bayram dönemlerinde oteller ve feribot biletleri hızla doluyor. Tarih netleştiğinde önce otel müsaitliğini sorup ardından feribot biletini almak mantıklı. Fiyatlar sezona, tarihe ve oda tipine göre değiştiği için güncel fiyatı her otelin sayfasındaki WhatsApp düğmesinden doğrudan öğrenebilirsin; böylece aracı olmadan işletmeyle konuşmuş olursun.</p>
+  <p>Adaya ulaşım planın için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a>, güncel sefer saatleri için <a href="/feribot-saatleri/">feribot saatleri</a> ve ücretler için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfalarına bakabilirsin. Gezi planın varsa <a href="/gezilecek-yerler/">Avşa gezilecek yerler</a> rehberi de yardımcı olur.</p>
+</InfoLayout>

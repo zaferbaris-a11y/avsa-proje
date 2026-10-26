@@ -1,0 +1,9 @@
+---
+// avsaadasi.net logosu: ikon + yazı. light=true koyu zeminde beyaz yazı verir.
+interface Props { light?: boolean; class?: string }
+const { light = false, class: cls = "" } = Astro.props;
+---
+<span class={`inline-flex items-center gap-2.5 ${cls}`}>
+  <svg viewBox="0 0 64 64" class="h-9 w-9 shrink-0" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a8fc4"/><stop offset="1" stop-color="#0b3a55"/></linearGradient><clipPath id="c"><rect width="64" height="64" rx="15"/></clipPath></defs><rect width="64" height="64" rx="15" fill="url(#g)"/><g clip-path="url(#c)"><circle cx="43" cy="22" r="9" fill="#fdba74"/><path d="M6 41c5-9 12-14 20-14s14 5 18 14z" fill="#fff7e8"/><path d="M0 44c7-4 12-4 18 0s11 4 18 0 12-4 18 0 7 2 10 0v20H0z" fill="#fff" opacity=".95"/><path d="M0 53c7-4 12-4 18 0s11 4 18 0 12-4 18 0 7 2 10 0v11H0z" fill="#7dd3fc" opacity=".55"/></g></svg>
+  <span class={`font-display text-xl font-bold leading-none tracking-tight ${light ? "text-white" : "text-deniz-900"}`}>avsaadasi<span class={light ? "text-orange-300" : "text-gunbatimi"}>.net</span></span>
+</span>

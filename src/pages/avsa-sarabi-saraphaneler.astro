@@ -1,0 +1,136 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa Şarabı ve Şaraphaneler | avsaadasi.net";
+const description =
+  "Avşa Adası şarabı ve şaraphaneleri: Adakarası üzümü, coğrafi işaret, Bortaçina ve Büyülübağ'da tadım, bağ bozumu, ziyaret ipuçları ve rezervasyon uyarıları.";
+
+const origin = "https://www.avsaadasi.net";
+
+const galeri = [
+  { src: "/img/saraphaneler/avsa-sarap-dukkani-raflar-1.webp", w: 1024, h: 622, alt: "Avşa Adası'nda şarap dükkânı, raflarda kırmızı, beyaz ve roze şaraplar", cap: "Şarap dükkânı" },
+  { src: "/img/saraphaneler/avsa-adakarasi-sarap-tezgahi-1.webp", w: 900, h: 600, alt: "Avşa Adası'nda Adakarası yazılı rafta şişe şaraplar ve hediyelik şaraplar", cap: "Adakarası şarap tezgâhı" },
+  { src: "/img/saraphaneler/bortacina-saraphanesi-ici-1.webp", w: 516, h: 387, alt: "Bortaçina şaraphanesi, kemerli salonda meşe fıçılar ve masalar", cap: "Bortaçina'da kemerli salon ve fıçılar" },
+  { src: "/img/saraphaneler/avsa-saraphane-fici-salonu-1.webp", w: 330, h: 219, alt: "Avşa Adası şaraphanesinde büyük meşe fıçılar ve taş duvarlı salon", cap: "Şaraphanede fıçılar" },
+];
+
+const toc = [
+  { id: "ozet", label: "Avşa'da şarap kısaca" },
+  { id: "adakarasi", label: "Adakarası üzümü" },
+  { id: "saraphaneler", label: "Bortaçina ve Büyülübağ" },
+  { id: "tadim", label: "Tadım ve ziyaret" },
+  { id: "bag-bozumu", label: "Bağ bozumu: Eylül" },
+  { id: "rota", label: "Gezi rotasına nasıl eklenir?" },
+  { id: "ipuclari", label: "Pratik ipuçları" },
+  { id: "konaklama", label: "Nerede kalınır?" },
+];
+
+const wineries = [
+  {
+    id: "bortacina",
+    name: "Bortaçina Şarap Evi",
+    text: "Avşa Adası'nda üretim yapan, ada karası üzümünden şarap üreten ve ziyaretçilere tadım sunduğu belirtilen şaraphane.",
+  },
+  {
+    id: "buyulubag",
+    name: "Büyülübağ Bağcılık ve Şarapçılık",
+    text: "Avşa Adası'nda Adakarası'nı işleyen butik üretici; kaynaklara göre üretim alanı gezilebiliyor, tadım ise ücretli.",
+  },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Avşa Adası şaraphaneleri",
+  itemListElement: wineries.map((w, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: `${origin}/avsa-sarabi-saraphaneler/#${w.id}`,
+    item: {
+      "@type": "Winery",
+      "@id": `${origin}/avsa-sarabi-saraphaneler/#${w.id}`,
+      name: w.name,
+      description: w.text,
+      address: { "@type": "PostalAddress", addressLocality: "Avşa Adası", addressRegion: "Balıkesir", addressCountry: "TR" },
+    },
+  })),
+};
+
+const faq = [
+  { q: "Avşa'da şaraphane gezilebilir mi?", a: "Evet. Kaynaklara göre Bortaçina ve Büyülübağ'da ziyaret ve tadım yapılabiliyor. Çalışma saatleri ve ücretler değişkenlik gösterdiği için gitmeden önce aramak ve rezervasyon yaptırmak önerilir." },
+  { q: "Adakarası nedir?", a: "Avşa'da yetişen, Türkiye'ye özgü kırmızı bir üzüm çeşidi. Üzüm coğrafi işaretle tescilli ve ada şarapçılığının temelini oluşturuyor." },
+  { q: "Avşa'da şarap tadımı ücretli mi?", a: "Kaynaklara göre tadım genellikle ücretli. Kesin fiyat kaynaklarda net olmadığı için şaraphaneye sorman gerekir; fiyatlar sezona ve paket içeriğine göre değişir." },
+  { q: "Avşa'da bağ bozumu ne zaman?", a: "2024 yılında bağ bozumu Eylül başında başladı ve yaklaşık 20 gün sürmesi bekleniyordu. Tarih her yıl iklime göre değişebilir." },
+  { q: "Avşa'da kaç şaraphane var?", a: "Bir haberde adada Adakarası'nı işleyen dört şaraphaneden söz ediliyor: ikisi büyük, ikisi butik. Bu sayfada kaynaklarda adı geçen Bortaçina ve Büyülübağ'a yer veriyoruz." },
+  { q: "Şaraphane için rezervasyon gerekli mi?", a: "Bazı dönemlerde (bağ bozumu, kalabalık hafta sonları) gerekebilir. Garanti için önceden arayıp saat ve ücret bilgisini öğren." },
+  { q: "Tadım sonrası araç kullanabilir miyim?", a: "Hayır, alkol aldıktan sonra motosiklet, ATV ya da araba kullanma. Ulaşımı önceden planla; minibüs, taksi veya yürüyerek dönmek daha güvenli." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Şarabı ve Şaraphaneler"
+  intro="Balıkesir'in Marmara ilçesindeki Avşa yalnızca plaj ve tatil değil, şarap da: coğrafi işaretli Adakarası üzümü, Bortaçina ve Büyülübağ şaraphaneleri, tadım ve bağ bozumu için bilmen gerekenler."
+  crumb="Şarap ve Şaraphaneler"
+  toc={toc}
+  faq={faq}
+  updated="24 Ekim 2026"
+  image="/img/hero.webp"
+  extraLd={[ld]}
+>
+  <h2 id="ozet">Avşa'da şarap kısaca</h2>
+  <p>Avşa, Marmara'nın şarapla anılan nadir adalarından biri. Adada yüzyıllardır üzüm yetiştiriliyor; kaynaklar bağcılığın Rum döneminden bu yana sürdüğünü belirtiyor. Bugün ada, Adakarası adlı yerel kırmızı üzümüyle ve bu üzümü işleyen şaraphaneleriyle tanınıyor. Plaj ve gece hayatı dışında bir ada deneyimi arayanlar için şarap tadımı, <a href="/avsa-adasi-gezi-rotasi/">gezi rotasına</a> eklenebilecek keyifli bir mola.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Bu sayfadaki bilgiler kamuya açık yayınlardan derlendi (son kontrol: 24 Ekim 2026). Şaraphanelerin çalışma saatleri, tadım ücretleri ve turları <strong>değişkenlik gösterebilir</strong>; kaynaklarda net saat ve fiyat bulamadık. Gitmeden önce aramanı ve <strong>rezervasyon yaptırmanı öneririz</strong>.
+  </div>
+
+  <div class="not-prose my-6 grid grid-cols-2 gap-3">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="adakarasi">Adakarası üzümü</h2>
+  <p>Adakarası ("adanın karası"), Türkiye'ye özgü kırmızı bir üzüm çeşidi ve Avşa'nın şarap kimliğinin merkezinde yer alıyor. Wikipedia'daki bilgiye göre üzüm 24 Ocak 2023'te coğrafi işaret olarak tescillendi; Avşa Adakarası Şarabı ise 7 Mayıs 2025'te mahreç işareti aldı ve bu işaret, şarabın Avşa Adası'ndaki Adakarası üzümünden ve tanımlı coğrafi alanda üretilmesini şart koşuyor. Üretici Büyülübağ'ın kurucusuna atfedilen bir ifadeye göre adanın rüzgârı, güneşi ve deniz tuzu Adakarası'na kendine özgü bir asidite ve derinlik veriyor. Şarabın tadı üretici ve yıla göre değiştiği için kesin bir aroma profili vermiyoruz; tadımda kendi damağınla keşfetmek en doğrusu.</p>
+
+  <h2 id="saraphaneler">Bortaçina ve Büyülübağ</h2>
+  <p>Bir haberde adada Adakarası'nı işleyen dört şaraphaneden söz ediliyor: ikisi büyük, ikisi butik üretici. Kaynaklarda en sık adı geçen ve ziyaretçilere tadım sunduğu belirtilenler Bortaçina ve Büyülübağ.</p>
+  <h3 id="bortacina">Bortaçina Şarap Evi</h3>
+  <p>Kaynaklara göre Bortaçina adada üretim yapan, ada karası üzümünden şarap üreten ve ziyaretçilere tadım olanağı sunan bir şaraphane. Çalışma saatleri, tadım ücretleri ve tur içeriği konusunda net bir kaynak bulamadık. Adresi tarif etmek yerine navigasyonla arayıp telefonla yer ve saat bilgisini öğrenmeni öneririz.</p>
+  <h3 id="buyulubag">Büyülübağ Bağcılık ve Şarapçılık</h3>
+  <p>Büyülübağ, Adakarası'nı işleyen butik üreticilerden biri olarak anılıyor. Ziyaretçi yorumlarına göre üretim alanı ve mahzenler gezilebiliyor, tadım ise ücretli. Bir yorumcu pandemi döneminde yalnızca satış bölümünün açık olduğunu belirtmiş; bu da açık olan bölümlerin dönemine göre değişebildiğini gösteriyor. Güncel saatler ve ücretler için doğrudan şaraphaneye sor.</p>
+  <p>Çevrede bir üzüm heykeli de adanın merkezinde fotoğraf molası olarak öne çıkıyor; ayrıntı için <a href="/gezilecek-yerler/#sarap">gezilecek yerler</a> sayfasına bak.</p>
+
+  <h2 id="tadim">Tadım ve ziyaret</h2>
+  <p>Şaraphane ziyareti genellikle üretim alanını görmek, mahzene inmek ve şarap tatmak şeklinde düzenleniyor. Tadımların ücretli olduğu belirtiliyor; kişi başı ücret kaynaklarda net olmadığı için sabit bir rakam vermiyoruz. Satış bölümünden şarap şişesi almak da mümkün; fiyatlar etikete ve şarap tarzına göre değişir.</p>
+  <ul>
+    <li><strong>Önceden ara:</strong> Çalışma saatleri sezona ve güne göre değişebilir.</li>
+    <li><strong>Rezervasyon:</strong> Özellikle Eylül'deki bağ bozumu ve yaz hafta sonlarında önerilir.</li>
+    <li><strong>Ücreti sor:</strong> Tadım paketi ve tur içeriği şaraphaneye göre farklı.</li>
+    <li><strong>Küçük grup:</strong> Butik üreticilerde kalabalık gruplar için önceden haber ver.</li>
+  </ul>
+
+  <h2 id="bag-bozumu">Bağ bozumu: Eylül</h2>
+  <p>Bir haberde 2024'te bağ bozumunun Eylül başında başladığı ve yaklaşık 20 gün süreceği belirtilmiş; Marmara Adalar Belediyesi'nin bağ bozumu etkinlikleri de (Eylül ortasında) düzenlenmiş. Bu tarihler her yıl iklime göre değişebilir. Şarapla ilgileniyorsan Eylül, bağ bozumu havasını görmek için ilginç bir zaman; deniz hâlâ ılık, plajlar ise yazın zirvesine göre daha sakin. Aylara göre planlama için <a href="/avsa-adasina-ne-zaman-gidilir/">Avşa'ya ne zaman gidilir</a> rehberine bak.</p>
+
+  <h2 id="rota">Gezi rotasına nasıl eklenir?</h2>
+  <p>Şaraphane ziyareti ikindi saatlerine iyi oturuyor: sabah köy ya da Manastır gezisi, öğlen plajda yüzme, ikindi tadım, akşam gün batımı. Rota örnekleri için <a href="/avsa-adasi-gezi-rotasi/">1, 2 ve 3 günlük gezi rotası</a> sayfamıza bak; plaj molası için <a href="/altinkum-plaji/">Altınkum</a> ya da <a href="/plajlar/#karadut">Karadut</a>, gün batımı için <a href="/gezilecek-yerler/#degirmenardi">Değirmenardı</a> uygun. Yemekle eşleştirme için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a> yazımıza göz atabilirsin.</p>
+
+  <h2 id="ipuclari">Pratik ipuçları</h2>
+  <ul>
+    <li><strong>Sorumlu içki:</strong> Tadımdan sonra motosiklet, ATV ya da araba kullanma; dönüş ulaşımını önceden planla.</li>
+    <li><strong>Nakit ve kart:</strong> Küçük işletmelerde kart çalışmayabilir; ödeme yöntemini sor.</li>
+    <li><strong>Şişe taşıma:</strong> Alırsan feribotla dönerken kırılmaması için paketlet.</li>
+    <li><strong>Yaş sınırı:</strong> Alkollü ürünler yasal yaş sınırına tabidir.</li>
+    <li><strong>Sezon dışı:</strong> Ziyaret saatleri azalabilir; mutlaka ara.</li>
+  </ul>
+
+  <h2 id="konaklama">Nerede kalınır?</h2>
+  <p>Şaraphaneler adanın farklı noktalarında; bu yüzden konaklama için iskele yakınındaki <a href="/avsa-merkez-konaklama/">merkez</a> ya da sakin köy havasındaki <a href="/yigitler-konaklama/">Yiğitler</a> iyi bir üs olur. Tür tür seçenekler için <a href="/avsa-otelleri/">oteller</a>, <a href="/avsa-pansiyonlari/">pansiyonlar</a>, <a href="/avsa-apartlari/">apartlar</a> ve <a href="/kiralik-evler/">kiralık evler</a> sayfalarına bak. Adaya ulaşım için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> rehberleri hazır.</p>
+
+  <p class="text-sm text-slate-500">Kaynaklar: Wikipedia (Adakarası), Dünya gazetesi ve Politikam haberleri, Tripadvisor yorumları ve Avşa gezi rehberleri. Çalışma saatleri ve ücretler için şaraphaneleri doğrudan ara.</p>
+</InfoLayout>

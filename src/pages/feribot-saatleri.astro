@@ -1,0 +1,97 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import { TARIFE_KONTROL } from "../data/rehber";
+
+const title = "Avşa Adası Feribot Saatleri 2026 | avsaadasi.net";
+const description =
+  "Erdek–Avşa Adası feribot saatleri, Tekirdağ seferleri ve İDO deniz otobüsü bilgisi. Marmara RoRo ve GESTAŞ tarifeleri, sefer süresi, bilet ipuçları.";
+
+const galeri = [
+  { src: "/img/feribot-saatleri/avsa-yolcu-feribotu-denizde-1.webp", w: 640, h: 425, alt: "Avşa Adası'na sefer yapan yolcu feribotu Marmara Denizi'nde", cap: "Avşa seferini yapan yolcu feribotu" },
+  { src: "/img/feribot-saatleri/arac-feribotu-iskele-balikci-tekneleri-1.webp", w: 640, h: 425, alt: "İskeleye yanaşmış araçlı feribot ve önünde balıkçı tekneleri, Avşa feribot seferleri", cap: "İskelede araçlı feribot" },
+];
+
+const toc = [
+  { id: "uyari", label: "Önemli not" },
+  { id: "erdek", label: "Erdek – Avşa seferleri" },
+  { id: "tekirdag", label: "Tekirdağ – Avşa" },
+  { id: "istanbul", label: "İstanbul'dan Avşa'ya" },
+  { id: "bilet", label: "Bilet ve rezervasyon" },
+  { id: "iptal", label: "İptal ve hava durumu" },
+];
+
+const faq = [
+  { q: "Avşa'ya feribot nereden kalkıyor?", a: "Araçlı seferler Erdek (Balıkesir) limanından yapılıyor. Marmara RoRo ve GESTAŞ Erdek–Avşa hattında sefer düzenliyor. Tekirdağ'dan da sınırlı sayıda sefer var." },
+  { q: "Erdek–Avşa feribotu kaç dakika sürüyor?", a: "Kaynaklara göre yaklaşık 1 saat ile 1 saat 20 dakika arasında değişiyor; hava ve gemiye göre fark edebilir." },
+  { q: "İstanbul'dan Avşa'ya direkt feribot var mı?", a: "Araçlı direkt İstanbul feribotu yok. İDO deniz otobüsü Yenikapı ve Bostancı'dan (nisan-kasım), yaz sezonunda ayrıca Avcılar'dan yolcu taşıyor (araçsız). Sefer günlerini ido.com.tr'den doğrula." },
+  { q: "Feribot biletini ne zaman almalıyım?", a: "Yaz aylarında cuma akşamı seferleri için 7-10 gün önceden, bayramlarda 3-4 hafta önceden bilet almak önerilir." },
+  { q: "Kış tarifesi ne zaman başlıyor?", a: "Marmara RoRo'nun güncel tarifesi 31 Ekim 2026'ya kadar geçerli. Kasım ve sonrası için sefer saatleri değişebilir; gitmeden önce şirketten doğrulayın." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Feribot Saatleri"
+  intro="Erdek–Avşa ve Tekirdağ–Avşa seferleri, İDO deniz otobüsü ve bilet alma ipuçları tek sayfada."
+  crumb="Feribot Saatleri"
+  toc={toc}
+  faq={faq}
+  updated={TARIFE_KONTROL}
+>
+  <h2 id="uyari">Önemli not</h2>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Feribot saatleri mevsime, güne ve hava koşullarına göre değişir ve bu sayfadaki bilgiler kamuya açık tarife duyurularından derlenmiştir (son kontrol: {TARIFE_KONTROL}). Yola çıkmadan önce mutlaka şirketin güncel tarifesini doğrulayın.
+  </div>
+
+  <div class="not-prose my-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    {galeri.map((g) => (
+      <figure class="overflow-hidden rounded-xl bg-slate-100">
+        <img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover" />
+        <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2 id="erdek">Erdek – Avşa seferleri</h2>
+  <p>Avşa'ya araçlı ulaşımın ana hattı Erdek'ten. İki şirket sefer yapıyor: Marmara RoRo ve GESTAŞ (Gestaş Deniz Ulaşımı).</p>
+  <h3>Marmara RoRo (6 Eylül – 31 Ekim 2026)</h3>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yön</th><th>Kalkış saatleri</th></tr></thead>
+    <tbody>
+      <tr><td>Erdek → Avşa</td><td>08:45 · 17:00</td></tr>
+      <tr><td>Avşa → Erdek</td><td>12:45 · 20:20</td></tr>
+    </tbody>
+  </table></div>
+  <h3>GESTAŞ (1 Haziran – 30 Eylül 2026 yaz tarifesi)</h3>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yön</th><th>Kalkış saatleri</th></tr></thead>
+    <tbody>
+      <tr><td>Erdek → Avşa</td><td>11:00 · 19:30 (bazı günler 19:15)</td></tr>
+      <tr><td>Avşa → Erdek</td><td>06:00 · 17:00 (bazı günler 16:45)</td></tr>
+    </tbody>
+  </table></div>
+  <p>Sefer süresi kaynaklara göre yaklaşık 1 saat ile 1 saat 20 dakika arasında. Yaz tarifesi sona erdiğinden GESTAŞ için güncel bir kış tarifesi duyurusunu şirketten teyit edin.</p>
+
+  <h2 id="tekirdag">Tekirdağ – Avşa</h2>
+  <p>Marmara RoRo, Tekirdağ Ceyport–Avşa arasında sınırlı gün seferler düzenliyor: cuma ve pazar günleri 17:00'de Tekirdağ'dan kalkış (varış yaklaşık 20:00), Avşa'dan dönüş 19:00. Yolculuk yaklaşık 3 saat sürüyor.</p>
+
+  <h2 id="istanbul">İstanbul'dan Avşa'ya</h2>
+  <p>İstanbul'dan Avşa'ya direkt araçlı feribot yok. Seçenekler:</p>
+  <ul>
+    <li><strong>Karayolu + Erdek feribotu:</strong> İstanbul'dan Erdek'e araçla gidip Erdek'ten feribota binmek.</li>
+    <li><strong>İDO deniz otobüsü (yaya):</strong> Kaynaklara göre Yenikapı ve Bostancı'dan nisan-kasım döneminde (yaklaşık 3,5-4 saat), yaz sezonunda ayrıca Avcılar'dan (daha kısa süre) seferler yapılıyor; araç taşınmıyor. Sefer günleri ve saatleri sezona göre değişiyor, fiyatlar dinamik. Ayrıntılar için <a href="/istanbuldan-avsaya/">İstanbul'dan Avşa'ya</a> sayfasına bak.</li>
+  </ul>
+
+  <h2 id="bilet">Bilet ve rezervasyon</h2>
+  <p>Hangi şehirden hangi rotayla geleceğini planlıyorsan <a href="/avsa-adasina-nasil-gidilir/">Avşa Adası'na nasıl gidilir</a> rehberine bak.</p>
+  <ul>
+    <li><strong>Marmara RoRo:</strong> bilet.erdekroro.com · marmararoro.com · +90 541 960 99 33</li>
+    <li><strong>GESTAŞ:</strong> online.gdu.com.tr · 444 0 752</li>
+    <li><strong>İDO:</strong> ido.com.tr</li>
+  </ul>
+  <p>Cuma akşamı ve bayram dönemlerinde araçlı biletler hızlı tükeniyor. Fiyatlar için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfamıza bakabilirsin.</p>
+
+  <h2 id="iptal">İptal ve hava durumu</h2>
+  <p>Marmara RoRo kurallarına göre seferden en az 24 saat öncesine kadar yapılan iptallerde ücret iadesi tam, sonrasında %50 oluyor. Hava koşulları nedeniyle iptal edilen seferlerde ücretsiz değişiklik veya iade yapılıyor. Adada kalış planını feribot saatlerine göre yaparken <a href="/gezilecek-yerler/">gezilecek yerler</a> rehberine de göz at; konaklama için <a href="/#konaklama">tesis listemize</a> bakabilirsin.</p>
+</InfoLayout>
