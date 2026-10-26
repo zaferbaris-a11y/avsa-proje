@@ -200,7 +200,7 @@ const steps = [
             {mainCards.map(({ stay: s, features }) => (
               <article data-type={s.type} data-features={features.map((f) => f.key).join(" ")} class="stay-card group overflow-hidden rounded-3xl border border-slate-100 bg-kum-50 shadow-sm transition hover:shadow-lg">
                 <div class={`relative h-48 overflow-hidden bg-gradient-to-br ${s.gradient}`}>
-                  {s.images[0] && <img src={s.images[0]} alt="" loading="lazy" decoding="async" width="600" height="400" class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />}
+                  {s.images[0] && <img src={s.images[0].replace(/\.webp$/, "-640.webp")} alt="" loading="lazy" decoding="async" width="600" height="400" class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />}
                   <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold capitalize text-deniz-900">{s.kind ?? s.type}</span>
                   <span class="absolute bottom-4 right-4 rounded-full bg-deniz-900/80 px-3 py-1 text-xs text-white">{s.tag}</span>
                 </div>
@@ -240,7 +240,7 @@ const steps = [
                 {otherCards.map(({ stay: s, features }) => (
                   <li data-type={s.type} data-features={features.map((f) => f.key).join(" ")} class="stay-card relative flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 transition hover:border-deniz-500 hover:shadow-md">
                     <div class={`relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br text-2xl ${s.gradient}`} aria-hidden="true">
-                      {s.images[0] ? <img src={s.images[0]} alt="" loading="lazy" decoding="async" width="112" height="112" class="absolute inset-0 h-full w-full object-cover" /> : typeIcon[s.type]}
+                      {s.images[0] ? <img src={s.images[0].replace(/\.webp$/, "-240.webp")} alt="" loading="lazy" decoding="async" width="112" height="112" class="absolute inset-0 h-full w-full object-cover" /> : typeIcon[s.type]}
                     </div>
                     <div class="min-w-0 flex-1">
                       <a href={`/konaklama/${s.slug}/`} class="block font-semibold leading-snug text-deniz-900 after:absolute after:inset-0 after:content-[''] hover:text-deniz-600">{s.name}</a>
@@ -357,7 +357,7 @@ const steps = [
     </main>
 
     <footer class="border-t border-kum-100 bg-white py-8 text-center text-sm text-slate-500">
-      <a href="/iletisim/" class="mb-2 mr-4 inline-block font-semibold text-deniz-900 hover:text-deniz-600">İletişim</a><a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="mb-2 inline-block font-semibold text-deniz-900 hover:text-pink-600">Instagram: @avsaadasi</a><br />
+      <a href="/iletisim/" class="mb-2 mr-4 inline-block font-semibold text-deniz-900 hover:text-deniz-600">İletişim</a><a href="/cerez-politikasi/" class="mb-2 mr-4 inline-block font-semibold text-deniz-900 hover:text-deniz-600">Çerez Politikası</a><a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="mb-2 inline-block font-semibold text-deniz-900 hover:text-pink-600">Instagram: @avsaadasi</a><br />
       © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.
     </footer>
 
