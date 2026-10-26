@@ -39,38 +39,82 @@ const FONTS =
     <meta name="twitter:image" content={ogImage} />
     <slot name="head" />
 
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-RQ0XZBR2W"></script>
+    <!-- Google Analytics 4: rıza (Kabul Et) verilmeden yüklenmez ve çerez bırakmaz -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
 
-      gtag('config', 'G-RQ0XZBR2W');
+      var GA_ID = 'G-RQ00XZBR2W';
+      function loadGA() {
+        if (window.__gaLoaded) return;
+        window.__gaLoaded = true;
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      }
+      try { if (localStorage.getItem('avsa_cerez') === 'kabul') loadGA(); } catch (e) {}
     </script>
-
-    <!-- Fontlar sayfayı bloklamadan yüklenir (print -> all hilesi) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href={FONTS} media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href={FONTS} /></noscript>
   </head>
   <body class="bg-kum-50 font-sans text-slate-700 antialiased">
     <slot />
     <ChatWidget />
 
-    <!-- GA4 olay takibi: WhatsApp ve telefon tıklamaları (tüm sayfalar, dinamik eklenen linkler dahil) -->
+    <!-- Çerez bilgilendirme çubuğu (KVKK): seçim yapılana kadar görünür, GA4 yalnızca "Kabul Et" ile çalışır -->
+    <div id="cerez-bar" hidden role="dialog" aria-live="polite" aria-label="Çerez bilgilendirmesi" class="fixed inset-x-3 bottom-3 z-[70] mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-2xl backdrop-blur sm:bottom-5 sm:p-5">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <p class="flex-1 text-sm leading-relaxed text-slate-600">
+          <span aria-hidden="true">🍪</span> Ziyaretçi istatistiklerini anlamak için Google Analytics çerezleri kullanıyoruz. Yalnızca onay verirsen çalışır, reddedersen çerez bırakılmaz.{" "}
+          <a href="/cerez-politikasi/" class="font-semibold text-deniz-600 underline hover:text-deniz-900">Ayrıntılar</a>
+        </p>
+        <div class="flex shrink-0 gap-2">
+          <button type="button" id="cerez-reddet" class="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Reddet</button>
+          <button type="button" id="cerez-kabul" class="rounded-full bg-deniz-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-deniz-600">Kabul Et</button>
+        </div>
+      </div>
+    </div>
+
     <script is:inline>
-      document.addEventListener("click", function (e) {
-        var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
-        if (!a || typeof gtag !== "function") return;
-        var href = (a.getAttribute("href") || "").toLowerCase();
-        if (href.indexOf("wa.me") !== -1 || href.indexOf("api.whatsapp.com") !== -1) {
-          gtag("event", "whatsapp_click");
-        } else if (href.indexOf("tel:") === 0) {
-          gtag("event", "phone_click");
+      (function () {
+        var KEY = 'avsa_cerez';
+        var bar = document.getElementById('cerez-bar');
+        var saved = null;
+        try { saved = localStorage.getItem(KEY); } catch (e) {}
+        if (!saved && bar) bar.hidden = false;
+
+        function choose(v) {
+          try { localStorage.setItem(KEY, v); } catch (e) {}
+          if (bar) bar.hidden = true;
+          if (v === 'kabul') loadGA();
         }
-      });
+        var k = document.getElementById('cerez-kabul'), r = document.getElementById('cerez-reddet');
+        if (k) k.addEventListener('click', function () { choose('kabul'); });
+        if (r) r.addEventListener('click', function () { choose('red'); });
+
+        // Çerez politikası sayfasındaki "tercihi değiştir" düğmesi
+        document.addEventListener('click', function (e) {
+          var t = e.target && e.target.closest ? e.target.closest('[data-cerez-sifirla]') : null;
+          if (!t) return;
+          try { localStorage.removeItem(KEY); } catch (err) {}
+          if (bar) bar.hidden = false;
+        });
+
+        // GA4 olay takibi: yalnızca rıza verildiyse WhatsApp ve telefon tıklamalarını gönder
+        document.addEventListener('click', function (e) {
+          var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+          if (!a || !window.__gaLoaded) return;
+          var href = (a.getAttribute('href') || '').toLowerCase();
+          if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
+            gtag('event', 'whatsapp_click');
+          } else if (href.indexOf('tel:') === 0) {
+            gtag('event', 'phone_click');
+          }
+        });
+      })();
     </script>
   </body>
 </html>
