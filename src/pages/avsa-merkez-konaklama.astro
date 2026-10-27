@@ -1,5 +1,6 @@
 ---
 import InfoLayout from "../layouts/InfoLayout.astro";
+import KonseptLinks from "../components/KonseptLinks.astro";
 import AreaStayList from "../components/AreaStayList.astro";
 import { stays, defaultSchemaType } from "../data/stays";
 
@@ -132,4 +133,5 @@ const faq = [
     <li><strong>Fiyat:</strong> Fiyatlar sezona göre değişir; tesis sayfasındaki WhatsApp ve telefondan sor.</li>
   </ul>
   <p>Tür tür seçenekler için <a href="/avsa-otelleri/">Avşa otelleri</a>, <a href="/avsa-pansiyonlari/">pansiyonları</a>, <a href="/avsa-apartlari/">apartları</a> ve <a href="/kiralik-evler/">kiralık evleri</a> inceleyebilirsin.</p>
+  <KonseptLinks />
 </InfoLayout>

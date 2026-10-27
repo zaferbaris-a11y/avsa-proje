@@ -29,6 +29,12 @@ const staticPages = [
   { path: "/gece-hayati/", changefreq: "monthly", priority: 0.7 },
   { path: "/feribot-saatleri/", changefreq: "monthly", priority: 0.7 },
   { path: "/bilet-fiyatlari/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-denize-sifir-konaklama/", changefreq: "weekly", priority: 0.8 },
+  { path: "/avsa-havuzlu-oteller/", changefreq: "weekly", priority: 0.8 },
+  { path: "/avsa-kahvalti-dahil-oteller/", changefreq: "weekly", priority: 0.8 },
+  { path: "/avsa-cocuklu-aile-konaklama/", changefreq: "weekly", priority: 0.8 },
+  { path: "/avsa-mutfakli-apartlar/", changefreq: "weekly", priority: 0.8 },
+  { path: "/avsa-uygun-fiyatli-konaklama/", changefreq: "weekly", priority: 0.8 },
 ];
 
 const escapeXml = (s: string) =>

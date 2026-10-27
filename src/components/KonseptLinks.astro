@@ -1,0 +1,16 @@
+---
+// Konsept sayfalarına iç link bloğu (otel/pansiyon/apart ve bölge sayfalarının sonuna)
+import { konseptler } from "../data/konseptler";
+---
+<section class="mt-12" aria-labelledby="konsept-linkleri">
+  <h2 id="konsept-linkleri" class="font-display text-2xl font-bold text-deniz-900">Olanaklara göre konaklama</h2>
+  <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+    {konseptler.map((k) => (
+      <li>
+        <a href={k.path} class="flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-4 font-semibold text-deniz-900 transition hover:border-deniz-500 hover:shadow">
+          <span>{k.label}</span><span aria-hidden="true" class="text-deniz-600">→</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

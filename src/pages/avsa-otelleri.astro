@@ -1,5 +1,6 @@
 ---
 import InfoLayout from "../layouts/InfoLayout.astro";
+import KonseptLinks from "../components/KonseptLinks.astro";
 import StayLinks from "../components/StayLinks.astro";
 import { stays, featuresOf } from "../data/stays";
 
@@ -116,4 +117,5 @@ const faq = [
   <h2 id="rezervasyon">Rezervasyon ipuçları</h2>
   <p>Yaz hafta sonları ve bayram dönemlerinde oteller ve feribot biletleri hızla doluyor. Tarih netleştiğinde önce otel müsaitliğini sorup ardından feribot biletini almak mantıklı. Fiyatlar sezona, tarihe ve oda tipine göre değiştiği için güncel fiyatı her otelin sayfasındaki WhatsApp düğmesinden doğrudan öğrenebilirsin; böylece aracı olmadan işletmeyle konuşmuş olursun.</p>
   <p>Adaya ulaşım planın için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a>, güncel sefer saatleri için <a href="/feribot-saatleri/">feribot saatleri</a> ve ücretler için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfalarına bakabilirsin. Gezi planın varsa <a href="/gezilecek-yerler/">Avşa gezilecek yerler</a> rehberi de yardımcı olur.</p>
+  <KonseptLinks />
 </InfoLayout>

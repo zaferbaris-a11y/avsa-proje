@@ -1,0 +1,6 @@
+---
+import KonseptSayfa from "../components/KonseptSayfa.astro";
+import { konseptByPath } from "../data/konseptler";
+const konsept = konseptByPath("/avsa-kahvalti-dahil-oteller/")!;
+---
+<KonseptSayfa konsept={konsept} />

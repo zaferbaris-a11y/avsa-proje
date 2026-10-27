@@ -1,0 +1,78 @@
+---
+// Konsept sayfası şablonu: liste stays.ts'ten gelir, metinler data/konseptler.ts'ten.
+import InfoLayout from "../layouts/InfoLayout.astro";
+import StayLinks from "./StayLinks.astro";
+import { konseptler, staysFor, type Konsept } from "../data/konseptler";
+import { typeLabels, formatPrice, hasPrice, type Stay } from "../data/stays";
+
+interface Props { konsept: Konsept }
+const { konsept: k } = Astro.props;
+const origin = "https://www.avsaadasi.net";
+const list = staysFor(k).sort((a, b) => (hasPrice(a.priceFrom) ? a.priceFrom : 1e9) - (hasPrice(b.priceFrom) ? b.priceFrom : 1e9));
+const noteOf = (s: Stay) => (hasPrice(s.priceFrom) ? `gecelik ${formatPrice(s.priceFrom)}'den` : "fiyat için arayın");
+const toItems = (arr: Stay[]) => arr.map((stay) => ({ stay, note: noteOf(stay) }));
+
+const groups = (["otel", "pansiyon", "apart"] as const)
+  .map((t) => ({ t, label: typeLabels[t], items: list.filter((s) => s.type === t) }))
+  .filter((g) => g.items.length > 0);
+
+const areaCount = (a: string) => list.filter((s) => s.area === a).length;
+const areas = ["Merkez", "Yiğitler", "Değirmenardı"].map((a) => ({ a, n: areaCount(a) })).filter((x) => x.n > 0);
+const prices = list.filter((s) => hasPrice(s.priceFrom)).map((s) => s.priceFrom);
+const minP = prices.length ? Math.min(...prices) : 0;
+const maxP = prices.length ? Math.max(...prices) : 0;
+
+const toc = [
+  { id: "nedir", label: k.why.h },
+  { id: "liste", label: "Tesis listesi" },
+  { id: "bolge", label: "Bölgelere göre dağılım" },
+  { id: "ipuclari", label: "Seçerken dikkat edilecekler" },
+];
+
+const faq = [
+  ...k.faq,
+  { q: "Bu sayfada kaç tesis var?", a: `Şu an ${list.length} tesis listeleniyor${areas.length ? ": " + areas.map((x) => `${x.a} ${x.n}`).join(", ") : ""}. Yeni tesis eklendikçe liste güncellenir.` },
+];
+const other = konseptler.filter((x) => x.path !== k.path);
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: k.h1,
+  itemListElement: list.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: `${origin}/konaklama/${s.slug}/` })),
+};
+---
+
+<InfoLayout title={k.title} description={k.description} h1={k.h1} intro={k.intro(list.length)} crumb={k.label} toc={toc} faq={faq} updated="28 Ekim 2026" published="2026-10-28" extraLd={[ld]}>
+  <h2 id="nedir">{k.why.h}</h2>
+  {k.why.p.map((t) => <p>{t}</p>)}
+
+  <h2 id="liste">{k.label}: {list.length} tesis</h2>
+  <p>
+    Aşağıdaki liste otel, pansiyon ve apart türüne göre ayrıldı; her grupta başlangıç fiyatı düşük olan önde.
+    {prices.length > 0 && ` Gecelik başlangıç fiyatları ${formatPrice(minP)} ile ${formatPrice(maxP)} arasında.`}{" "}
+    Fiyatlar sezona, tarihe ve oda tipine göre değişir; kesin fiyat için tesise WhatsApp'tan yaz.
+  </p>
+  {groups.map((g) => (
+    <StayLinks items={toItems(g.items)} title={`${g.label} seçenekleri (${g.items.length})`} />
+  ))}
+
+  <h2 id="bolge">Bölgelere göre dağılım</h2>
+  <p>
+    {areas.map((x, i) => `${i > 0 ? ", " : ""}${x.a} bölgesinde ${x.n} tesis`).join("")}
+    bulunuyor. Merkez iskele ve çarşıya, Yiğitler Köyü ve Değirmenardı ise daha sakin plaj çevresine yakın. Bölgelerin karakterini <a href="/avsa-adasi/">Avşa Adası rehberinde</a>, <a href="/avsa-merkez-konaklama/">Merkez konaklama</a> ve <a href="/yigitler-konaklama/">Yiğitler konaklama</a> sayfalarında anlattık.
+  </p>
+
+  <h2 id="ipuclari">Seçerken dikkat edilecekler</h2>
+  <ul>
+    {k.tips.map((t) => <li>{t}</li>)}
+  </ul>
+  <p>
+    Adaya ulaşım için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a>, <a href="/feribot-saatleri/">feribot saatleri</a> ve <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfalarına bakabilirsin. Tüm tesisleri türüne göre görmek için <a href="/avsa-otelleri/">oteller</a>, <a href="/avsa-pansiyonlari/">pansiyonlar</a>, <a href="/avsa-apartlari/">apartlar</a> ve <a href="/kiralik-evler/">kiralık evler</a> sayfalarını açabilirsin.
+  </p>
+
+  <h2>Diğer konaklama rehberleri</h2>
+  <ul>
+    {other.map((o) => <li><a href={o.path}>{o.label}</a></li>)}
+  </ul>
+</InfoLayout>
