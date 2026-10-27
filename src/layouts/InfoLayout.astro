@@ -21,6 +21,13 @@ interface Props {
   extraLd?: object[]; // sayfaya özel ek JSON-LD (ItemList, TouristAttraction vb.)
 }
 const { title, description, h1, intro, crumb, toc = [], faq = [], updated, published = "2026-10-24", image, extraLd = [] } = Astro.props;
+const AYLAR = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+function isoTarih(t?: string): string | undefined {
+  const m = t?.match(/^(\d{1,2}) (\S+) (\d{4})$/);
+  const ay = m ? AYLAR.indexOf(m[2]) : -1;
+  return m && ay >= 0 ? `${m[3]}-${String(ay + 1).padStart(2, "0")}-${m[1].padStart(2, "0")}` : undefined;
+}
+const modified = isoTarih(updated) ?? published;
 const origin = Astro.site ?? new URL("https://www.avsaadasi.net");
 const url = new URL(Astro.url.pathname, origin).href;
 const here = Astro.url.pathname.replace(/\/$/, "");
@@ -42,7 +49,7 @@ const jsonLd: object[] = [
     description,
     inLanguage: "tr",
     datePublished: published,
-    dateModified: published,
+    dateModified: modified,
     mainEntityOfPage: url,
     author: { "@type": "Organization", name: "avsaadasi.net" },
     publisher: { "@type": "Organization", name: "avsaadasi.net", url: origin.href },
@@ -135,6 +142,7 @@ if (faq.length > 0) {
       {rehberPages.map((p) => <a href={p.path} class="hover:text-deniz-600">{p.label}</a>)}
       <a href="/kiralik-evler/" class="hover:text-deniz-600">Kiralık Evler</a>
       <a href="/iletisim/" class="hover:text-deniz-600">İletişim</a>
+      <a href="/cerez-politikasi/" class="hover:text-deniz-600">Çerez Politikası</a>
     </nav>
     <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="mb-2 inline-block font-semibold text-deniz-900 hover:text-pink-600">Instagram: @avsaadasi</a><br />
     © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.

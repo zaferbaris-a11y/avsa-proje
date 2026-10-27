@@ -6,6 +6,7 @@ const staticPages = [
   { path: "/", changefreq: "weekly", priority: 1.0 },
   { path: "/kiralik-evler/", changefreq: "weekly", priority: 0.8 },
   { path: "/iletisim/", changefreq: "yearly", priority: 0.5 },
+  { path: "/cerez-politikasi/", changefreq: "yearly", priority: 0.3 },
   { path: "/avsa-adasi-tarihi-ve-plajlari/", changefreq: "monthly", priority: 0.8 },
   { path: "/avsa-otelleri/", changefreq: "weekly", priority: 0.8 },
   { path: "/avsa-pansiyonlari/", changefreq: "weekly", priority: 0.8 },
