@@ -6,8 +6,9 @@ interface Props {
   title: string;
   description: string;
   image?: string;
+  stickyCta?: boolean; // true: mobilde altta sabit Ara/WhatsApp çubuğu var; sohbet balonu ve çerez çubuğu yukarı kayar
 }
-const { title, description, image } = Astro.props;
+const { title, description, image, stickyCta = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://www.avsaadasi.net"); // alan adını astro.config.mjs içinde `site` olarak tanımla
 const ogImage = new URL(image ?? "/img/hero.webp", canonical).href; // og:image mutlak URL olmalı
 
@@ -59,8 +60,13 @@ const FONTS =
       }
       try { if (localStorage.getItem('avsa_cerez') === 'kabul') loadGA(); } catch (e) {}
     </script>
+      <style is:global>
+      @media (max-width: 1023px) {
+        .has-cta #chat-root, .has-cta #cerez-bar { bottom: 5.25rem; }
+      }
+    </style>
   </head>
-  <body class="bg-kum-50 font-sans text-slate-700 antialiased">
+  <body class:list={["bg-kum-50 font-sans text-slate-700 antialiased", { "has-cta": stickyCta }]}>
     <slot />
     <ChatWidget />
 
