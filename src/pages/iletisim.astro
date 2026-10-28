@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
-import { WHATSAPP, INSTAGRAM } from "../data/site";
+import { WHATSAPP, INSTAGRAM, YOUTUBE_AVSA } from "../data/site";
 
 const title = "İletişim: Avşa Adası Rehberi | avsaadasi.net";
 const description =
@@ -29,7 +29,7 @@ const jsonLd = [
       telephone: PHONE_TEL,
       email: EMAIL,
       address: { "@type": "PostalAddress", streetAddress: "64/3", addressLocality: "Bo Phut, Koh Samui", addressRegion: "Surat Thani", addressCountry: "TH" },
-      sameAs: [INSTAGRAM],
+      sameAs: [INSTAGRAM, YOUTUBE_AVSA],
       contactPoint: { "@type": "ContactPoint", contactType: "customer support", telephone: PHONE_TEL, email: EMAIL, availableLanguage: ["Turkish"], areaServed: "TR" },
     },
   },

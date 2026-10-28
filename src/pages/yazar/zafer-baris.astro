@@ -1,6 +1,6 @@
 ---
 import InfoLayout from "../../layouts/InfoLayout.astro";
-import { INSTAGRAM } from "../../data/site";
+import { INSTAGRAM, YOUTUBE_AVSA } from "../../data/site";
 
 const title = "Zafer Barış | avsaadasi.net Kurucusu ve Editörü";
 const description = "Zafer Barış, avsaadasi.net'in kurucusu ve editörü. Avşa Adası doğumlu; adayı 2002'de internette tanıtmaya başladı; konaklama, ulaşım ve ada rehberleri yazıyor.";
@@ -22,7 +22,7 @@ const ld = {
     worksFor: { "@type": "Organization", name: "avsaadasi.net", url: "https://www.avsaadasi.net/" },
     knowsAbout: ["Avşa Adası", "Avşa Adası konaklama", "Avşa feribot ve ulaşım", "Avşa plajları"],
     image: "https://www.avsaadasi.net/img/yazar/zafer-baris.webp",
-    sameAs: [INSTAGRAM, FACEBOOK, YOUTUBE],
+    sameAs: [INSTAGRAM, YOUTUBE_AVSA, FACEBOOK, YOUTUBE],
   },
 };
 const sayfalar = [
@@ -56,5 +56,5 @@ const sayfalar = [
   <ul>
     {sayfalar.map(([href, t]) => <li><a href={href}>{t}</a></li>)}
   </ul>
-  <p>Bağlantılar: <a href={INSTAGRAM} rel="noopener">Instagram @avsaadasi</a> · <a href={FACEBOOK} rel="noopener">Facebook</a> · <a href={YOUTUBE} rel="noopener">YouTube: Tayland'da Yaşam</a></p>
+  <p>Bağlantılar: <a href={YOUTUBE_AVSA} rel="noopener">YouTube: Avşa Adası Rehberi</a> · <a href={INSTAGRAM} rel="noopener">Instagram @avsaadasi</a> · <a href={FACEBOOK} rel="noopener">Facebook</a> · <a href={YOUTUBE} rel="noopener">YouTube: kişisel kanalım</a></p>
 </InfoLayout>

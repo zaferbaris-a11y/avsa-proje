@@ -1,6 +1,7 @@
 ---
 // Konsept sayfası şablonu: liste stays.ts'ten gelir, metinler data/konseptler.ts'ten.
 import InfoLayout from "../layouts/InfoLayout.astro";
+import VideoKutu from "./VideoKutu.astro";
 import StayLinks from "./StayLinks.astro";
 import { konseptler, staysFor, type Konsept } from "../data/konseptler";
 import { typeLabels, formatPrice, hasPrice, type Stay } from "../data/stays";
@@ -46,6 +47,8 @@ const ld = {
 <InfoLayout title={k.title} description={k.description} h1={k.h1} intro={k.intro(list.length)} crumb={k.label} toc={toc} faq={faq} updated="28 Ekim 2026" published="2026-10-28" extraLd={[ld]}>
   <h2 id="nedir">{k.why.h}</h2>
   {k.why.p.map((t) => <p>{t}</p>)}
+
+  <VideoKutu id="B72QU8ZPJJ8" baslik="Avşa Adası'nda nerede kalınır? Avşa Adası Rehberi" />
 
   <h2 id="liste">{k.label}: {list.length} tesis</h2>
   <p>

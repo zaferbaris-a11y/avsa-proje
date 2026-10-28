@@ -4,7 +4,7 @@ import type { StayType } from "../data/stays";
 import Layout from "../layouts/Layout.astro";
 import Logo from "../components/Logo.astro";
 import Header from "../components/Header.astro";
-import { WHATSAPP, INSTAGRAM } from "../data/site";
+import { WHATSAPP, INSTAGRAM, YOUTUBE_AVSA } from "../data/site";
 import { rehberPages, homeChipPaths } from "../data/rehber";
 const homeChips = homeChipPaths.map((p) => rehberPages.find((r) => r.path === p)).filter((r): r is NonNullable<typeof r> => Boolean(r));
 
@@ -32,7 +32,7 @@ const ld = [
     url: `${origin}/`,
     logo: `${origin}/logo.svg`,
     description: "Avşa Adası'ndaki otel, pansiyon ve apartları tanıtan; plaj, gezi ve ulaşım rehberi sunan bağımsız rehber site.",
-    sameAs: [INSTAGRAM],
+    sameAs: [INSTAGRAM, YOUTUBE_AVSA],
     contactPoint: { "@type": "ContactPoint", contactType: "customer support", telephone: "+" + WHATSAPP, email: "zafer.baris@gmail.com", availableLanguage: ["Turkish"], areaServed: "TR" },
   },
   {
