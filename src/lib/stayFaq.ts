@@ -46,7 +46,7 @@ export function buildStayFaq(stay: Stay): Qa[] {
   // 4) Oda ve kapasite
   if (stay.rooms.length) {
     const caps = stay.rooms.map((r) => r.capacity).filter((n) => n > 0);
-    const names = stay.rooms.slice(0, 4).map((r) => `${r.name} (${r.capacity} kişilik)`).join(", ");
+    const names = stay.rooms.slice(0, 4).map((r) => (r.capacity > 0 ? `${r.name} (${r.capacity} kişilik)` : r.name)).join(", ");
     out.push({
       q: `${stay.name}'de ${stay.type === "apart" ? "hangi daire" : "hangi oda"} seçenekleri var?`,
       a: `${names}${stay.rooms.length > 4 ? " ve diğerleri" : ""}.${caps.length ? ` Kapasite ${Math.min(...caps)} ile ${Math.max(...caps)} kişi arasında değişiyor.` : ""}`,
@@ -74,7 +74,7 @@ export function buildStayFaq(stay: Stay): Qa[] {
   // 8) Rezervasyon
   out.push({
     q: `${stay.name}'de rezervasyon nasıl yapılır?`,
-    a: `Sayfadaki WhatsApp düğmesinden ${stay.phone ? `ya da ${stay.phone} numaralı telefondan ` : ""}tarih ve kişi sayısını yazarak işletmeyle doğrudan görüşebilirsiniz. Fiyat ve müsaitlik bilgisini işletme verir.`,
+    a: `${stay.whatsapp ? "Sayfadaki WhatsApp düğmesinden " : ""}${stay.phone ? `${stay.whatsapp ? "ya da " : ""}${stay.phone} numaralı telefondan ` : ""}${stay.whatsapp || stay.phone ? "" : "İletişim bilgisi yakında eklenecek; "}tarih ve kişi sayısını yazarak işletmeyle doğrudan görüşebilirsiniz. Fiyat ve müsaitlik bilgisini işletme verir.`,
   });
 
   return out.slice(0, 8);

@@ -5,7 +5,7 @@ function buildCatalog(): string {
   return stays
     .map((s) => {
       const rooms = s.rooms
-        .map((r) => `${r.name} (${r.capacity} kişilik, ${formatPrice(r.price)}/gece${r.note ? `, ${r.note}` : ""})`)
+        .map((r) => `${r.name} (${r.capacity > 0 ? `${r.capacity} kişilik, ` : ""}${formatPrice(r.price)}/gece${r.note ? `, ${r.note}` : ""})`)
         .join("; ");
       const nearby = s.nearby.map((n) => `${n.label} ${n.distance}`).join(", ");
       return [
@@ -17,7 +17,7 @@ function buildCatalog(): string {
         `  Olanaklar: ${s.amenities.join(", ")}`,
         `  Yakın yerler: ${nearby}`,
         `  Giriş ${s.checkIn} / Çıkış ${s.checkOut}`,
-        `  WhatsApp: https://wa.me/${s.whatsapp}`,
+        s.whatsapp ? `  WhatsApp: https://wa.me/${s.whatsapp}` : "",
         s.phone ? `  Telefon: ${s.phone}` : "",
       ]
         .filter(Boolean)

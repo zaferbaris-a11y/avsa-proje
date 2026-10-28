@@ -53,6 +53,7 @@ const waLink = (text: string) => `https://wa.me/${stay.whatsapp}?text=${encodeUR
 // Google için yapılandırılmış veri (JSON-LD)
 const origin = Astro.site ?? new URL("https://www.avsaadasi.net"); // astro.config.mjs içindeki `site` kullanılır
 const abs = (path: string) => new URL(path, origin).href;
+const shareLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${stay.name} - Avşa Adası\n${abs(`/konaklama/${stay.slug}/`)}`)}`;
 const prices = stay.rooms.map((r) => r.price).filter(hasPrice);
 const priceRange =
   prices.length > 0
@@ -169,7 +170,7 @@ const breadcrumbLd = {
             </p>
             <p>
               <span class="font-semibold text-deniz-900">Telefon:</span>
-              {stay.phone ? <a href={`tel:${phoneTel}`} class="font-semibold text-deniz-600 hover:underline">{stay.phone}</a> : <span>WhatsApp üzerinden ulaşabilirsiniz</span>}
+              {stay.phone ? <a href={`tel:${phoneTel}`} class="font-semibold text-deniz-600 hover:underline">{stay.phone}</a> : <span>{stay.whatsapp ? "WhatsApp üzerinden ulaşabilirsiniz" : "İletişim bilgisi yakında eklenecek"}</span>}
             </p>
             <p><span class="font-semibold text-deniz-900">Giriş / Çıkış:</span> {stay.checkIn} / {stay.checkOut}</p>
           </address>
@@ -207,18 +208,20 @@ const breadcrumbLd = {
             <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-white p-5 shadow-sm">
               <div>
                 <h3 class="font-semibold text-deniz-900">{r.name}</h3>
-                <p class="text-sm text-slate-500">{r.capacity} kişilik{r.note ? ` · ${r.note}` : ""}</p>
+                <p class="text-sm text-slate-500">{[r.capacity > 0 ? `${r.capacity} kişilik` : "", r.note ?? ""].filter(Boolean).join(" · ")}</p>
               </div>
               <div class="flex items-center gap-4">
                 <p class="text-sm text-slate-500">
                   <span class="text-lg font-bold text-deniz-900">{formatPrice(r.price)}</span>{hasPrice(r.price) && " / gece"}
                 </p>
-                <a
-                  href={waLink(`${stay.name} - ${r.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)}
-                  class="rounded-full bg-deniz-50 px-4 py-2 text-sm font-semibold text-deniz-600 hover:bg-deniz-600 hover:text-white"
-                >
-                  Sor
-                </a>
+                {stay.whatsapp && (
+                  <a
+                    href={waLink(`${stay.name} - ${r.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)}
+                    class="rounded-full bg-deniz-50 px-4 py-2 text-sm font-semibold text-deniz-600 hover:bg-deniz-600 hover:text-white"
+                  >
+                    Sor
+                  </a>
+                )}
               </div>
             </div>
           ))}
@@ -259,17 +262,22 @@ const breadcrumbLd = {
             </div>
           </dl>
 
-          <a
-            href={waLink(`${stay.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)}
-            class="mt-6 block rounded-full bg-gunbatimi py-3 text-center font-semibold text-white shadow-lg shadow-gunbatimi/30 transition hover:scale-[1.02]"
-          >
-            WhatsApp'tan yaz
-          </a>
+          {stay.whatsapp && (
+            <a
+              href={waLink(`${stay.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)}
+              class="mt-6 block rounded-full bg-gunbatimi py-3 text-center font-semibold text-white shadow-lg shadow-gunbatimi/30 transition hover:scale-[1.02]"
+            >
+              WhatsApp'tan yaz
+            </a>
+          )}
           {stay.phone && (
             <a href={`tel:${stay.phone.replace(/\s/g, "")}`} class="mt-3 block rounded-full border border-deniz-100 py-3 text-center font-semibold text-deniz-600 hover:bg-deniz-50">
               Ara: {stay.phone}
             </a>
           )}
+          <a href={shareLink} data-share target="_blank" rel="noopener noreferrer" class="mt-3 flex items-center justify-center gap-2 rounded-full border border-emerald-200 py-3 text-center text-sm font-semibold text-emerald-700 hover:bg-emerald-50">
+            <span aria-hidden="true">📲</span> WhatsApp'ta arkadaşına gönder
+          </a>
           <p class="mt-4 text-center text-xs text-slate-500">Fiyatlar sezona ve doluluğa göre değişebilir.</p>
         </div>
       </aside>
@@ -341,10 +349,12 @@ const breadcrumbLd = {
     © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.
   </footer>
   <!-- Mobilde sabit iletişim çubuğu -->
+  {(stay.whatsapp || stay.phone) && (
   <div class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 p-3 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] backdrop-blur lg:hidden" role="region" aria-label="Hızlı iletişim">
     <div class="mx-auto flex max-w-xl gap-2">
-      <a href={waLink(`${stay.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)} class="flex-1 rounded-full bg-gunbatimi py-3 text-center text-sm font-semibold text-white">WhatsApp'tan yaz</a>
+      {stay.whatsapp && <a href={waLink(`${stay.name} için müsaitlik ve fiyat bilgisi almak istiyorum.`)} class="flex-1 rounded-full bg-gunbatimi py-3 text-center text-sm font-semibold text-white">WhatsApp'tan yaz</a>}
       {stay.phone && <a href={`tel:${phoneTel}`} class="flex-1 rounded-full bg-deniz-900 py-3 text-center text-sm font-semibold text-white">Ara</a>}
     </div>
   </div>
+  )}
 </Layout>
