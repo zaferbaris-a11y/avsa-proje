@@ -1,0 +1,128 @@
+---
+// Fiyat rehberi sayfası: tablo stays.ts'ten üretilir; hiçbir fiyat uydurulmaz (fiyatı olmayan tesis "Fiyat için arayın" yazar).
+import InfoLayout from "../layouts/InfoLayout.astro";
+import { stays, featuresOf, formatPrice, hasPrice, typeLabels, type StayType } from "../data/stays";
+
+interface Props { tip: StayType }
+const { tip } = Astro.props;
+const origin = "https://www.avsaadasi.net";
+
+const cfg = {
+  otel: {
+    path: "/avsa-adasi-otel-fiyatlari/",
+    ad: "otel",
+    Ad: "Otel",
+    title: "Avşa Adası Otel Fiyatları 2027 | avsaadasi.net",
+    description: "Avşa Adası otel fiyatları 2027 sezonu: otellerin gecelik başlangıç fiyatları, bölgeleri ve olanakları tek tabloda. Fiyatlar işletmeden teyit edilir.",
+    h1: "Avşa Adası Otel Fiyatları 2027",
+    diger: [{ href: "/avsa-otelleri/", t: "Avşa otelleri" }, { href: "/avsa-havuzlu-oteller/", t: "Havuzlu oteller" }, { href: "/avsa-kahvalti-dahil-oteller/", t: "Kahvaltı dahil oteller" }, { href: "/avsa-aquaparkli-oteller/", t: "Aquaparklı oteller" }],
+    etkenler: ["Sezon: temmuz-ağustos ve bayram hafta sonları fiyatlar genelde yükselir; mayıs-haziran başı ve eylül daha uygun olabilir.", "Yemek düzeni: sadece oda, oda kahvaltı, yarım pansiyon ve açık büfe farklı fiyatlandırılır.", "Olanaklar: havuz, aquapark, spa gibi olanaklar fiyata yansıyabilir.", "Konum: denize ve iskeleye mesafe, bölge (Merkez, Yiğitler, Değirmenardı) fiyatı etkiler.", "Oda tipi ve kişi sayısı: standart, aile ve suit odalar farklı fiyatlıdır."],
+  },
+  pansiyon: {
+    path: "/avsa-adasi-pansiyon-fiyatlari/",
+    ad: "pansiyon",
+    Ad: "Pansiyon",
+    title: "Avşa Adası Pansiyon Fiyatları 2027 | avsaadasi.net",
+    description: "Avşa Adası pansiyon ve motel fiyatları 2027 sezonu: gecelik başlangıç fiyatları, bölgeleri ve olanakları tek tabloda. Fiyatlar işletmeden teyit edilir.",
+    h1: "Avşa Adası Pansiyon Fiyatları 2027",
+    diger: [{ href: "/avsa-pansiyonlari/", t: "Avşa pansiyonları" }, { href: "/avsa-motelleri/", t: "Avşa motelleri" }, { href: "/avsa-uygun-fiyatli-konaklama/", t: "Uygun fiyatlı konaklama" }, { href: "/avsa-mutfakli-apartlar/", t: "Mutfaklı apartlar" }],
+    etkenler: ["Sezon: temmuz-ağustos ve bayram hafta sonları fiyatlar genelde yükselir; sezon kenarı tarihlerde düşebilir.", "Kahvaltı: pansiyonlarda kahvaltının dahil olup olmadığı toplam bütçeyi değiştirir.", "Mutfak: odada mutfak varsa yemek masrafı azalabilir.", "Konum: denize ve iskeleye mesafe ve bölge fiyatı etkiler.", "Fiyatın oda başı mı kişi başı mı olduğunu işletmeden netleştir."],
+  },
+  apart: {
+    path: "/avsa-adasi-apart-fiyatlari/",
+    ad: "apart",
+    Ad: "Apart",
+    title: "Avşa Adası Apart Fiyatları 2027 | avsaadasi.net",
+    description: "Avşa Adası apart fiyatları 2027 sezonu: mutfaklı apartların gecelik başlangıç fiyatları, bölgeleri ve olanakları tek tabloda. Fiyatlar işletmeden teyit edilir.",
+    h1: "Avşa Adası Apart Fiyatları 2027",
+    diger: [{ href: "/avsa-apartlari/", t: "Avşa apartları" }, { href: "/avsa-mutfakli-apartlar/", t: "Mutfaklı apartlar" }, { href: "/kiralik-evler/", t: "Kiralık evler" }, { href: "/avsa-kalabalik-grup-konaklama/", t: "4+ kişilik oda ve grup konaklama" }],
+    etkenler: ["Sezon: temmuz-ağustos ve bayram hafta sonları fiyatlar genelde yükselir.", "Daire tipi: stüdyo, 1+1 ve 2+1 daireler farklı fiyatlıdır.", "Kalış süresi: uzun kalışlarda işletmeler farklı fiyat verebilir, işletmeye sor.", "Mutfak: mutfaklı dairelerde yemek masrafı azalabilir.", "Konum: denize ve iskeleye mesafe ve bölge fiyatı etkiler."],
+  },
+}[tip];
+
+const list = stays
+  .filter((s) => s.type === tip)
+  .sort((a, b) => (hasPrice(a.priceFrom) ? a.priceFrom : 1e9) - (hasPrice(b.priceFrom) ? b.priceFrom : 1e9) || a.name.localeCompare(b.name, "tr"));
+const priced = list.filter((s) => hasPrice(s.priceFrom));
+const min = priced.length ? Math.min(...priced.map((s) => s.priceFrom)) : 0;
+const max = priced.length ? Math.max(...priced.map((s) => s.priceFrom)) : 0;
+const aralik = min === max ? `${formatPrice(min)}` : `${formatPrice(min)} ile ${formatPrice(max)} arasında`;
+const kahvalti = list.filter((s) => featuresOf(s).some((f) => f.key === "kahvalti")).length;
+const mutfak = list.filter((s) => s.amenities.some((a) => /mutfak/i.test(a))).length;
+
+const toc = [
+  { id: "ozet", label: "Kısa cevap" },
+  { id: "tablo", label: `${cfg.Ad} fiyat tablosu` },
+  { id: "etkenler", label: "Fiyatı etkileyen şeyler" },
+  { id: "rezervasyon", label: "Fiyat öğrenme ve rezervasyon" },
+];
+
+const faq = [
+  {
+    q: `Avşa'da ${cfg.ad} fiyatları ne kadar?`,
+    a: priced.length
+      ? `Fiyatı yazılı ${priced.length} ${cfg.ad} tesisinde gecelik başlangıç fiyatı ${aralik}. Kalan ${list.length - priced.length} tesis için fiyat işletmeden öğreniliyor. Fiyatlar sezona ve oda tipine göre değişir.`
+      : `Bu sayfadaki ${list.length} ${cfg.ad} tesisinin fiyatı işletmeden öğreniliyor; fiyatlar sezona ve oda tipine göre değişir.`,
+  },
+  { q: "2027 fiyatları belli mi?", a: "2027 sezonu için işletmelerden gelen fiyat listelerini bu sayfaya işliyoruz. Tabloda dönem yazan fiyatlar o döneme aittir; dönem yazmayan fiyatlar için işletmeye WhatsApp'tan yazmak en doğrusu. Güncelleme tarihi sayfanın başında yazar." },
+  { q: "Fiyatlar kişi başı mı, oda başı mı?", a: "Tesise göre değişir. Tablodaki not sütununda belirtilmişse (örneğin 'oda (2 kişi)') ona bak; belirtilmemişse işletmeye sor." },
+  { q: `Avşa'da ${cfg.ad} fiyatlarına kahvaltı dahil mi?`, a: `Tesise göre değişir. Bu sayfadaki ${list.length} tesisten ${kahvalti} tanesinde kahvaltı dahil olarak belirtilmiş. Diğerleri için işletmeye sor.` },
+  { q: "En uygun fiyatı nasıl bulurum?", a: "Hafta içi ya da sezon kenarı (mayıs, haziran başı, eylül) tarihleri dene, erken rezervasyon indirimi olup olmadığını sor ve mutfaklı seçeneklerle toplam bütçeyi karşılaştır." },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: cfg.h1,
+  itemListElement: list.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.name, url: `${origin}/konaklama/${s.slug}/` })),
+};
+const intro = priced.length
+  ? `Avşa Adası'nda ${list.length} ${cfg.ad} tesisinin ${priced.length} tanesi için gecelik başlangıç fiyatı biliniyor: ${min === max ? formatPrice(min) : `${formatPrice(min)} ile ${formatPrice(max)} arası`}. Fiyatı olmayan tesisleri de tabloda gösteriyor, uydurma rakam yazmıyoruz.`
+  : `Avşa Adası'ndaki ${list.length} ${cfg.ad} tesisini fiyat, bölge ve olanaklarıyla tek tabloda topladık. Fiyatı henüz öğrenilmemiş tesisleri "Fiyat için arayın" olarak gösteriyoruz.`;
+---
+
+<InfoLayout title={cfg.title} description={cfg.description} h1={cfg.h1} intro={intro} crumb={`${cfg.Ad} fiyatları`} toc={toc} faq={faq} updated="28 Ekim 2026" published="2026-10-28" extraLd={[ld]}>
+  <h2 id="ozet">Kısa cevap</h2>
+  <p>
+    {priced.length > 0 && <>Avşa'da {cfg.ad} gecelik başlangıç fiyatları {min === max ? formatPrice(min) : `${formatPrice(min)} ile ${formatPrice(max)} arasında değişiyor`}. Bazı fiyatlar kişi başı, bazıları oda başı olduğu için tabloyu doğrudan kıyaslamadan önce Not sütununa bak. </>}
+    Bu rakamlar başlangıç fiyatıdır; tarihe, oda tipine, kişi sayısına ve yemek düzenine göre farklılaşır. 2027 sezonu için işletmelerden gelen yeni fiyat listelerini bu sayfaya işliyoruz ve her güncellemede sayfanın tarihini değiştiriyoruz.
+  </p>
+
+  <h2 id="tablo">{cfg.Ad} fiyat tablosu ({list.length} tesis)</h2>
+  <p>Fiyatı yazılı olanlar başta, düşük fiyattan yükseğe doğru sıralı. Not sütununda dönem veya kişi bilgisi varsa fiyat o koşul içindir.</p>
+  <div class="not-prose my-6 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+    <table class="w-full min-w-[640px] text-left text-sm">
+      <thead class="bg-slate-50 text-slate-600">
+        <tr><th class="px-4 py-3 font-semibold">Tesis</th><th class="px-4 py-3 font-semibold">Bölge</th><th class="px-4 py-3 font-semibold">Gecelik başlangıç</th><th class="px-4 py-3 font-semibold">Not</th><th class="px-4 py-3 font-semibold">Öne çıkan</th></tr>
+      </thead>
+      <tbody>
+        {list.map((s) => (
+          <tr class="border-t border-slate-100">
+            <td class="px-4 py-3 font-semibold text-deniz-900"><a class="hover:underline" href={`/konaklama/${s.slug}/`}>{s.name}</a></td>
+            <td class="px-4 py-3">{s.area}</td>
+            <td class="px-4 py-3 whitespace-nowrap">{hasPrice(s.priceFrom) ? formatPrice(s.priceFrom) : "Fiyat için arayın"}</td>
+            <td class="px-4 py-3 text-slate-600">{s.priceNote || "—"}</td>
+            <td class="px-4 py-3 text-slate-600">{featuresOf(s).map((f) => f.label).slice(0, 3).join(", ") || "—"}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Bu listedeki {mutfak} tesiste mutfak bulunuyor. Her tesisin olanaklarını, oda tiplerini ve iletişim bilgilerini tesis sayfasında bulabilirsin.
+  </p>
+
+  <h2 id="etkenler">Fiyatı etkileyen şeyler</h2>
+  <ul>
+    {cfg.etkenler.map((t) => <li>{t}</li>)}
+  </ul>
+
+  <h2 id="rezervasyon">Fiyat öğrenme ve rezervasyon</h2>
+  <p>
+    Kesin fiyat ve müsaitlik için tesis sayfasındaki WhatsApp düğmesinden tarih ve kişi sayısını yazman yeterli; fiyatı işletme verir. Adaya ulaşım maliyeti için <a href="/bilet-fiyatlari/">feribot bilet fiyatları</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına bakabilirsin.
+  </p>
+  <ul>
+    {cfg.diger.map((d) => <li><a href={d.href}>{d.t}</a></li>)}
+    <li><a href="/avsa-adasi/">Avşa Adası rehberi</a></li>
+  </ul>
+</InfoLayout>

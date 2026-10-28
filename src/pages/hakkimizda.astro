@@ -1,0 +1,44 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Hakkımızda | Avşa Adası Rehberi avsaadasi.net";
+const description = "avsaadasi.net'in hikâyesi: Avşa Adası doğumlu Zafer Barış'ın, adayı 2000'lerin başında internette tanıtmaya başlayan rehberi. Kim olduğumuz ve bilgileri nasıl derlediğimiz.";
+const toc = [
+  { id: "hikaye", label: "Hikâyemiz" },
+  { id: "kanit", label: "Arşivdeki kayıtlar" },
+  { id: "durust", label: "Bilmeniz gerekenler" },
+  { id: "eski-site", label: "Eski site adı hakkında" },
+];
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "Hakkımızda",
+  url: "https://www.avsaadasi.net/hakkimizda/",
+  mainEntity: { "@type": "Person", name: "Zafer Barış", url: "https://www.avsaadasi.net/yazar/zafer-baris/" },
+};
+---
+<InfoLayout title={title} description={description} h1="Hakkımızda" intro="avsaadasi.net, Avşa Adası doğumlu Zafer Barış'ın yeniden kurduğu konaklama ve ada rehberidir." crumb="Hakkımızda" toc={toc} author={false} updated="28 Ekim 2026" published="2026-10-28" extraLd={[ld]}>
+  <h2 id="hikaye">Hikâyemiz</h2>
+  <p>Avşa Adası'nda doğdum; adalıyım. Adayı internette tanıtmaya 2002'de başladım. Otel, pansiyon ve apart sahiplerinin ilanlarını internete taşıyan sitelerin arasındaydım; yıllarca avsa-avsa.com ve avsaadasi.com.tr adreslerinde yayın yaptım.</p>
+  <p>2021'de Tayland'a yerleştim ve o dönemin sitelerini bıraktım. Beş yıl sonra fikrim değişti; adanın tanıtımını bu kez daha düzenli, daha hızlı ve doğruluğu kontrol edilebilir bir şekilde yeniden yapmak istedim. avsaadasi.net bu dönüşün sonucudur.</p>
+  <p>Sitede otel, pansiyon ve apart bilgilerini, adaya nasıl gidileceğini, feribot saatlerini ve plajları bulabilirsin. Amacım, adaya gitmeden önce ihtiyaç duyduğun bilgiyi tek yerde, tarihiyle ve kaynağıyla vermek.</p>
+
+  <h2 id="kanit">Arşivdeki kayıtlar</h2>
+  <p>Eski sitelerin kayıtları herkesin görebileceği internet arşivinde duruyor:</p>
+  <ul>
+    <li><a href="https://web.archive.org/web/20090124222900/http://avsa-avsa.com/" rel="noopener">avsa-avsa.com, 24 Ocak 2009 arşiv kaydı</a>: Avşa otel, pansiyon, villa ve apart rehberi; sayfada 75'ten fazla otel ve pansiyondan söz ediliyor ve avsaadasi.com.tr'ye bağlantı veriliyor.</li>
+    <li><a href="https://web.archive.org/web/*/avsa-avsa.com" rel="noopener">avsa-avsa.com arşiv listesi</a>: Ağustos 2006'dan itibaren yüzlerce kayıt.</li>
+  </ul>
+  <p>Arşivdeki en eski kayıtlar 2006'ya dayanıyor; 2002 ile 2006 arasındaki dönemin kaydı arşivde yok, o dönem için kendi anlatımımı veriyorum.</p>
+
+  <h2 id="durust">Bilmeniz gerekenler</h2>
+  <ul>
+    <li><strong>Şu an Tayland'da yaşıyorum.</strong> Tesislerle telefon ve WhatsApp üzerinden görüşüyor, bilgileri işletmelerden teyit ediyorum. Adada günlük olarak bulunmuyorum.</li>
+    <li><strong>Rezervasyon işletmeyle yapılır.</strong> Fiyatı ve müsaitliği işletme belirler; sitedeki fiyatlar başlangıç fiyatıdır.</li>
+    <li><strong>Tesisler tanıtım için bizimle iletişime geçebilir.</strong> avsaadasi.net bir tanıtım ve rehber sitesidir; tesis eklemek için <a href="/iletisim/">iletişim sayfasını</a> kullanabilirsin.</li>
+    <li>Bilgileri nasıl derlediğimizi ve düzelttiğimizi <a href="/bilgi-politikasi/">bilgi politikasında</a> anlattık.</li>
+  </ul>
+
+  <h2 id="eski-site">Eski site adı hakkında</h2>
+  <p>avsaadasi.com.tr adresi 2021'e kadar benim yönetimimdeydi (yukarıdaki 2009 arşiv kaydında da bu adrese bağlantı görülüyor). Bugün o adreste yayın yapan site ile avsaadasi.net'in herhangi bir bağlantısı yoktur. Adı benzer iki farklı site olduğu için karıştırılmamasını rica ederim.</p>
+</InfoLayout>

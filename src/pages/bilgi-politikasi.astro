@@ -1,0 +1,36 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Bilgi Politikası | Fiyat ve Bilgileri Nasıl Doğruluyoruz | avsaadasi.net";
+const description = "avsaadasi.net bilgi politikası: tesis bilgileri ve fiyatlar nasıl derleniyor, nasıl güncelleniyor, hatalar nasıl düzeltiliyor.";
+const toc = [
+  { id: "kaynak", label: "Bilgiler nereden geliyor?" },
+  { id: "fiyat", label: "Fiyat kuralımız" },
+  { id: "tarih", label: "Tarih ve güncelleme" },
+  { id: "gorsel", label: "Görseller" },
+  { id: "hata", label: "Hata bildirimi" },
+];
+---
+<InfoLayout title={title} description={description} h1="Bilgi Politikası" intro="Bu sayfada bilgilerimizi nasıl derlediğimizi, fiyatları nasıl gösterdiğimizi ve hataları nasıl düzelttiğimizi açıklıyoruz." crumb="Bilgi politikası" toc={toc} author={false} updated="28 Ekim 2026" published="2026-10-28">
+  <h2 id="kaynak">Bilgiler nereden geliyor?</h2>
+  <p>Tesis bilgileri işletmeden alınan bilgilere ve kamuya açık kaynaklara (işletmenin kendi sayfaları, harita ve rezervasyon sitelerindeki kayıtlar) dayanır. Bir bilgiyi doğrulayamazsak yazmıyoruz; tesis sayfasında "işletmeden öğrenin" ya da "fiyat için arayın" gibi bir ifade görürsün.</p>
+  <p>Ulaşım bilgileri (feribot saatleri ve bilet fiyatları) için işletmelerin yayımladığı tarifeler esas alınır ve sayfanın başında kontrol tarihi yazılır.</p>
+
+  <h2 id="fiyat">Fiyat kuralımız</h2>
+  <ul>
+    <li>Sitedeki fiyatlar <strong>gecelik başlangıç fiyatıdır</strong>; tarihe, oda tipine ve kişi sayısına göre değişir.</li>
+    <li>Fiyatı bilmediğimiz tesis için rakam uydurmayız; "fiyat için arayın" yazarız.</li>
+    <li>Fiyatın hangi dönem veya kişi sayısı için olduğunu biliyorsak tabloda not olarak belirtiriz.</li>
+    <li>Kesin fiyatı ve müsaitliği işletme verir; rezervasyon işletmeyle doğrudan yapılır.</li>
+  </ul>
+
+  <h2 id="tarih">Tarih ve güncelleme</h2>
+  <p>Sayfalardaki "Son kontrol" tarihi, içeriğin o tarihte gözden geçirildiğini gösterir. İçeriği gerçekten değiştirmediğimiz sürece tarihi değiştirmeyiz. Yeni sezon fiyatları ve feribot tarifeleri açıklandıkça ilgili sayfalar güncellenir.</p>
+
+  <h2 id="gorsel">Görseller</h2>
+  <p>Tesis görsellerini işletmelerden aldığımız ya da kullanımına izin verilen fotoğraflardan seçeriz. Başka sitelere ait logo, filigran ya da telefon numarası taşıyan görselleri kullanmayız.</p>
+
+  <h2 id="hata">Hata bildirimi</h2>
+  <p>Bir bilgi yanlışsa ya da eskimişse <a href="/iletisim/">iletişim sayfasından</a> ya da WhatsApp ile yaz; kontrol edip düzeltiriz. Tesis sahipleri de kendi sayfalarındaki bilgilerin güncellenmesini aynı yoldan isteyebilir.</p>
+  <p>Bu sitenin sahibi ve editörü hakkında bilgi için <a href="/hakkimizda/">Hakkımızda</a> ve <a href="/yazar/zafer-baris/">Zafer Barış</a> sayfalarına bakabilirsin.</p>
+</InfoLayout>

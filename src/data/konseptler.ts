@@ -193,6 +193,151 @@ export const konseptler: Konsept[] = [
       { q: "Fiyatlar sezonda artar mı?", a: "Evet. Temmuz-ağustos ve bayram hafta sonları fiyatlar yükselir, erken rezervasyon avantaj sağlayabilir." },
     ],
   },
+  {
+    path: "/avsa-motelleri/",
+    label: "Moteller",
+    title: "Avşa Adası Motelleri ve Fiyatları | avsaadasi.net",
+    description:
+      "Avşa Adası'ndaki moteller: bölgesi, olanakları ve gecelik başlangıç fiyatlarıyla sade ve merkezi konaklama seçeneklerini karşılaştır.",
+    h1: "Avşa Adası Motelleri",
+    intro: (n) =>
+      `Avşa Adası'nda motel adıyla hizmet veren ${n} tesisi bu sayfada topladık. Bölgeye, olanaklara ve gecelik başlangıç fiyatına göre karşılaştırıp işletmeyle doğrudan görüşebilirsin.`,
+    filter: (s) => s.kind === "Motel" || /motel/i.test(s.name),
+    why: {
+      h: "Motel mi, otel mi, pansiyon mu?",
+      p: [
+        "Avşa'da motel adıyla geçen tesisler genelde otellere göre daha sade: oda, klima, balkon ve banyo gibi temel olanaklara odaklanır; havuz, aquapark gibi eğlence olanakları çoğunlukla yoktur. Bunun karşılığında merkezi konumları ve sade yapıları öne çıkar.",
+        "Adlandırma tesisten tesise değişiyor: bazı yerler kaynaklarda hem motel hem apart ya da pansiyon adıyla geçiyor. Bu yüzden ad yerine tesis sayfasındaki olanak ve oda bilgisine bakmanı öneririz.",
+      ],
+    },
+    tips: [
+      "Havuz ya da aquapark istiyorsan havuzlu oteller sayfasına bak; motellerin çoğunda havuz yok.",
+      "Odada mutfak olup olmadığını tesis sayfasından ve işletmeden teyit et.",
+      "Fiyatın oda başı mı kişi başı mı olduğunu ve kahvaltının dahil olup olmadığını sor.",
+      "Yaz hafta sonları ve bayramlarda erken rezervasyon yap.",
+    ],
+    faq: [
+      { q: "Avşa'da motel ile otel arasındaki fark nedir?", a: "Moteller genelde daha sade ve daha az olanaklıdır; oteller havuz, restoran gibi ek olanaklar sunabilir. Her tesisin olanağı farklıdır, tesis sayfasına bakın." },
+      { q: "Avşa'da motellerde kahvaltı dahil mi?", a: "Tesise göre değişir. Her tesis sayfasında olanak listesi var, kesin bilgi için işletmeye WhatsApp'tan yazabilirsin." },
+      { q: "Motel fiyatları sezonda değişir mi?", a: "Evet. Sayfadaki fiyatlar başlangıç fiyatıdır; tarih, oda tipi ve kişi sayısına göre işletme güncel fiyatı verir." },
+    ],
+  },
+  {
+    path: "/avsa-aquaparkli-oteller/",
+    label: "Aquaparklı oteller",
+    title: "Avşa Aquaparklı Oteller ve Su Kaydıraklı Tesisler | avsaadasi.net",
+    description:
+      "Avşa Adası'nda aquaparklı ve su kaydıraklı oteller. Çocuklu aileler için olanaklarıyla ve bölgesiyle tesisleri karşılaştır.",
+    h1: "Avşa'da Aquaparklı Oteller",
+    intro: (n) =>
+      `Avşa Adası'nda aquapark ya da su kaydırağı olan ${n} tesisi bu sayfada listeledik. Havuz keyfini çocuklarla birlikte yaşamak isteyenler buradan başlayabilir.`,
+    filter: (s) => /aquapark|kaydırak/i.test([s.tag, s.tagline, ...s.amenities, ...s.rooms.map((r) => r.name)].join(" ")),
+    why: {
+      h: "Aquaparklı otel seçerken nelere bakmalı?",
+      p: [
+        "Aquaparklı tesislerde havuz, kaydırak ve çocuk havuzu aynı yerde olduğu için gün içinde denize gitmeden de vakit geçirmek mümkün. Yine de denize mesafeyi ve aquapark kullanımının fiyata dahil olup olmadığını tesise sormak gerekir.",
+        "Bazı tesisler aquaparkını konuk olmayanlara da açabiliyor, bazıları sadece konuklarına. Giriş koşulları ve açık olduğu saatler tesise göre değişir.",
+      ],
+    },
+    tips: [
+      "Kaydırak ve havuzun hangi yaş ve boy sınırlarına açık olduğunu sor.",
+      "Aquapark girişinin konaklama fiyatına dahil olup olmadığını teyit et.",
+      "Sezon açılış ve kapanış tarihlerini öğren; aquaparklar genelde yaz sezonunda hizmet verir.",
+      "Plaj için denize mesafeyi tesis sayfasından kontrol et.",
+    ],
+    faq: [
+      { q: "Avşa'da aquaparklı otel var mı?", a: "Evet, bu sayfada aquapark ya da su kaydırağı olan tesisleri listeliyoruz. Güncel olanaklar için işletmeye yazabilirsin." },
+      { q: "Aquapark çocuklar için uygun mu?", a: "Çocuk havuzu ve kaydırak olan tesisler çocuklu aileler için uygun olabilir. Yaş ve boy sınırlarını tesisten öğren." },
+      { q: "Aquaparklı otelde yemek dahil mi?", a: "Tesise göre değişir. Kahvaltı ve akşam yemeği koşullarını tesis sayfasında ve işletmeden kontrol edin." },
+    ],
+  },
+  {
+    path: "/barlar-sokagina-yakin-konaklama/",
+    label: "Barlar Sokağı'na yakın konaklama",
+    title: "Avşa Barlar Sokağı'na Yakın Otel, Pansiyon ve Apart | avsaadasi.net",
+    description:
+      "Avşa'da Barlar Sokağı'na yürüme mesafesindeki otel, pansiyon ve apartlar. Gece hayatına yakın konaklamayı mesafeleriyle karşılaştır.",
+    h1: "Avşa'da Barlar Sokağı'na Yakın Konaklama",
+    intro: (n) =>
+      `Avşa Adası'nda Barlar Sokağı'na mesafesi belirtilen ${n} tesisi bu sayfada topladık. Akşam eğlencesine yürüyerek gitmek isteyenler için mesafeleri tesis bazında görebilirsin.`,
+    filter: (s) => s.nearby.some((n) => /barlar/i.test(n.label)),
+    why: {
+      h: "Barlar Sokağı'na yakın kalmanın artıları ve eksileri",
+      p: [
+        "Barlar Sokağı'na yakın kalmak, gece dönüş yolunu kısaltır ve yürüyerek gidip gelmeyi sağlar. Arkadaş grupları ve akşam eğlenceyi sevenler için bu konum rahattır.",
+        "Öte yandan gece hayatına yakın bölgelerde akşam ve gece saatlerinde ses olabilir. Sessiz uyumak istiyorsan odanın hangi cepheye baktığını işletmeye sor, ya da daha sakin Yiğitler'e bak.",
+      ],
+    },
+    tips: [
+      "Odanın sokağa mı arka cepheye mi baktığını sor.",
+      "Barlar Sokağı'nın yanında disko bölgesine de mesafe belirtiliyorsa tesis sayfasından kontrol et.",
+      "Gece hayatı rehberimizde bölgenin saatlerini ve genel düzenini okuyabilirsin.",
+      "Sakin bir tatil istiyorsan Yiğitler konaklama sayfasına göz at.",
+    ],
+    faq: [
+      { q: "Barlar Sokağı Avşa'nın neresinde?", a: "Barlar Sokağı Avşa Merkez'dedir. Bu sayfadaki tesislerin Barlar Sokağı'na mesafeleri tesis sayfalarında yazıyor." },
+      { q: "Barlar Sokağı'na yakın tesis gürültülü olur mu?", a: "Eğlence bölgesine yakın tesislerde akşam ve gece sesi olabilir. Oda cephesini ve gece sessizlik düzenini işletmeye sor." },
+      { q: "Arkadaş grubu için hangi bölge uygun?", a: "Gece hayatına yürümek isteyen gruplar Merkez'i tercih edebilir; sakin bir tatil için Yiğitler ve Değirmenardı uygundur." },
+    ],
+  },
+  {
+    path: "/iskeleye-yakin-konaklama/",
+    label: "İskeleye yakın konaklama",
+    title: "Avşa İskeleye Yakın Otel, Pansiyon ve Apart | avsaadasi.net",
+    description:
+      "Avşa'da iskeleye yürüme mesafesindeki konaklama seçenekleri. Feribottan inince hızla yerleşmek isteyenler için mesafeleriyle tesis listesi.",
+    h1: "Avşa'da İskeleye Yakın Konaklama",
+    intro: (n) =>
+      `Avşa Adası'nda iskeleye mesafesi belirtilen ${n} tesisi bu sayfada topladık. Feribottan inince bagajla uzun yürümek istemeyenler, günübirlik ya da kısa tatil planlayanlar için pratik bir başlangıç.`,
+    filter: (s) => s.nearby.some((n) => /[İi]skele/.test(n.label)),
+    why: {
+      h: "İskeleye yakın kalmak neden avantajlı?",
+      p: [
+        "Feribottan indikten sonra tesise kısa sürede ulaşmak, özellikle bagajlı ve çocuklu gelenler için rahatlık sağlar. Dönüş günü feribot saatine yetişmek de kolaylaşır.",
+        "Adada Merkez ve Yiğitler gibi farklı bölgelerde iskeleler var. Tesise yakın iskeleyi ve feribot seferinin hangi iskeleye yanaştığını yola çıkmadan öğrenmen gerekir; feribot saatleri ve ulaşım sayfalarımız bu konuda yardımcı olur.",
+      ],
+    },
+    tips: [
+      "Feribot saatini bilet almadan önce kontrol et; saatler sezona göre değişir.",
+      "Tesis sayfasındaki iskele adını ve mesafeyi işletmeden teyit et.",
+      "Erken giriş ve geç çıkış için işletmeyle önceden konuş.",
+      "Araçla gelecekseniz otopark durumunu sor.",
+    ],
+    faq: [
+      { q: "Avşa'da iskeleye en yakın bölge neresi?", a: "Merkez bölgesi iskeleye en yakın bölgedir. Yiğitler'de de bir iskele var. Tesisin mesafesi tesis sayfasında yazıyor." },
+      { q: "İskeleden tesise nasıl gidilir?", a: "Mesafesi kısa olan tesislere yürüyerek gidilebilir. Bagaj ya da uzaklık için işletmeden transfer bilgisi isteyebilirsin." },
+      { q: "Feribot saatine göre erken giriş mümkün mü?", a: "Tesise göre değişir. Erken giriş ve geç çıkış için işletmeye önceden yazman gerekir." },
+    ],
+  },
+  {
+    path: "/avsa-kalabalik-grup-konaklama/",
+    label: "4+ kişilik oda ve grup konaklama",
+    title: "Avşa 4 Kişilik Oda ve Kalabalık Grup Konaklama | avsaadasi.net",
+    description:
+      "Avşa'da 4 ve daha fazla kişilik odası olan otel, pansiyon ve apartlar. Aile, kalabalık grup ve arkadaş tatili için konaklama seçenekleri.",
+    h1: "Avşa'da 4 Kişilik ve Kalabalık Grup Konaklama",
+    intro: (n) =>
+      `Avşa Adası'nda 4 ya da daha fazla kişilik odası bulunan ${n} tesisi bu sayfada listeledik. Aile, akraba ya da arkadaş grubuyla gelenler kapasiteye göre karşılaştırabilir.`,
+    filter: (s) => s.rooms.some((r) => r.capacity >= 4),
+    why: {
+      h: "Kalabalık grupla konaklama nasıl planlanır?",
+      p: [
+        "Dört kişilik bir odada ya da birden fazla odada kalmak fiyat ve rahatlık açısından farklı sonuç verebilir. Mutfaklı apartlar uzun kalışlarda yemek masrafını düşürürken, otellerde ortak alan ve kahvaltı gibi kolaylıklar öne çıkar.",
+        "Gruplarda kişi sayısı ve yaş aralığını rezervasyon öncesinde işletmeye söylemek en sağlıklısı; her tesis grup ve konaklama politikasını kendisi belirler.",
+      ],
+    },
+    tips: [
+      "Kişi sayısını, yaş aralığını ve kalış süresini rezervasyondan önce işletmeye bildir.",
+      "Ek yatak ve çocuk fiyatı politikasını sor.",
+      "Oda sayısı yetiyorsa yan yana ya da aynı kat odalar iste.",
+      "Mutfaklı seçenekler için mutfaklı apartlar sayfasına bak.",
+    ],
+    faq: [
+      { q: "Avşa'da 4 kişilik oda var mı?", a: "Evet. Bu sayfadaki tesislerin 4 ve daha fazla kişilik odaları var. Oda tipleri tesis sayfalarında yazıyor." },
+      { q: "Kalabalık gruplar için hangi tesis türü uygun?", a: "Mutfaklı apartlar uzun kalışlarda ekonomik olabilir; oteller kahvaltı ve ortak alan avantajı sunar. İhtiyacına göre karşılaştırabilirsin." },
+      { q: "Grup rezervasyonunda indirim olur mu?", a: "Tesise göre değişir. Kişi sayısını ve tarihi yazarak işletmeden indirim ve ek yatak koşullarını sorabilirsin." },
+    ],
+  },
 ];
 
 export const konseptByPath = (p: string) => konseptler.find((k) => k.path === p);

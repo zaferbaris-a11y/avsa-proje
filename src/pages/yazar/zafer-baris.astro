@@ -1,0 +1,60 @@
+---
+import InfoLayout from "../../layouts/InfoLayout.astro";
+import { INSTAGRAM } from "../../data/site";
+
+const title = "Zafer Barış | avsaadasi.net Kurucusu ve Editörü";
+const description = "Zafer Barış, avsaadasi.net'in kurucusu ve editörü. Avşa Adası doğumlu; adayı 2002'de internette tanıtmaya başladı; konaklama, ulaşım ve ada rehberleri yazıyor.";
+const FACEBOOK = "https://www.facebook.com/share/1ECc7AKLDz/";
+const YOUTUBE = "https://www.youtube.com/c/TaylandYa%C5%9Fam";
+const toc = [
+  { id: "hakkinda", label: "Hakkında" },
+  { id: "uzmanlik", label: "Uzmanlık alanları" },
+  { id: "sayfalar", label: "Editörlüğünü yaptığı sayfalar" },
+];
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  mainEntity: {
+    "@type": "Person",
+    name: "Zafer Barış",
+    url: "https://www.avsaadasi.net/yazar/zafer-baris/",
+    jobTitle: "Kurucu ve Editör",
+    worksFor: { "@type": "Organization", name: "avsaadasi.net", url: "https://www.avsaadasi.net/" },
+    knowsAbout: ["Avşa Adası", "Avşa Adası konaklama", "Avşa feribot ve ulaşım", "Avşa plajları"],
+    image: "https://www.avsaadasi.net/img/yazar/zafer-baris.webp",
+    sameAs: [INSTAGRAM, FACEBOOK, YOUTUBE],
+  },
+};
+const sayfalar = [
+  ["/avsa-adasi/", "Avşa Adası rehberi"],
+  ["/avsa-adasina-nasil-gidilir/", "Avşa'ya nasıl gidilir"],
+  ["/feribot-saatleri/", "Feribot saatleri"],
+  ["/bilet-fiyatlari/", "Bilet fiyatları"],
+  ["/avsa-otelleri/", "Avşa otelleri"],
+  ["/avsa-pansiyonlari/", "Avşa pansiyonları"],
+  ["/avsa-apartlari/", "Avşa apartları"],
+  ["/plajlar/", "Plajlar"],
+  ["/avsa-adasi-otel-fiyatlari/", "Otel fiyatları"],
+];
+---
+<InfoLayout title={title} description={description} h1="Zafer Barış" intro="avsaadasi.net'in kurucusu ve editörü. Avşa Adası doğumlu; adayı 2002'de internette tanıtmaya başladı." crumb="Zafer Barış" toc={toc} author={false} updated="28 Ekim 2026" published="2026-10-28" extraLd={[ld]}>
+  <img src="/img/yazar/zafer-baris.webp" alt="Zafer Barış" width="200" height="200" class="mt-8 h-40 w-40 rounded-3xl object-cover shadow-lg md:h-48 md:w-48" decoding="async" />
+  <h2 id="hakkinda">Hakkında</h2>
+  <p>Zafer Barış Avşa Adası doğumludur; adanın otel, pansiyon ve apart tanıtımını internete taşıyan isimlerden biridir. 2000'li yıllarda avsa-avsa.com ve avsaadasi.com.tr adreslerinde yayın yaptı; bu sitelerin kayıtları <a href="/hakkimizda/#kanit">internet arşivinde</a> görülebilir.</p>
+  <p>2021'de Tayland'a yerleşti ve siteleri bıraktı; 2026'da avsaadasi.net ile Avşa Adası rehberliğine geri döndü. Bugün tesislerle telefon ve WhatsApp üzerinden görüşerek bilgileri teyit ediyor ve sitenin içeriklerinin editörlüğünü yapıyor.</p>
+  <p>Bilgi toplama ve düzeltme yöntemi için <a href="/bilgi-politikasi/">bilgi politikasına</a> bakabilirsin.</p>
+
+  <h2 id="uzmanlik">Uzmanlık alanları</h2>
+  <ul>
+    <li>Avşa Adası konaklama seçenekleri: otel, pansiyon, apart ve kiralık evler</li>
+    <li>Adaya ulaşım: feribot seferleri ve bilet fiyatları</li>
+    <li>Avşa'nın bölgeleri: Merkez, Yiğitler ve Değirmenardı</li>
+    <li>Plajlar, gece hayatı ve gezi rotaları</li>
+  </ul>
+
+  <h2 id="sayfalar">Editörlüğünü yaptığı sayfalar</h2>
+  <ul>
+    {sayfalar.map(([href, t]) => <li><a href={href}>{t}</a></li>)}
+  </ul>
+  <p>Bağlantılar: <a href={INSTAGRAM} rel="noopener">Instagram @avsaadasi</a> · <a href={FACEBOOK} rel="noopener">Facebook</a> · <a href={YOUTUBE} rel="noopener">YouTube: Tayland'da Yaşam</a></p>
+</InfoLayout>
