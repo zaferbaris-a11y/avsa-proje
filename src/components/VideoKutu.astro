@@ -1,7 +1,8 @@
 ---
 // Tıklayınca yüklenen YouTube videosu: sayfa hızını bozmaz, tıklanana kadar YouTube'a istek atmaz.
-interface Props { id: string; baslik: string }
-const { id, baslik } = Astro.props;
+import { videolar, type VideoKey } from "../data/videolar";
+interface Props { v: VideoKey }
+const { id, baslik } = videolar[Astro.props.v];
 ---
 <figure class="my-8">
   <div class="video-kutu relative aspect-video overflow-hidden rounded-2xl bg-slate-900" data-video={id}>

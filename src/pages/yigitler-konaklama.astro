@@ -1,5 +1,6 @@
 ---
 import InfoLayout from "../layouts/InfoLayout.astro";
+import VideoKutu from "../components/VideoKutu.astro";
 import KonseptLinks from "../components/KonseptLinks.astro";
 import AreaStayList from "../components/AreaStayList.astro";
 import { stays, typeLabels, defaultSchemaType } from "../data/stays";
@@ -98,6 +99,8 @@ const faq = [
 
   <AreaStayList id="tesisler" items={list} title="Yiğitler'deki konaklama tesisleri" />
   <p class="mt-4 text-sm text-slate-600">Sitemizde Yiğitler'de {byType("otel").length} otel ve {byType("apart").length} apart listeleniyor{byType("pansiyon").length > 0 ? ` ayrıca ${byType("pansiyon").length} pansiyon` : ""}. Yeni tesisler eklendikçe bu liste kendiliğinden güncellenir.</p>
+
+  <VideoKutu v="kalinir" />
 
   <h2 id="plajlar">Plajlara uzaklık</h2>
   <p>Yiğitler'in en büyük avantajı plajlar. <a href="/altinkum-plaji/">Altınkum</a> köyün hemen yanında; ince kumlu ve sığ denizli koyda plaj işletmeleri ve ücretsiz alan bir arada. Uzun sahilli <a href="/plajlar/#karadut">Karadut Koyu</a> ücretsiz ve sığ denizi ile ailelerin favorisi. Yalnızca kadınlara ayrılmış <a href="/kadinlar-plaji/">Kadınlar Plajı</a> da bazı tesislerden yürüme mesafesinde. Adanın en geniş plajı <a href="/cinar-koyu/">Çınar Koyu</a> ise adanın diğer ucunda, merkezden minibüsle 10-15 dakika. Her tesisin denize uzaklığı kendi sayfasında yazıyor; örneğin Bahar Aqua Resort Hotel'in sayfasında Yiğitler Plajı 400 m, Affisia Garden Otel'de deniz yaklaşık 20 m olarak belirtiliyor.</p>

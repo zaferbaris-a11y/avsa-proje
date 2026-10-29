@@ -1,5 +1,6 @@
 ---
 import InfoLayout from "../layouts/InfoLayout.astro";
+import VideoKutu from "../components/VideoKutu.astro";
 import KonseptLinks from "../components/KonseptLinks.astro";
 import AreaStayList from "../components/AreaStayList.astro";
 import { stays, defaultSchemaType } from "../data/stays";
@@ -106,6 +107,8 @@ const faq = [
 
   <AreaStayList id="iskele-yakin" items={[...yakin, ...degirmen]} title="İskeleye ve merkeze yakın diğer tesisler" />
   <p class="mt-4 text-sm text-slate-600">Bu tesislerin bölgesi sitemizde "Avşa Adası" ya da Değirmenardı olarak geçiyor; iskele ve merkeze uzaklıkları kendi sayfalarında belirtiliyor.</p>
+
+  <VideoKutu v="kalinir" />
 
   <h2 id="plaj">Merkez sahili ve plajlar</h2>
   <p>Merkez sahili yaklaşık 3 km uzunluğunda ve denize girilebiliyor; merkezde kalıyorsan ilk plaj durağın burası. Özkaptan Aqua Otel sayfasında sahile "50 adım", Ayışığı Apart ve Şebnem Motel'de denize "sıfır" mesafe yazıyor. Daha farklı koylar için merkezden minibüs ya da motosiklet yeterli: restoran ve kafelere yakın <a href="/plajlar/#mavi-koy">Mavi Koy</a> yaklaşık 5, <a href="/altinkum-plaji/">Altınkum</a> yaklaşık 10, <a href="/cinar-koyu/">Çınar Koyu</a> yaklaşık 10-15 dakika. Tüm koylar için <a href="/plajlar/">plajlar rehberi</a>ne bak. Günü yeme-içmeyle tamamlamak için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a> yazımız var.</p>

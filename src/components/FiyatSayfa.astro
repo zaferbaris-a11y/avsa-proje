@@ -89,7 +89,7 @@ const intro = priced.length
     Bu rakamlar başlangıç fiyatıdır; tarihe, oda tipine, kişi sayısına ve yemek düzenine göre farklılaşır. 2027 sezonu için işletmelerden gelen yeni fiyat listelerini bu sayfaya işliyoruz ve her güncellemede sayfanın tarihini değiştiriyoruz.
   </p>
 
-  <VideoKutu id="B72QU8ZPJJ8" baslik="Avşa Adası'nda nerede kalınır? Avşa Adası Rehberi" />
+  <VideoKutu v={tip === "pansiyon" ? "pansiyon" : "kalinir"} />
 
   <h2 id="tablo">{cfg.Ad} fiyat tablosu ({list.length} tesis)</h2>
   <p>Fiyatı yazılı olanlar başta, düşük fiyattan yükseğe doğru sıralı. Not sütununda dönem veya kişi bilgisi varsa fiyat o koşul içindir.</p>
