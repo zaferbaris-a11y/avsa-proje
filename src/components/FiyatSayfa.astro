@@ -55,7 +55,15 @@ const toc = [
   { id: "ozet", label: "Kısa cevap" },
   { id: "tablo", label: `${cfg.Ad} fiyat tablosu` },
   { id: "etkenler", label: "Fiyatı etkileyen şeyler" },
+  { id: "donem", label: "Sezon ve dönem farkları" },
+  { id: "bayram", label: "Bayram ve uzun hafta sonları" },
+  { id: "erken", label: "Erken rezervasyon" },
   { id: "rezervasyon", label: "Fiyat öğrenme ve rezervasyon" },
+];
+
+const faqPansiyon = [
+  { q: `Avşa'da ${cfg.ad} bayramda minimum gece şartı arar mı?`, a: `Bayram ve resmi tatille birleşen uzun hafta sonlarında ${cfg.ad} tesislerinin çoğu en az 2-3 gece konaklama şartı arıyor ve fiyatlar normal günlere göre artıyor. Şart ve fiyat tesise göre değişir; tarihi belli olunca işletmeye sor.` },
+  { q: `Avşa'da ${cfg.ad} için erken rezervasyon yaptırmak avantaj sağlar mı?`, a: `Yoğun dönemlerde (bayram, temmuz, ağustos) müsait oda çabuk doluyor. Sezon açılmadan, kış sonu ve ilkbaharda işletmeyle doğrudan görüşmek hem oda bulma hem de fiyat açısından avantajlı olabiliyor. Ön ödeme ve iptal koşullarını yazılı iste.` },
 ];
 
 const faq = [
@@ -69,6 +77,7 @@ const faq = [
   { q: "Fiyatlar kişi başı mı, oda başı mı?", a: "Tesise göre değişir. Tablodaki not sütununda belirtilmişse (örneğin 'oda (2 kişi)') ona bak; belirtilmemişse işletmeye sor." },
   { q: `Avşa'da ${cfg.ad} fiyatlarına kahvaltı dahil mi?`, a: `Tesise göre değişir. Bu sayfadaki ${list.length} tesisten ${kahvalti} tanesinde kahvaltı dahil olarak belirtilmiş. Diğerleri için işletmeye sor.` },
   { q: "En uygun fiyatı nasıl bulurum?", a: "Hafta içi ya da sezon kenarı (mayıs, haziran başı, eylül) tarihleri dene, erken rezervasyon indirimi olup olmadığını sor ve mutfaklı seçeneklerle toplam bütçeyi karşılaştır." },
+  ...faqPansiyon,
 ];
 
 const ld = {
@@ -82,7 +91,7 @@ const intro = priced.length
   : `Avşa Adası'ndaki ${list.length} ${cfg.ad} tesisini fiyat, bölge ve olanaklarıyla tek tabloda topladık. Fiyatı henüz öğrenilmemiş tesisleri "Fiyat için arayın" olarak gösteriyoruz.`;
 ---
 
-<InfoLayout title={cfg.title} description={cfg.description} h1={cfg.h1} intro={intro} crumb={`${cfg.Ad} fiyatları`} toc={toc} faq={faq} updated="28 Ekim 2026" published="2026-10-28" extraLd={[ld]}>
+<InfoLayout title={cfg.title} description={cfg.description} h1={cfg.h1} intro={intro} crumb={`${cfg.Ad} fiyatları`} toc={toc} faq={faq} updated="29 Ekim 2026" published="2026-10-28" extraLd={[ld]}>
   <h2 id="ozet">Kısa cevap</h2>
   <p>
     {priced.length > 0 && <>Avşa'da {cfg.ad} gecelik başlangıç fiyatları {min === max ? formatPrice(min) : `${formatPrice(min)} ile ${formatPrice(max)} arasında değişiyor`}. Bazı fiyatlar kişi başı, bazıları oda başı olduğu için tabloyu doğrudan kıyaslamadan önce Not sütununa bak. </>}
@@ -119,6 +128,18 @@ const intro = priced.length
   <ul>
     {cfg.etkenler.map((t) => <li>{t}</li>)}
   </ul>
+
+  <>
+      <h2 id="donem">Sezon ve dönem farkları</h2>
+      <p>Avşa'da {cfg.ad} fiyatları yıl boyunca aynı kalmaz, tarihe göre belirgin biçimde değişir. Genel olarak mayıs, haziran başı ve eylül, temmuz ve ağustosa göre daha uygun; temmuz-ağustos ada en kalabalık ve en pahalı dönemdir. Tabloda "Mayıs · oda (2 kişi)" gibi bir dönem yazıyorsa o fiyat yalnızca o aya aittir, yaz ortası için geçerli sayma.</p>
+
+      <h2 id="bayram">Bayram ve uzun hafta sonları</h2>
+      <p>Bayram ve resmi tatille birleşen uzun hafta sonlarında ada hızla doluyor. Bu dönemlerde {cfg.ad} tesislerinin çoğu en az 2-3 gece konaklama şartı arıyor ve fiyatlar normal günlere göre artıyor. Şart ve fiyat tesise göre değişir; tarihi belli olunca işletmeye WhatsApp'tan sor.</p>
+
+      <h2 id="erken">Erken rezervasyon</h2>
+      <p>Yoğun dönemlerde (bayram, temmuz, ağustos) müsait oda çabuk bitiyor. Bu yüzden sezon açılmadan, kış sonu ve ilkbaharda işletmeyle doğrudan görüşüp yer ayırtmak hem oda bulma hem de fiyat açısından avantajlı olabiliyor. Erken rezervasyonda ön ödeme tutarını ve iptal koşullarını yazılı olarak iste.</p>
+      <p class="text-sm text-slate-500">Editör notu: Bu üç bölüm, adadaki genel uygulamayı anlatır. Her işletmenin kuralı farklı olabilir; kesin şart ve fiyat için işletmeyle yazılı teyitleş.</p>
+    </>
 
   <h2 id="rezervasyon">Fiyat öğrenme ve rezervasyon</h2>
   <p>
