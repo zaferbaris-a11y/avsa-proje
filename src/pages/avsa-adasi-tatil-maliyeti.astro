@@ -1,0 +1,105 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import { TARIFE_KONTROL } from "../data/rehber";
+
+const title = "Avşa Adası Tatil Maliyeti: Feribot + Konaklama Hesabı | avsaadasi.net";
+const description =
+  "Avşa Adası tatili ne kadar tutar? Feribot, konaklama ve adada ulaşım için bilinen rakamlarla örnek hesap; yemek ve plaj giderlerini nasıl hesaplayacağın.";
+
+// Tüm rakamlar bilet-fiyatlari sayfasındaki tarifelerden ve tesis verisinden gelir; yeni tarife çıkınca buradan güncelle.
+const roroYolcu = 160;
+const roroOto = 1850;
+const gestasYolcu = 120;
+const gestasOto = 1330;
+const gece = 3;
+const odaFiyat = 2000; // Mayıs, oda (2 kişi), işletmelerin bildirdiği başlangıç fiyatı
+const tl = (n: number) => n.toLocaleString("tr-TR") + " TL";
+
+const yayaRoro = 2 * roroYolcu * 2; // 2 yetişkin, gidiş-dönüş
+const yayaGestas = 2 * gestasYolcu * 2;
+const otoRoro = (roroOto + 2 * roroYolcu) * 2;
+const otoGestas = (gestasOto + 2 * gestasYolcu) * 2;
+const konaklama = gece * odaFiyat;
+
+const toc = [
+  { id: "uyari", label: "Bu hesap neyi kapsıyor?" },
+  { id: "feribot", label: "Feribot maliyeti" },
+  { id: "konaklama", label: "Konaklama maliyeti" },
+  { id: "toplam", label: "Örnek toplam" },
+  { id: "diger", label: "Yemek, plaj ve adada ulaşım" },
+  { id: "dusur", label: "Maliyeti düşürmek için" },
+];
+
+const faq = [
+  { q: "Avşa'ya 2 kişi, 3 gece gitmek ne kadar tutar?", a: `Bilinen kalemlerle yaya, 2 yetişkin, gidiş-dönüş feribot Marmara RoRo tarifesiyle ${tl(yayaRoro)}, GESTAŞ tarifesiyle ${tl(yayaGestas)}; 3 gece konaklama (Mayıs, 2.000 TL oda başlangıç fiyatıyla) ${tl(konaklama)}. Yemek, plaj, iskele geçiş ücreti ve adada ulaşım ayrıca eklenir.` },
+  { q: "Arabayla gitmek ne kadar fark ettirir?", a: `2 yetişkin ve bir otomobil için gidiş-dönüş feribot Marmara RoRo'da ${tl(otoRoro)}, GESTAŞ'ta ${tl(otoGestas)} olarak hesaplanıyor. Arabasız gelip adada minibüs veya kiralık motosiklet kullanmak maliyeti belirgin düşürüyor.` },
+  { q: "Bu fiyatlar 2027 için geçerli mi?", a: "Hayır. Feribot rakamları şirketlerin bugün yayımlanmış tarifeleridir, konaklama rakamı ise Mayıs ayı için işletmelerin bildirdiği başlangıç fiyatıdır. 2027 fiyatları kesinleşince sayfa güncellenecek." },
+  { q: "Yemek ve plaj masrafı ne kadar?", a: "Bu konuda doğrulanmış bir rakamımız yok; menü ve şezlong fiyatları işletmeye göre değişiyor. Gitmeden önce işletmeden güncel fiyatı sormak en güvenlisi." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Tatil Maliyeti"
+  intro="Avşa tatili için bütçe yaparken en büyük üç kalem feribot, konaklama ve adada günlük harcama. Bu sayfada elimizdeki doğrulanmış rakamlarla örnek bir hesap var; bilmediğimiz kalemleri tahminle doldurmuyoruz."
+  crumb="Tatil Maliyeti"
+  toc={toc}
+  faq={faq}
+  updated="30 Ekim 2026"
+>
+  <h2 id="uyari">Bu hesap neyi kapsıyor?</h2>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Feribot rakamları şirketlerin yayımlanmış tarifelerinden (son kontrol: {TARIFE_KONTROL}), konaklama rakamı işletmelerin Mayıs ayı için bildirdiği başlangıç fiyatından alınmıştır. 2027 fiyatları kesinleşmedi. Yemek, plaj ve eğlence giderleri için doğrulanmış bir rakamımız olmadığından toplama eklemedik.
+  </div>
+
+  <h2 id="feribot">Feribot maliyeti</h2>
+  <p>Erdek–Avşa hattında iki şirket sefer yapıyor. Aşağıdaki tutarlar 2 yetişkin için, gidiş-dönüş ve iskele geçiş ücreti hariçtir.</p>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Senaryo</th><th>Marmara RoRo</th><th>GESTAŞ</th></tr></thead>
+    <tbody>
+      <tr><td>Yaya, 2 yetişkin</td><td>{tl(yayaRoro)}</td><td>{tl(yayaGestas)}</td></tr>
+      <tr><td>Otomobil + 2 yetişkin</td><td>{tl(otoRoro)}</td><td>{tl(otoGestas)}</td></tr>
+    </tbody>
+  </table></div>
+  <p>Tek yön tarifelerin tamamı, AdaKart ve diğer araç türleri için <a href="/bilet-fiyatlari/">Avşa feribot bilet fiyatları</a>, sefer günleri için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasına bakabilirsin. Marmara RoRo'nun sefer tarifesi 31 Ekim 2026'ya kadar geçerli; Kasım sonrası için tutarlar değişebilir.</p>
+
+  <h2 id="konaklama">Konaklama maliyeti</h2>
+  <p>İşletmelerin Mayıs ayı için bildirdiği başlangıç fiyatı, birçok pansiyon ve apartta 2 kişilik oda için {tl(odaFiyat)}. Temmuz ve ağustos ile bayram dönemlerinde fiyatlar belirgin biçimde yükseliyor; bu dönemler için tesisten güncel fiyat almak gerekiyor.</p>
+  <ul>
+    <li><a href="/avsa-adasi-pansiyon-fiyatlari/">Avşa pansiyon fiyatları</a></li>
+    <li><a href="/avsa-adasi-apart-fiyatlari/">Avşa apart fiyatları</a></li>
+    <li><a href="/avsa-adasi-otel-fiyatlari/">Avşa otel fiyatları</a></li>
+    <li><a href="/avsa-uygun-fiyatli-konaklama/">Uygun fiyatlı konaklama</a></li>
+  </ul>
+  <p>Fiyat sorarken giriş-çıkış tarihi, kişi sayısı, kahvaltı dahil olup olmadığı ve fiyatın oda başı mı kişi başı mı olduğunu mutlaka yaz.</p>
+
+  <h2 id="toplam">Örnek toplam: 2 kişi, 3 gece, Mayıs</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Kalem</th><th>Yaya (RoRo)</th><th>Yaya (GESTAŞ)</th></tr></thead>
+    <tbody>
+      <tr><td>Feribot, gidiş-dönüş</td><td>{tl(yayaRoro)}</td><td>{tl(yayaGestas)}</td></tr>
+      <tr><td>Konaklama, {gece} gece × {tl(odaFiyat)}</td><td>{tl(konaklama)}</td><td>{tl(konaklama)}</td></tr>
+      <tr><td><strong>Bilinen kalemler toplamı</strong></td><td><strong>{tl(yayaRoro + konaklama)}</strong></td><td><strong>{tl(yayaGestas + konaklama)}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p>Bu toplama yemek, plaj, iskele geçiş ücreti ve adada ulaşım dahil değil. Gerçek bütçen bundan yüksek olacaktır.</p>
+
+  <h2 id="diger">Yemek, plaj ve adada ulaşım</h2>
+  <p>Bu kalemlerin fiyatı işletmeye ve sezona göre değiştiği için sabit rakam vermiyoruz. Bütçene şu başlıkları ayrı ayrı yazmanı öneririz:</p>
+  <ul>
+    <li><strong>Yemek:</strong> Restoran menü fiyatlarını önceden sor. Mutfaklı apartlarda bir kısım öğünü kendin hazırlayabilirsin. Mekânlar için <a href="/avsada-ne-yenir/">Avşa'da ne yenir</a>.</li>
+    <li><strong>Plaj:</strong> Plajların bazısı ücretsiz, bazısı şezlong-şemsiye ücretli. Hangisinin hangisi olduğu için <a href="/plajlar/">plajlar rehberi</a>.</li>
+    <li><strong>Adada ulaşım:</strong> Minibüs, motosiklet, bisiklet ve ATV seçenekleri var; ücretleri işletmeden sor. Rehber: <a href="/avsa-adasi/">Avşa Adası rehberi</a>.</li>
+    <li><strong>Gece hayatı:</strong> Barlar Sokağı'ndaki mekânların fiyatları değişken. <a href="/gece-hayati/">Gece hayatı rehberi</a>.</li>
+  </ul>
+
+  <h2 id="dusur">Maliyeti düşürmek için</h2>
+  <ul>
+    <li>Arabasız gel; adada minibüs veya kiralık motosiklet kullan.</li>
+    <li>Mayıs, Haziran başı ve Eylül'ü tercih et; <a href="/avsa-adasina-ne-zaman-gidilir/">ne zaman gidilir</a> sayfasında aylara göre fark anlatılıyor.</li>
+    <li>Mutfaklı apart seç: <a href="/avsa-mutfakli-apartlar/">mutfaklı apartlar</a>.</li>
+    <li>Kahvaltısı dahil tesisleri karşılaştır: <a href="/avsa-kahvalti-dahil-oteller/">kahvaltı dahil oteller</a>.</li>
+    <li>Fiyatı mutlaka yazılı al; WhatsApp mesajı yeterli.</li>
+  </ul>
+</InfoLayout>

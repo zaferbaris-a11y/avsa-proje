@@ -31,6 +31,7 @@ const staticPages = [
   { path: "/hakkimizda/", changefreq: "yearly", priority: 0.6 },
   { path: "/yazar/zafer-baris/", changefreq: "yearly", priority: 0.5 },
   { path: "/bilgi-politikasi/", changefreq: "yearly", priority: 0.5 },
+  { path: "/avsa-adasi-tatil-maliyeti/", changefreq: "monthly", priority: 0.7 },
   { path: "/avsa-adasi-otel-fiyatlari/", changefreq: "weekly", priority: 0.8 },
   { path: "/avsa-adasi-pansiyon-fiyatlari/", changefreq: "weekly", priority: 0.8 },
   { path: "/avsa-adasi-apart-fiyatlari/", changefreq: "weekly", priority: 0.8 },

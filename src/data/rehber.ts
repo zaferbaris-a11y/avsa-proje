@@ -25,6 +25,7 @@ export const rehberPages: RehberPage[] = [
   { path: "/feribot-saatleri/", label: "Feribot Saatleri", icon: "⛴️", short: "Erdek, Tekirdağ ve İstanbul hatlarının sefer saatleri" },
   { path: "/avsada-ne-yenir/", label: "Avşa'da Ne Yenir?", icon: "🐟", short: "Yöresel lezzetler, deniz ürünleri ve yeme-içme rehberi", chip: false },
   { path: "/bilet-fiyatlari/", label: "Bilet Fiyatları", icon: "🎟️", short: "Yolcu ve araç feribot bilet ücretleri" },
+  { path: "/avsa-adasi-tatil-maliyeti/", label: "Tatil Maliyeti", icon: "🧮", short: "Feribot ve konaklama için örnek bütçe hesabı", chip: false },
 ];
 
 // Tarifelerin derlendiği tarih (sayfalarda "son kontrol" olarak gösterilir)

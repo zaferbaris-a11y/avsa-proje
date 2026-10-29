@@ -36,6 +36,10 @@ const spokes = [
   { path: "/bilet-fiyatlari/", name: "Avşa feribot bilet fiyatları" },
   { path: "/avsa-adasi-tarihi-ve-plajlari/", name: "Avşa Adası tarihi" },
   { path: "/kiralik-evler/", name: "Avşa kiralık evler" },
+  { path: "/avsa-adasi-otel-fiyatlari/", name: "Avşa Adası otel fiyatları" },
+  { path: "/avsa-adasi-pansiyon-fiyatlari/", name: "Avşa Adası pansiyon fiyatları" },
+  { path: "/avsa-adasi-apart-fiyatlari/", name: "Avşa Adası apart fiyatları" },
+  { path: "/avsa-adasi-tatil-maliyeti/", name: "Avşa Adası tatil maliyeti" },
 ];
 const destination = {
   "@context": "https://schema.org",
@@ -76,7 +80,7 @@ const faq = [
   crumb="Avşa Adası"
   toc={toc}
   faq={faq}
-  updated="24 Ekim 2026"
+  updated="30 Ekim 2026"
   image="/img/hero.webp"
   extraLd={[destination, list]}
 >
@@ -119,6 +123,16 @@ const faq = [
   <StayLinks items={featured} title="Öne çıkan oteller" />
   <StayLinks items={yigitler} title="Sakin bölge: Yiğitler Köyü'nde konaklama" />
   <p>Tüm seçenekleri <a href="/#konaklama">Avşa otelleri, apartları ve pansiyonları</a> listesinde görebilir, müstakil ev arıyorsan <a href="/kiralik-evler/">Avşa kiralık evler</a> sayfasına bakabilirsin.</p>
+
+  <h3 id="konaklama-fiyat-rehberleri">Konaklama ve fiyat rehberleri</h3>
+  <p>Bütçene göre doğrudan ilgili sayfaya geçebilirsin. Fiyat sayfalarında dönem, bayram ve erken rezervasyon bilgisi de yer alıyor; 2027 fiyatları kesinleştikçe güncelleniyor.</p>
+  <ul>
+    <li><a href="/avsa-adasi-otel-fiyatlari/">Avşa Adası otel fiyatları</a>: konforu öne çıkaranlar için.</li>
+    <li><a href="/avsa-adasi-pansiyon-fiyatlari/">Avşa Adası pansiyon fiyatları</a> ve <a href="/avsa-motelleri/">moteller</a>: sade ve uygun fiyatlı seçenekler.</li>
+    <li><a href="/avsa-adasi-apart-fiyatlari/">Avşa Adası apart fiyatları</a> ve <a href="/avsa-mutfakli-apartlar/">mutfaklı apartlar</a>: esnek, kendi öğününü hazırlamak isteyenler için.</li>
+    <li><a href="/avsa-uygun-fiyatli-konaklama/">Uygun fiyatlı konaklama</a> ve <a href="/avsa-adasi-tatil-maliyeti/">Avşa Adası tatil maliyeti</a>: toplam bütçeni hesaplamak için.</li>
+    <li>Konuma göre: <a href="/avsa-merkez-konaklama/">Merkez</a>, <a href="/yigitler-konaklama/">Yiğitler</a>, <a href="/iskeleye-yakin-konaklama/">iskeleye yakın</a> ve <a href="/barlar-sokagina-yakin-konaklama/">Barlar Sokağı'na yakın</a> konaklama.</li>
+  </ul>
 
   <h2 id="ne-zaman">Avşa'ya ne zaman gidilir?</h2>
   <p>Plaj işletmeleri, restoranlar ve gece hayatı yaz sezonunda en canlı. Sezon açılış ve kapanış tarihleri işletmeye göre değişiyor; sezon dışında birçok işletme kapalı olabiliyor. Yaz ayları bu yüzden hem denize girmek hem de eğlence için en uygun dönem. Tatil planlamadan önce feribot saatlerini ve konaklama müsaitliğini kontrol etmek iyi olur.</p>
