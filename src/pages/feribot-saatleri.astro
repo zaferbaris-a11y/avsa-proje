@@ -23,10 +23,10 @@ const toc = [
 
 const faq = [
   { q: "Avşa'ya feribot nereden kalkıyor?", a: "Araçlı seferler Erdek (Balıkesir) limanından yapılıyor. Marmara RoRo ve GESTAŞ Erdek–Avşa hattında sefer düzenliyor. Tekirdağ'dan da sınırlı sayıda sefer var." },
-  { q: "Erdek–Avşa feribotu kaç dakika sürüyor?", a: "Kaynaklara göre yaklaşık 1 saat ile 1 saat 20 dakika arasında değişiyor; hava ve gemiye göre fark edebilir." },
+  { q: "Erdek–Avşa feribotu kaç dakika sürüyor?", a: "Kaynaklara göre doğrudan seferlerde yaklaşık 1 saat ile 1 saat 20 dakika. GESTAŞ tarifesinde Marmara ve Balıklı (Paşalimanı) iskeleleri de göründüğü için ara duraklı seferlerde süre uzayabilir; bilet alırken seferin doğrudan mı ara duraklı mı olduğunu sor." },
   { q: "İstanbul'dan Avşa'ya direkt feribot var mı?", a: "Araçlı direkt İstanbul feribotu yok. İDO deniz otobüsü Yenikapı ve Bostancı'dan (nisan-kasım), yaz sezonunda ayrıca Avcılar'dan yolcu taşıyor (araçsız). Sefer günlerini ido.com.tr'den doğrula." },
   { q: "Feribot biletini ne zaman almalıyım?", a: "Yaz aylarında cuma akşamı seferleri için 7-10 gün önceden, bayramlarda 3-4 hafta önceden bilet almak önerilir." },
-  { q: "Kış tarifesi ne zaman başlıyor?", a: "Marmara RoRo'nun güncel tarifesi 31 Ekim 2026'ya kadar geçerli. Kasım ve sonrası için sefer saatleri değişebilir; gitmeden önce şirketten doğrulayın." },
+  { q: "Kış tarifesi ne zaman başlıyor?", a: "Marmara RoRo'nun yaz düzeni 31 Ekim 2026'ya kadar geçerli. Şirketin sitesindeki 19/10/2026 tarihli kış tarifesinde Avşa iskelesi yalnızca cuma ve pazar günleri görünüyor: Erdek'ten 17:00, Tekirdağ'dan 16:00 kalkış, Avşa'dan 19:00 dönüş. Tarifede başlangıç ve bitiş tarihi yazmıyor, yaz düzeniyle geçiş günü için şirketi arayıp teyit edin. GESTAŞ tarifesi haftanın her günü sefer gösteriyor." },
 ];
 ---
 
@@ -34,15 +34,15 @@ const faq = [
   title={title}
   description={description}
   h1="Avşa Adası Feribot Saatleri"
-  intro="Avşa'ya araçlı feribotlar Erdek (Balıkesir) limanından kalkar ve yolculuk yaklaşık 1 saat ile 1 saat 20 dakika sürer. Erdek–Avşa hattında Marmara RoRo ve GESTAŞ sefer yapar, Tekirdağ'dan da sınırlı sayıda sefer vardır. Güncel RoRo tarifesi 31 Ekim 2026'ya kadar geçerlidir."
+  intro="Avşa'ya araçlı feribotlar Erdek (Balıkesir) limanından kalkar ve yolculuk yaklaşık 1 saat ile 1 saat 20 dakika sürer. Erdek–Avşa hattında Marmara RoRo ve GESTAŞ sefer yapar, Tekirdağ'dan da sınırlı sayıda sefer vardır. Marmara RoRo'nun yaz düzeni 31 Ekim 2026'ya kadar geçerlidir; şirketin 19/10/2026 tarihli kış tarifesi de aşağıda."
   crumb="Feribot Saatleri"
   toc={toc}
   faq={faq}
-  updated={TARIFE_KONTROL}
+  updated="30 Ekim 2026"
 >
   <h2 id="uyari">Önemli not</h2>
   <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-    Feribot saatleri mevsime, güne ve hava koşullarına göre değişir ve bu sayfadaki bilgiler kamuya açık tarife duyurularından derlenmiştir (son kontrol: {TARIFE_KONTROL}). Yola çıkmadan önce mutlaka şirketin güncel tarifesini doğrulayın.
+    Feribot saatleri mevsime, güne ve hava koşullarına göre değişir ve bu sayfadaki bilgiler şirketlerin resmi sitelerindeki sefer listelerinden ve duyurulardan derlenmiştir (Marmara RoRo ve GESTAŞ saatleri 30 Ekim 2026'da kontrol edildi). Listelerde geçerlilik tarihleri her zaman açık yazmıyor. Yola çıkmadan önce mutlaka şirketin güncel tarifesini doğrulayın.
   </div>
 
   <div class="not-prose my-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -66,18 +66,37 @@ const faq = [
       <tr><td>Avşa → Erdek</td><td>12:45 · 20:20</td></tr>
     </tbody>
   </table></div>
-  <h3>GESTAŞ (1 Haziran – 30 Eylül 2026 yaz tarifesi)</h3>
+  <h3>Marmara RoRo: 19/10/2026 tarihli kış tarifesi</h3>
+  <p>Marmara RoRo'nun resmi sitesindeki 19/10/2026 tarihli kış tarifesine göre (30 Ekim 2026'da kontrol edildi) Avşa iskelesi bu tarifede yalnızca cuma ve pazar günleri sefer alıyor. Tarifede başlangıç ve bitiş tarihi yazmıyor; yaz düzeni 31 Ekim'e kadar olduğundan geçiş günü için şirketi arayıp teyit edin.</p>
   <div class="overflow-x-auto"><table>
-    <thead><tr><th>Yön</th><th>Kalkış saatleri</th></tr></thead>
+    <thead><tr><th>Yön</th><th>Gün</th><th>Kalkış</th></tr></thead>
     <tbody>
-      <tr><td>Erdek → Avşa</td><td>11:00 · 19:30 (bazı günler 19:15)</td></tr>
-      <tr><td>Avşa → Erdek</td><td>06:00 · 17:00 (bazı günler 16:45)</td></tr>
+      <tr><td>Erdek → Avşa</td><td>Cuma ve pazar</td><td>17:00</td></tr>
+      <tr><td>Tekirdağ → Marmara → Avşa</td><td>Cuma ve pazar</td><td>16:00</td></tr>
+      <tr><td>Marmara → Avşa → Erdek</td><td>Cuma ve pazar</td><td>18:20</td></tr>
+      <tr><td>Avşa → Erdek</td><td>Cuma ve pazar</td><td>19:00</td></tr>
+      <tr><td>Avşa → Marmara → Tekirdağ</td><td>Cuma ve pazar</td><td>19:00</td></tr>
     </tbody>
   </table></div>
-  <p>Sefer süresi kaynaklara göre yaklaşık 1 saat ile 1 saat 20 dakika arasında. Yaz tarifesi sona erdiğinden GESTAŞ için güncel bir kış tarifesi duyurusunu şirketten teyit edin.</p>
+  <p>Tarifedeki not: aşırı yoğunluk ya da geminin bir tarafta kalması gibi gerekli hallerde ek sefer düzenlenir.</p>
+
+  <h3>GESTAŞ (resmi sitedeki tarife, 30 Ekim 2026'da kontrol edildi)</h3>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yön</th><th>Günler</th><th>Kalkış</th></tr></thead>
+    <tbody>
+      <tr><td>Erdek → Avşa</td><td>Her gün</td><td>11:00</td></tr>
+      <tr><td>Erdek → Avşa</td><td>Salı, çarşamba, cuma, cumartesi</td><td>19:15</td></tr>
+      <tr><td>Erdek → Avşa</td><td>Pazartesi, perşembe, pazar</td><td>19:30</td></tr>
+      <tr><td>Avşa → Erdek</td><td>Her gün</td><td>06:00</td></tr>
+      <tr><td>Avşa → Erdek</td><td>Salı, çarşamba, cuma, cumartesi</td><td>16:45</td></tr>
+      <tr><td>Avşa → Erdek</td><td>Pazartesi, perşembe, pazar</td><td>17:00</td></tr>
+    </tbody>
+  </table></div>
+  <p>GESTAŞ tablosunda Marmara ve Balıklı (Paşalimanı) iskeleleri de yer alıyor; bazı seferler bu iskelelere uğruyor olabilir ve bu durumda süre uzar. Seferin doğrudan mı ara duraklı mı olduğunu bilet alırken sor. Ekinlik iskelesi de bazı günlerde (ağırlıkla pazartesi ve perşembe) tabloda yer alıyor. GESTAŞ sayfasında iptal ve ek sefer duyuruları için ayrı bir bağlantı var, yola çıkmadan oradan da bak.</p>
+  <p>Doğrudan seferlerde süre kaynaklara göre yaklaşık 1 saat ile 1 saat 20 dakika arasında.</p>
 
   <h2 id="tekirdag">Tekirdağ – Avşa</h2>
-  <p>Marmara RoRo, Tekirdağ Ceyport–Avşa arasında sınırlı gün seferler düzenliyor: cuma ve pazar günleri 17:00'de Tekirdağ'dan kalkış (varış yaklaşık 20:00), Avşa'dan dönüş 19:00. Yolculuk yaklaşık 3 saat sürüyor.</p>
+  <p>Marmara RoRo, Tekirdağ Ceyport–Avşa arasında sınırlı gün seferler düzenliyor. 19/10/2026 tarihli kış tarifesine göre cuma ve pazar günleri Tekirdağ'dan 16:00'da kalkan gemi Marmara üzerinden Avşa'ya uğruyor, Avşa'dan dönüş 19:00. Diğer günlerde tarifede Avşa görünmüyor. Yolculuk kaynaklara göre yaklaşık 3 saat sürüyor.</p>
 
   <h2 id="istanbul">İstanbul'dan Avşa'ya</h2>
   <p>İstanbul'dan Avşa'ya direkt araçlı feribot yok. Seçenekler:</p>
