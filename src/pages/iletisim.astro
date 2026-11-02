@@ -12,7 +12,7 @@ const PHONE_TEL = "+" + WHATSAPP; // +66624712500
 const wa = (msg: string) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 const origin = "https://www.avsaadasi.net";
 const EMAIL = "zafer.baris@gmail.com";
-const ADDRESS_TEXT = "64/3 Bo Phut, Koh Samui, Surat Thani, Tayland";
+const ADDRESS_TEXT = "Deniz Mh., Alize Sk. No:56, 10940 Marmara / Balıkesir";
 
 const jsonLd = [
   {
@@ -28,7 +28,7 @@ const jsonLd = [
       brand: { "@type": "Brand", name: "avsaadasi.net" },
       telephone: PHONE_TEL,
       email: EMAIL,
-      address: { "@type": "PostalAddress", streetAddress: "64/3", addressLocality: "Bo Phut, Koh Samui", addressRegion: "Surat Thani", addressCountry: "TH" },
+      address: { "@type": "PostalAddress", streetAddress: "Deniz Mh., Alize Sk. No:56", addressLocality: "Marmara", addressRegion: "Balıkesir", postalCode: "10940", addressCountry: "TR" },
       sameAs: [INSTAGRAM, YOUTUBE_AVSA],
       contactPoint: { "@type": "ContactPoint", contactType: "customer support", telephone: PHONE_TEL, email: EMAIL, availableLanguage: ["Turkish"], areaServed: "TR" },
     },
@@ -111,6 +111,7 @@ const topics = [
           <div class="rounded-2xl bg-white p-4">
             <dt class="text-xs font-semibold uppercase tracking-wide text-slate-500">📍 Adres</dt>
             <dd class="mt-1 font-semibold text-deniz-900">{ADDRESS_TEXT}</dd>
+            <dd class="mt-1 text-xs text-slate-500">Avşa Adası. Editör Tayland'da yaşadığı için en hızlı ulaşım WhatsApp ve e-postadır.</dd>
           </div>
         </dl>
         <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-deniz-900 transition hover:border-pink-500 hover:text-pink-600">Instagram: @avsaadasi</a>
