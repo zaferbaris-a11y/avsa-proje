@@ -1,34 +1,59 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Logo from "../components/Logo.astro";
 import Header from "../components/Header.astro";
-import { evler } from "../data/evler";
+import { evler, EVLER_GUNCELLEME } from "../data/evler";
 import { WHATSAPP, INSTAGRAM } from "../data/site";
 
-const title = "Avşa Adası Kiralık Evler | avsaadasi.net";
+const title = "Avşa Adası Kiralık Daire ve Ev: Yıllık Kiralık İlanları | avsaadasi.net";
 const description =
-  "Avşa Adası'nda kiralık müstakil ev, villa ve yazlık seçenekleri. Avşa'da ev sahipleriyle doğrudan iletişime geç; ilanını ücretsiz ekletmek için yaz.";
+  "Avşa Adası'nda yıllık ve dönemlik kiralık daire ve evler: merkez ve Yiğitler Köyü, aylık kira, depozito ve koşullar açık yazıldı. Ev sahibiyle doğrudan görüş, komisyon yok.";
 
-const tips = [
-  { icon: "📅", title: "Tarihleri netleştir", text: "Yaz sezonunda hafta sonları hızlı doluyor. Giriş-çıkış gününü ve gece sayısını baştan sor." },
-  { icon: "🏖️", title: "Denize mesafeyi sor", text: "Evin plaja yürüme mesafesini, yolun durumunu ve merkeze uzaklığını ev sahibinden öğren." },
-  { icon: "💳", title: "Depozito ve ödeme", text: "Ön ödeme, depozito ve iptal koşullarını rezervasyondan önce yazılı olarak netleştir." },
-  { icon: "🧺", title: "Donanımı kontrol et", text: "Klima, çamaşır makinesi, mutfak eşyası, otopark ve çarşaf-havlu dahil mi, sor." },
+const tl = (n: number) => n.toLocaleString("tr-TR") + " TL";
+const wa = (msg: string) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
+const sartlar = [
+  { icon: "💳", title: "Depozito", text: "İlanlardaki evlerin tümünde depozito 1 aylık kira tutarıdır." },
+  { icon: "🔥", title: "Isınma", text: "Isınma soba ile yapılıyor; ısınma giderleri kiracıya aittir." },
+  { icon: "🐾", title: "Evcil hayvan", text: "İlanlardaki evlerde evcil hayvan kabul edilmiyor." },
+  { icon: "🛋️", title: "Eşyalı", text: "Bu sayfadaki evlerin hepsi eşyalı olarak kiralanıyor." },
 ];
 
-const wa = (msg: string) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: "Avşa Adası Kiralık Evler",
-  description,
-  inLanguage: "tr",
-  url: new URL(Astro.url.pathname, Astro.site ?? "https://www.avsaadasi.net").href,
-};
+const faq = [
+  { q: "Avşa'da yıllık kiralık ev ne kadar?", a: `Bu sayfadaki ilanlarda aylık kira 1+1 dairelerde ${tl(18000)} ile ${tl(20000)}, 3+1 ters dubleks evde ${tl(20000)}, bahçeli 2+1 dairede ${tl(26000)}. Fiyatlar ${EVLER_GUNCELLEME} tarihli ilan bilgisidir ve ev sahibi tarafından değiştirilebilir.` },
+  { q: "Kira aylık mı, yıllık mı ödeniyor?", a: "Fiyatlar aylık kira bedelidir. Yıllık kiralamada sözleşme 12 aydır; ödeme düzenini ev sahibiyle yazılı olarak netleştirmek gerekir." },
+  { q: "Depozito ne kadar?", a: "İlanlardaki evlerin tümünde depozito 1 aylık kira bedelidir." },
+  { q: "Evcil hayvan kabul ediliyor mu?", a: "Hayır, bu sayfadaki evlerde evcil hayvan kabul edilmiyor." },
+  { q: "Evler ısınma açısından nasıl?", a: "Isınma soba ile yapılıyor ve ısınma giderleri kiracıya ait. Aidat ve fatura düzenini ev sahibiyle görüşmede sor." },
+  { q: "Komisyon var mı?", a: "Hayır. avsaadasi.net bu ilanlarda hiçbir taraftan komisyon almaz." },
+  { q: "Ev sahibiyle nasıl iletişime geçerim?", a: "İlandaki WhatsApp düğmesinden yaz. İlgilendiğin ilanın ev sahibinin iletişim bilgisi sana iletilir, kiralama görüşmesini ev sahibiyle doğrudan yaparsın." },
+  { q: "Günlük veya haftalık konaklama için ne yapmalıyım?", a: "Bu sayfadaki evler aylık/yıllık kiralamadır. Tatil için günlük konaklama arıyorsan Avşa otelleri, pansiyonları ve apartları sayfalarına bakabilirsin." },
+];
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? "https://www.avsaadasi.net").href;
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Avşa Adası Kiralık Daire ve Ev",
+    description,
+    inLanguage: "tr",
+    url: canonicalUrl,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: evler.map((e, i) => ({ "@type": "ListItem", position: i + 1, name: e.name })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  },
+];
 ---
 
 <Layout title={title} description={description}>
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  {jsonLd.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
 
   <Header />
 
@@ -36,50 +61,60 @@ const jsonLd = {
     <section class="bg-gradient-to-br from-deniz-900 to-deniz-600 py-14 text-white md:py-20">
       <div class="mx-auto max-w-6xl px-5">
         <nav aria-label="Sayfa yolu" class="text-sm text-white/80"><a href="/" class="hover:underline">Ana sayfa</a> <span aria-hidden="true">/</span> Kiralık Evler</nav>
-        <h1 class="font-display mt-4 max-w-2xl text-4xl font-bold leading-tight md:text-5xl">Avşa Adası kiralık evler</h1>
-        <p class="mt-4 max-w-xl text-lg text-white/90">Müstakil ev, villa ve yazlık seçenekleri. Ev sahibiyle <strong class="text-white">doğrudan</strong> konuş, aracıya komisyon verme.</p>
+        <h1 class="font-display mt-4 max-w-3xl text-4xl font-bold leading-tight md:text-5xl">Avşa Adası kiralık daire ve evler</h1>
+        <p class="mt-4 max-w-2xl text-lg text-white/90">Avşa'da yıllık ve dönemlik kiralık daire ve evler. Aylık kira, depozito ve koşullar açık yazıldı; ilan için WhatsApp'tan yaz, ev sahibinin iletişim bilgisini ileteyim. <strong class="text-white">Komisyon yok</strong>.</p>
       </div>
     </section>
 
     <section class="mx-auto max-w-6xl px-5 py-14">
-      <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">İlanlar</h2>
-      {evler.length > 0 ? (
-        <ul class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {evler.map((e) => (
-            <li class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-              {e.image && <img src={e.image} alt={e.name} loading="lazy" class="aspect-[4/3] w-full object-cover" />}
-              <div class="p-5">
-                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">{e.area}</p>
+      <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Güncel ilanlar</h2>
+      <p class="mt-2 text-sm text-slate-500">İlan bilgileri {EVLER_GUNCELLEME} tarihinde güncellendi. Evin hâlâ müsait olup olmadığını ev sahibinden teyit et.</p>
+      <ul class="mt-6 grid gap-5 sm:grid-cols-2">
+        {evler.map((e) => {
+          const waHref = wa(`Merhaba, avsaadasi.net'teki "${e.name}" ilanı hakkında bilgi almak istiyorum.`);
+          return (
+            <li class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              {e.image ? (
+                <div class="relative">
+                  <img src={e.image} alt={e.imageNote ? `Avşa merkez, temsili görsel (${e.name})` : e.name} width="800" height="600" loading="lazy" class="aspect-[4/3] w-full object-cover" />
+                  {e.imageNote && <span class="absolute bottom-2 left-2 rounded-full bg-black/65 px-3 py-1 text-xs font-medium text-white">{e.imageNote}</span>}
+                </div>
+              ) : (
+                <div class="flex aspect-[4/2] w-full items-center justify-center bg-gradient-to-br from-deniz-900/10 to-deniz-600/20 text-5xl" aria-hidden="true">🏠</div>
+              )}
+              {e.gallery && e.gallery.length > 0 && (
+                <div class="grid grid-cols-3 gap-1 bg-white px-1 pt-1">
+                  {e.gallery.map((g, i) => (
+                    <a href={g} target="_blank" rel="noopener">
+                      <img src={g} alt={`${e.name}, fotoğraf ${i + 2}`} width="800" height="600" loading="lazy" class="aspect-[4/3] w-full rounded object-cover" />
+                    </a>
+                  ))}
+                </div>
+              )}
+              <div class="flex flex-1 flex-col p-5">
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">{e.area} · {e.type}</p>
                 <h3 class="mt-1 text-lg font-bold text-deniz-900">{e.name}</h3>
-                <p class="mt-1 text-sm text-slate-500">{e.bedrooms} yatak odası · {e.guests} kişilik</p>
+                <p class="mt-1 text-sm text-slate-500">{e.rooms} · {e.furnished ? "Eşyalı" : "Eşyasız"} · {e.contract}</p>
                 <p class="mt-3 text-sm leading-relaxed">{e.description}</p>
-                <p class="mt-4 font-bold text-deniz-900">{e.priceFrom > 0 ? `${e.priceFrom.toLocaleString("tr-TR")} ₺ / gece` : "Fiyat için arayın"}</p>
+                <ul class="mt-3 flex flex-wrap gap-2 text-xs">
+                  {e.features.map((f) => <li class="rounded-full bg-kum-100 px-3 py-1 text-slate-700">{f}</li>)}
+                </ul>
+                <p class="mt-4 font-bold text-deniz-900">{tl(e.monthlyRent)} <span class="text-sm font-normal text-slate-500">/ ay · depozito: {e.deposit}</span></p>
                 <div class="mt-4 flex gap-2">
-                  <a href={`https://wa.me/${e.whatsapp}`} class="flex-1 rounded-full bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-emerald-700">WhatsApp</a>
-                  <a href={`tel:${e.phone.replace(/\s/g, "")}`} class="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-deniz-900 hover:bg-slate-50">Ara</a>
+                  <a href={waHref} class="flex-1 rounded-full bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-emerald-700">WhatsApp'tan sor</a>
                 </div>
               </div>
             </li>
-          ))}
-        </ul>
-      ) : (
-        <div class="mt-6 rounded-2xl border-2 border-dashed border-slate-300 bg-white p-8 text-center md:p-12">
-          <p class="text-4xl" aria-hidden="true">🔑</p>
-          <h3 class="mt-3 text-xl font-bold text-deniz-900">Kiralık ev ilanları çok yakında</h3>
-          <p class="mx-auto mt-2 max-w-md text-slate-600">Şu an listelenen ev yok. Aradığın tarih ve kişi sayısını yaz, uygun evleri sana iletelim.</p>
-          <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={wa("Merhaba, Avşa Adası'nda kiralık ev arıyorum. Tarih: ... Kişi sayısı: ...")} class="rounded-full bg-emerald-600 px-6 py-3 font-semibold text-white hover:bg-emerald-700">Ev arıyorum, WhatsApp'tan yaz</a>
-            <a href="/#konaklama" class="rounded-full border border-slate-300 px-6 py-3 font-semibold text-deniz-900 hover:bg-slate-50">Otel ve pansiyonlara bak</a>
-          </div>
-        </div>
-      )}
+          );
+        })}
+      </ul>
     </section>
 
     <section class="bg-white py-14">
       <div class="mx-auto max-w-6xl px-5">
-        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Kiralık ev ararken</h2>
+        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">İlanlardaki ortak koşullar</h2>
         <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {tips.map((t) => (
+          {sartlar.map((t) => (
             <div class="rounded-2xl border border-slate-200 p-5">
               <span class="text-2xl" aria-hidden="true">{t.icon}</span>
               <h3 class="mt-3 font-bold text-deniz-900">{t.title}</h3>
@@ -90,10 +125,36 @@ const jsonLd = {
       </div>
     </section>
 
+    <section class="mx-auto max-w-3xl px-5 py-14">
+      <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Kiralık ev ararken</h2>
+      <ul class="mt-4 list-disc space-y-2 pl-5 text-slate-700">
+        <li>Giriş tarihini, sözleşme süresini ve ödeme düzenini baştan sor.</li>
+        <li>Aidat, elektrik, su ve internet giderlerinin kime ait olduğunu yazılı netleştir.</li>
+        <li>Denize ve merkeze mesafeyi, yolun durumunu ev sahibinden öğren.</li>
+        <li>Depozito ve iade koşullarını sözleşmeye yazdır.</li>
+        <li>Yalnızca birkaç günlük tatil için gelecekseniz <a href="/avsa-otelleri/" class="text-deniz-600 underline">oteller</a>, <a href="/avsa-pansiyonlari/" class="text-deniz-600 underline">pansiyonlar</a> ve <a href="/avsa-apartlari/" class="text-deniz-600 underline">apartlar</a> daha uygun.</li>
+      </ul>
+      <p class="mt-4 text-sm text-slate-600">Ada hakkında genel bilgi için <a href="/avsa-adasi/" class="text-deniz-600 underline">Avşa Adası rehberi</a>, adaya ulaşım için <a href="/avsa-adasina-nasil-gidilir/" class="text-deniz-600 underline">nasıl gidilir</a> ve <a href="/feribot-saatleri/" class="text-deniz-600 underline">feribot saatleri</a> sayfalarına bakabilirsin.</p>
+    </section>
+
+    <section class="bg-white py-14">
+      <div class="mx-auto max-w-3xl px-5">
+        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Sık sorulan sorular</h2>
+        <div class="mt-6 divide-y divide-slate-200 rounded-2xl border border-slate-200">
+          {faq.map((f) => (
+            <details class="group p-5">
+              <summary class="cursor-pointer font-semibold text-deniz-900">{f.q}</summary>
+              <p class="mt-2 text-sm leading-relaxed text-slate-700">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <section class="py-14">
       <div class="mx-auto max-w-3xl px-5 text-center">
-        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Evin mi var? İlanını ekleyelim</h2>
-        <p class="mt-3 text-slate-600">Avşa'da kiralık evin varsa fotoğraflarını ve iletişim bilgilerini gönder, sayfamızda yayınlayalım.</p>
+        <h2 class="font-display text-2xl font-bold text-deniz-900 md:text-3xl">Avşa'da kiralık evin mi var?</h2>
+        <p class="mt-3 text-slate-600">Evinin fotoğraflarını ve bilgilerini gönder, bu sayfada yayınlayalım. Ev sahibinin onayı olmadan hiçbir bilgi yayınlanmaz.</p>
         <a href={wa("Merhaba, Avşa Adası'nda kiralık evimi avsaadasi.net'te yayınlatmak istiyorum.")} class="mt-6 inline-block rounded-full bg-deniz-900 px-6 py-3 font-semibold text-white hover:bg-deniz-600">İlan vermek için WhatsApp'tan yaz</a>
       </div>
     </section>
