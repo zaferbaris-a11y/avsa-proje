@@ -24,6 +24,9 @@ export const rehberPages: RehberPage[] = [
   { path: "/gece-hayati/", label: "Gece Hayatı", icon: "🌙", short: "Barlar Sokağı ve akşam eğlencesi rehberi" },
   { path: "/feribot-saatleri/", label: "Feribot Saatleri", icon: "⛴️", short: "Erdek, Tekirdağ ve İstanbul hatlarının sefer saatleri" },
   { path: "/avsada-ne-yenir/", label: "Avşa'da Ne Yenir?", icon: "🐟", short: "Yöresel lezzetler, deniz ürünleri ve yeme-içme rehberi", chip: false },
+  { path: "/gestas-erdek-avsa/", label: "GESTAŞ Erdek–Avşa", icon: "🚢", short: "GESTAŞ seferleri, bilet ve ücretler", chip: false },
+  { path: "/marmara-roro-erdek-avsa/", label: "Marmara RoRo Erdek–Avşa", icon: "🚢", short: "Marmara RoRo yaz ve kış tarifesi, Tekirdağ hattı", chip: false },
+  { path: "/avsa-feribot-seferleri-iptal/", label: "Sefer İptali", icon: "🌬️", short: "Feribot seferi iptal mi? Nereden öğrenilir, ne yapılır", chip: false },
   { path: "/bilet-fiyatlari/", label: "Bilet Fiyatları", icon: "🎟️", short: "Yolcu ve araç feribot bilet ücretleri" },
   { path: "/avsa-adasi-tatil-maliyeti/", label: "Tatil Maliyeti", icon: "🧮", short: "Feribot ve konaklama için örnek bütçe hesabı", chip: false },
 ];

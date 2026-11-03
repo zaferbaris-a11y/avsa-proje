@@ -47,6 +47,10 @@ const staticPages = [
   { path: "/avsa-cocuklu-aile-konaklama/", changefreq: "weekly", priority: 0.8 },
   { path: "/avsa-mutfakli-apartlar/", changefreq: "weekly", priority: 0.8 },
   { path: "/avsa-uygun-fiyatli-konaklama/", changefreq: "weekly", priority: 0.8 },
+  { path: "/avsa-butik-oteller/", changefreq: "weekly", priority: 0.8 },
+  { path: "/gestas-erdek-avsa/", changefreq: "monthly", priority: 0.7 },
+  { path: "/marmara-roro-erdek-avsa/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-feribot-seferleri-iptal/", changefreq: "monthly", priority: 0.7 },
 ];
 
 const escapeXml = (s: string) =>

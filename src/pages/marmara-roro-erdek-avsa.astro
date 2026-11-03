@@ -1,0 +1,91 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Marmara RoRo Erdek–Avşa Feribot 2027: Kış Tarifesi | avsaadasi.net";
+const description =
+  "Marmara RoRo Erdek–Avşa ve Tekirdağ–Avşa seferleri 2027: 1 Kasım 2026 kış tarifesi (haziran 2027'ye kadar uygulanması bekleniyor), ücretler, AdaKart ve bilet bilgileri.";
+
+const toc = [
+  { id: "uyari", label: "Önemli not" },
+  { id: "yaz", label: "Yaz düzeni" },
+  { id: "kis", label: "Kış tarifesi" },
+  { id: "tekirdag", label: "Tekirdağ hattı" },
+  { id: "ucretler", label: "Ücretler" },
+  { id: "bilet", label: "Bilet nasıl alınır?" },
+];
+
+const faq = [
+  { q: "Marmara RoRo Erdek'ten Avşa'ya kaçta kalkıyor?", a: "6 Eylül – 31 Ekim 2026 yaz düzeninde Erdek'ten Avşa'ya 08:45 ve 17:00 seferleri vardı. 01/11/2026 tarihli kış tarifesinde Erdek'ten Avşa'ya sefer yalnızca cuma ve pazar günleri 17:00'de." },
+  { q: "Kış tarifesi ne zaman başlıyor?", a: "Marmara RoRo'nun kış tarifesi 01/11/2026 tarihli, yani 1 Kasım 2026'dan itibaren geçerli. Tarifede bitiş tarihi yazmıyor; haziran 2027'ye kadar uygulanması bekleniyor, kesin tarihi +90 541 960 99 33 numarasından teyit edin." },
+  { q: "Marmara RoRo'da Avşa her gün sefer alıyor mu?", a: "01/11/2026 kış tarifesine göre Avşa iskelesi yalnızca cuma ve pazar günleri sefer alıyor. GESTAŞ'ın tarifesi farklı, iki şirketi birlikte değerlendirin." },
+  { q: "Marmara RoRo bilet fiyatı ne kadar?", a: "27.03.2026 tarifesinde yolcu 160 TL, otomobil 1.850 TL, motosiklet 750 TL; AdaKart ile yolcu 80 TL, otomobil 750 TL. Fiyatlar zamanla değişir." },
+  { q: "Tekirdağ'dan Avşa'ya feribot var mı?", a: "Marmara RoRo, 01/11/2026 kış tarifesine göre cuma ve pazar günleri Tekirdağ'dan 16:00'da kalkıp Marmara üzerinden Avşa'ya uğruyor. Diğer günlerde tarifede Avşa görünmüyor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Marmara RoRo Erdek–Avşa ve Tekirdağ–Avşa Seferleri"
+  intro="Marmara RoRo, Erdek–Avşa hattında GESTAŞ ile birlikte sefer yapan iki şirketten biri ve Tekirdağ–Avşa hattında sınırlı günlerde sefer düzenliyor. Bu sayfada yaz düzenini, kış tarifesini, ücretleri ve bilet bilgilerini topladık."
+  crumb="Marmara RoRo Erdek–Avşa"
+  toc={toc}
+  faq={faq}
+  updated="3 Kasım 2026"
+  published="2026-11-03"
+>
+  <h2 id="uyari">Önemli not</h2>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Bilgiler Marmara RoRo'nun yayımladığı tarifelerden derlendi (kış tarifesi 3 Kasım 2026'da kontrol edildi). Tarifeler mevsime ve havaya göre değişir; listelerde geçerlilik tarihleri her zaman açık yazmıyor. Yola çıkmadan şirketten teyit edin. İki şirketi birlikte görmek için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasına bak.
+  </div>
+
+  <h2 id="yaz">Yaz düzeni (6 Eylül – 31 Ekim 2026)</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yön</th><th>Kalkış saatleri</th></tr></thead>
+    <tbody>
+      <tr><td>Erdek → Avşa</td><td>08:45 · 17:00</td></tr>
+      <tr><td>Avşa → Erdek</td><td>12:45 · 20:20</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="kis">Kış tarifesi (01/11/2026 tarihli)</h2>
+  <p>Marmara RoRo'nun 1 Kasım 2026'dan itibaren geçerli kış tarifesine göre Avşa iskelesi yalnızca cuma ve pazar günleri sefer alıyor (tarife 3 Kasım 2026'da kontrol edildi). Tarifede bitiş tarihi yazmıyor; haziran 2027'ye kadar uygulanması bekleniyor, kesin tarih için şirketi arayıp teyit edin.</p>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yön</th><th>Gün</th><th>Kalkış</th></tr></thead>
+    <tbody>
+      <tr><td>Erdek → Avşa</td><td>Cuma ve pazar</td><td>17:00</td></tr>
+      <tr><td>Marmara → Avşa → Erdek</td><td>Cuma ve pazar</td><td>18:20</td></tr>
+      <tr><td>Avşa → Erdek</td><td>Cuma ve pazar</td><td>19:00</td></tr>
+    </tbody>
+  </table></div>
+  <p>Tarifedeki not: aşırı yoğunluk ya da geminin bir tarafta kalması gibi gerekli hallerde ek sefer düzenleniyor. Kışın diğer günlerde adaya ulaşım için <a href="/gestas-erdek-avsa/">GESTAŞ seferlerine</a> da bak.</p>
+
+  <h2 id="tekirdag">Tekirdağ – Avşa hattı</h2>
+  <p>Marmara RoRo'nun 01/11/2026 kış tarifesinde Avşa'ya uğrayan iki Tekirdağ rotası var, ikisi de yalnızca cuma ve pazar günleri:</p>
+  <ul>
+    <li><strong>Tekirdağ → Marmara → Avşa → Erdek:</strong> Tekirdağ Ceyport'tan 16:00'da kalkar, Marmara iskelesinden 18:20'de kalkıp Avşa'ya gelir, Avşa'dan 19:00'da Erdek'e gider.</li>
+    <li><strong>Erdek → Avşa → Marmara → Tekirdağ:</strong> Erdek'ten 17:00'de kalkar, Avşa'dan 19:00'da kalkar, Marmara iskelesinden 19:40'ta kalkıp Tekirdağ'a gider.</li>
+  </ul>
+  <p>Yani Avşa–Tekirdağ yolculuğu doğrudan değil, Marmara Adası'ndaki Marmara iskelesi üzerinden yapılıyor. Avşa'dan Tekirdağ'a gidecek olan cuma veya pazar günü 19:00'da kalkan sefere biner. Diğer günlerde Avşa bu tarifede yok; Tekirdağ seferleri Saraylar, Erdek ve Bandırma gibi iskelelere gidiyor. Tekirdağ'a varış saati tarifede yazmıyor; yolculuk kaynaklara göre toplamda yaklaşık 3 saat sürüyor.</p>
+
+  <h2 id="ucretler">Marmara RoRo ücretleri (27.03.2026 tarifesi)</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Tür</th><th>Normal</th><th>AdaKart</th></tr></thead>
+    <tbody>
+      <tr><td>Yolcu</td><td>160 TL</td><td>80 TL</td></tr>
+      <tr><td>Otomobil</td><td>1.850 TL</td><td>750 TL</td></tr>
+      <tr><td>Motosiklet</td><td>750 TL</td><td>375 TL</td></tr>
+      <tr><td>Minibüs</td><td>2.450 TL</td><td>—</td></tr>
+      <tr><td>Kamyonet</td><td>2.450 TL</td><td>—</td></tr>
+      <tr><td>Otobüs</td><td>4.400 TL</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ücretler tek yön ve iskele geçiş ücreti hariçtir. AdaKart kapsamı için şirkete danış. Karşılaştırma için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfamıza bak.</p>
+
+  <h2 id="bilet">Bilet nasıl alınır?</h2>
+  <ul>
+    <li><strong>Online:</strong> bilet.erdekroro.com · marmararoro.com</li>
+    <li><strong>Telefon:</strong> +90 541 960 99 33</li>
+  </ul>
+  <p>Cuma akşamı ve bayram dönemlerinde araçlı biletler hızlı tükenir. Hava koşullarında iptal olabileceği için <a href="/avsa-feribot-seferleri-iptal/">sefer iptali</a> sayfasına da göz at.</p>
+</InfoLayout>

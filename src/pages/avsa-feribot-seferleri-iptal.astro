@@ -1,0 +1,68 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa Feribot Seferleri İptal mi? Nereden Öğrenilir | avsaadasi.net";
+const description =
+  "Avşa feribot seferleri hava koşullarında iptal edilebilir. İptali resmi kaynaklardan nasıl öğrenirsin, sefer iptal olursa ne yapmalısın, rezervasyonunu nasıl korursun? Pratik rehber.";
+
+const toc = [
+  { id: "uyari", label: "Önemli not" },
+  { id: "neden", label: "Seferler neden iptal olur?" },
+  { id: "ogrenme", label: "İptali nereden öğrenirsin?" },
+  { id: "ne-yapmali", label: "Sefer iptal olursa ne yapmalı?" },
+  { id: "onlem", label: "Önceden alınacak önlemler" },
+];
+
+const faq = [
+  { q: "Avşa feribot seferleri iptal mi?", a: "Bugünkü durumu bu sayfadan öğrenemezsin; sefer durumu şirketlerin resmi kanallarından takip edilir. Aşağıda hangi kanalların kullanılacağını listeledik." },
+  { q: "Feribot seferleri neden iptal edilir?", a: "Genellikle fırtına, kuvvetli rüzgar ve dalga gibi olumsuz deniz ve hava koşulları nedeniyle. Kararı şirketler verir." },
+  { q: "Sefer iptal olursa biletim ne olur?", a: "İptal ve değişiklik koşulları şirkete ve bilete göre değişir. Bileti alırken ve sefer iptalinde şirketin müşteri hizmetlerinden öğren." },
+  { q: "Sefer iptal olursa konaklamam ne olur?", a: "Politika tesisten tesise değişir. Rezervasyondan önce işletmeye 'feribot iptal olursa tarih değişikliği yapabiliyor musunuz?' diye sormanı öneririz." },
+  { q: "Hava durumuna nereden bakmalıyım?", a: "Meteoroloji Genel Müdürlüğü'nün (mgm.gov.tr) Marmara Denizi tahmin ve uyarılarına bakabilirsin. Sefer kararı yine şirketlerden öğrenilir." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Feribot Seferleri İptal mi? Nereden Öğrenilir?"
+  intro="Avşa seferleri, özellikle sonbahar ve kış aylarında olumsuz hava koşullarında iptal edilebiliyor. Bu sayfada iptalin nereden öğrenileceğini, sefer iptal olursa ne yapılacağını ve yolculuğunu nasıl daha güvenli planlayacağını anlattık."
+  crumb="Sefer İptali"
+  toc={toc}
+  faq={faq}
+  updated="3 Kasım 2026"
+  published="2026-11-03"
+>
+  <h2 id="uyari">Önemli not</h2>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Bu sayfa canlı bir iptal listesi değildir ve günlük sefer durumunu göstermez. Güncel durumu yalnızca şirketlerin resmi kanallarından öğrenebilirsin. Sefer saatleri için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasına bak.
+  </div>
+
+  <h2 id="neden">Seferler neden iptal olur?</h2>
+  <p>Deniz ulaşımında seferler güvenlik nedeniyle fırtına, kuvvetli rüzgar ve yüksek dalga gibi koşullarda iptal edilebilir ya da ertelenebilir. Kararı ilgili şirket verir. Marmara Denizi'nde rüzgar kısa sürede değişebildiği için sabah verilen karar akşama kadar değişebilir.</p>
+
+  <h2 id="ogrenme">İptali nereden öğrenirsin?</h2>
+  <ul>
+    <li><strong>Marmara RoRo:</strong> marmararoro.com ve +90 541 960 99 33. Ayrıntı için <a href="/marmara-roro-erdek-avsa/">Marmara RoRo sayfası</a>.</li>
+    <li><strong>GESTAŞ:</strong> sitesindeki iptal ve ek sefer duyuruları bağlantısı ve 444 0 752. Ayrıntı için <a href="/gestas-erdek-avsa/">GESTAŞ sayfası</a>.</li>
+    <li><strong>İDO (yayalar için deniz otobüsü):</strong> ido.com.tr. Ayrıntı için <a href="/istanbuldan-avsaya/">İstanbul'dan Avşa'ya</a>.</li>
+    <li><strong>Hava ve deniz durumu:</strong> mgm.gov.tr üzerindeki Marmara Denizi tahmin ve uyarıları. Bu sefer kararı değil, tahmin için bir ipucudur.</li>
+  </ul>
+
+  <h2 id="ne-yapmali">Sefer iptal olursa ne yapmalı?</h2>
+  <ol>
+    <li>Biletini aldığın şirketle iletişime geç; iptal ve değişiklik koşullarını sor.</li>
+    <li>Diğer şirketin ya da hattın (Erdek veya Tekirdağ) seferlerine bakıp yer olup olmadığını öğren.</li>
+    <li>Konaklayacağın tesise haber ver; tarih değişikliği veya ek gece için uygun olup olmadıklarını sor.</li>
+    <li>Adadaysan ve dönemiyorsan dönüş biletini yeniden planla, işe veya randevulara haber ver.</li>
+  </ol>
+
+  <h2 id="onlem">Önceden alınacak önlemler</h2>
+  <ul>
+    <li>Sonbahar ve kış aylarında, dönüş günü önemli bir işin varsa bir gün tampon bırak.</li>
+    <li>Yola çıkmadan önceki gün ve sabah sefer durumunu şirketten kontrol et.</li>
+    <li>Rezervasyon yaparken tesisin iptal ve tarih değişikliği politikasını sor. Tesis listesine <a href="/#konaklama">buradan</a> bakabilirsin.</li>
+    <li>Araçlı geçişte alternatif hattı (Erdek veya Tekirdağ) önceden öğren. Rotalar için <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a> rehberine bak.</li>
+    <li>Bilet fiyatları için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfamıza bak.</li>
+  </ul>
+</InfoLayout>

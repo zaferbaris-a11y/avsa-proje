@@ -338,6 +338,35 @@ export const konseptler: Konsept[] = [
       { q: "Grup rezervasyonunda indirim olur mu?", a: "Tesise göre değişir. Kişi sayısını ve tarihi yazarak işletmeden indirim ve ek yatak koşullarını sorabilirsin." },
     ],
   },
+  {
+    path: "/avsa-butik-oteller/",
+    label: "Butik oteller",
+    title: "Avşa Butik Oteller: Küçük, Sakin ve Şık Konaklama | avsaadasi.net",
+    description:
+      "Avşa Adası'nda butik otel ve butik apart seçenekleri: sakin, küçük ölçekli ve özenli tesisler. Merkez ve Yiğitler'den seçenekleri karşılaştır, işletmeye WhatsApp'tan yaz.",
+    h1: "Avşa'da Butik Oteller",
+    intro: (n) =>
+      `Avşa Adası'nda kendini butik otel ya da butik apart olarak tanıtan ${n} tesisi bu sayfada topladık. Daha küçük ölçekli, sakin ve özenli bir konaklama arayanlar bölgeye ve olanaklara göre karşılaştırıp işletmeyle doğrudan görüşebilir.`,
+    filter: (s) => /butik/i.test([s.name, s.tag, s.tagline].join(" ")),
+    why: {
+      h: "Butik otel ne demek, Avşa'da neye dikkat edilmeli?",
+      p: [
+        "Butik otel; genellikle az odalı, daha kişisel hizmet sunan ve tasarımına özen gösterilen küçük tesisleri anlatır. Avşa'da bu ifadeyi tesisler kendileri kullanıyor; resmi bir sınıflandırma değil. Bu yüzden her tesisin sayfasındaki olanak listesine ve fotoğraflarına bakmanı öneririz.",
+        "Butik tesislerde oda sayısı az olduğu için yaz hafta sonları ve bayramlarda yerler çabuk doluyor. Havuz, restoran gibi olanaklar tesisten tesise değişir; gelmeden önce hangi hizmetlerin fiyata dahil olduğunu sormak en sağlıklısı.",
+      ],
+    },
+    tips: [
+      "Havuz, kahvaltı ve otopark gibi olanakların fiyata dahil olup olmadığını işletmeden teyit et.",
+      "Denize mesafeyi tesis sayfasından kontrol et; butik tesislerin konumu Merkez'den Yiğitler'e kadar değişiyor.",
+      "Oda sayısı az olduğu için yaz hafta sonları ve bayramlarda erken sor.",
+      "Çocuk ve evcil hayvan politikası tesise göre değişir, rezervasyon öncesi öğren.",
+    ],
+    faq: [
+      { q: "Avşa'da butik otel var mı?", a: "Evet. Bu sayfada kendini butik otel ya da butik apart olarak tanıtan tesisleri listeliyoruz. Olanak ve fiyat bilgisi için işletmeye WhatsApp'tan yazabilirsin." },
+      { q: "Butik oteller daha pahalı mı?", a: "Fiyat tesise, tarihe ve oda tipine göre değişiyor. Sayfadaki fiyatlar başlangıç fiyatıdır, güncel fiyatı işletme verir." },
+      { q: "Butik otelde kahvaltı dahil mi?", a: "Tesise göre değişir. Her tesis sayfasında olanaklar yazıyor, kesin bilgi için işletmeye sor." },
+    ],
+  },
 ];
 
 export const konseptByPath = (p: string) => konseptler.find((k) => k.path === p);

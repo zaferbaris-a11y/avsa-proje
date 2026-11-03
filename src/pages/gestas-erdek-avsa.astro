@@ -1,0 +1,106 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "GESTAŞ Erdek–Avşa Feribot 2027: Saatler ve Ücretler | avsaadasi.net";
+const description =
+  "GESTAŞ Erdek–Avşa feribot seferleri 2027: günlere göre tam sefer tablosu (Balıklı, Marmara, Ekinlik durakları), yolcu ve araç ücretleri, bilet bilgileri. Haziran 2027'ye kadar uygulanması bekleniyor.";
+
+const toc = [
+  { id: "uyari", label: "Önemli not" },
+  { id: "saatler", label: "Günlere göre sefer tablosu" },
+  { id: "oku", label: "Tabloyu nasıl okursun?" },
+  { id: "ucretler", label: "Ücretler" },
+  { id: "bilet", label: "Bilet nasıl alınır?" },
+  { id: "ipuclari", label: "İpuçları" },
+];
+
+const faq = [
+  { q: "GESTAŞ Erdek'ten Avşa'ya kaçta kalkıyor?", a: "Tarifede Erdek'ten her gün 11:00 seferi var ve Balıklı (Paşalimanı) üzerinden Avşa'ya 13:00'te varıyor. Akşam seferi salı, çarşamba, cuma ve cumartesi 19:15, pazartesi, perşembe ve pazar 19:30'da Erdek'ten kalkıyor ve Avşa'ya 22:00 ile 22:15 arasında varıyor." },
+  { q: "GESTAŞ ile Avşa'dan Erdek'e ilk sefer kaçta?", a: "Avşa'dan her gün 06:00'da kalkan sefer var. Öğleden sonra seferi salı, çarşamba, cuma, cumartesi 16:45, pazartesi, perşembe ve pazar 17:00'de Avşa'dan kalkıyor." },
+  { q: "Erdek–Avşa GESTAŞ seferi ne kadar sürüyor?", a: "Tabloya göre Erdek'ten 11:00'de kalkan sefer Balıklı'ya uğrayarak Avşa'ya 13:00'te varıyor, yani yaklaşık 2 saat. Akşam seferleri Balıklı ve Marmara'ya da uğradığı için daha uzun: Erdek 19:15 veya 19:30'dan Avşa 22:00 veya 22:15'e kadar. Bazı seferlerde Ekinlik de duraklar." },
+  { q: "Bu tarife ne zamana kadar geçerli?", a: "Tarifede geçerlilik tarihi yazmıyor; haziran 2027'ye kadar bu düzenin uygulanması bekleniyor. Kesin tarih için GESTAŞ'ı 444 0 752 numarasından arayın." },
+  { q: "GESTAŞ bilet fiyatı ne kadar?", a: "Haziran 2026 tarifesinde yolcu 120 TL, öğrenci ve 65 yaş üstü 60 TL, otomobil 1.330 TL, motosiklet 630 TL. Fiyatlar zamanla değişir, güncel ücreti şirketten teyit edin." },
+  { q: "Seferler iptal olur mu?", a: "Olumsuz hava koşullarında seferler iptal edilebilir. GESTAŞ sitesindeki tarife sayfasında iptal ve ek sefer bilgisi için ayrı bir bağlantı var; yola çıkmadan oradan da bakmanı öneririz." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="GESTAŞ Erdek–Avşa Feribot Seferleri (2027)"
+  intro="GESTAŞ (Gestaş Deniz Ulaşımı), Erdek–Avşa hattında Marmara RoRo ile birlikte sefer yapan iki şirketten biri. Aşağıda şirketin tarifesindeki günlere göre tam sefer tablosunu, tabloyu nasıl okuyacağını, ücretleri ve bilet bilgilerini topladık."
+  crumb="GESTAŞ Erdek–Avşa"
+  toc={toc}
+  faq={faq}
+  updated="3 Kasım 2026"
+  published="2026-11-03"
+>
+  <h2 id="uyari">Önemli not</h2>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Tablo GESTAŞ'ın yayımladığı tarifeden derlendi (3 Kasım 2026'da kontrol edildi). Tarifede geçerlilik tarihi yazmıyor; bu düzenin haziran 2027'ye kadar uygulanması bekleniyor. Hava koşullarına göre iptal ve ek seferler olabilir, yola çıkmadan şirketi kontrol edin. İki şirketi birlikte görmek için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasına bak.
+  </div>
+
+  <h2 id="saatler">Günlere göre sefer tablosu (Erdek – Avşa – Marmara – Paşalimanı (Balıklı) – Ekinlik)</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Durak</th><th>Pzt</th><th>Salı</th><th>Çar</th><th>Per</th><th>Cuma</th><th>Cmt</th><th>Pazar</th></tr></thead>
+    <tbody>
+      <tr class="font-semibold"><td>Avşa (kalkış)</td><td>06:00</td><td>06:00</td><td>06:00</td><td>06:00</td><td>06:00</td><td>06:00</td><td>06:00</td></tr>
+      <tr><td>Ekinlik</td><td>06:20</td><td>-</td><td>-</td><td>06:20</td><td>-</td><td>-</td><td>-</td></tr>
+      <tr><td>Marmara</td><td>07:00</td><td>06:45</td><td>06:45</td><td>07:00</td><td>06:45</td><td>06:45</td><td>06:45</td></tr>
+      <tr><td>Balıklı</td><td>08:00</td><td>07:45</td><td>07:45</td><td>08:00</td><td>07:45</td><td>07:45</td><td>-</td></tr>
+      <tr class="font-semibold"><td>Erdek</td><td>11:00</td><td>11:00</td><td>11:00</td><td>11:00</td><td>11:00</td><td>11:00</td><td>11:00</td></tr>
+      <tr><td>Balıklı</td><td>12:00</td><td>12:00</td><td>12:00</td><td>12:00</td><td>12:00</td><td>12:00</td><td>12:00</td></tr>
+      <tr><td>Avşa</td><td>13:00</td><td>13:00</td><td>13:00</td><td>13:00</td><td>13:00</td><td>13:00</td><td>13:00</td></tr>
+      <tr><td>Ekinlik</td><td>13:20</td><td>-</td><td>-</td><td>13:20</td><td>-</td><td>-</td><td>-</td></tr>
+      <tr><td>Marmara</td><td>16:00</td><td>16:00</td><td>16:00</td><td>16:00</td><td>16:00</td><td>16:00</td><td>16:00</td></tr>
+      <tr><td>Ekinlik</td><td>16:30</td><td>-</td><td>-</td><td>16:30</td><td>-</td><td>-</td><td>16:30</td></tr>
+      <tr><td>Avşa</td><td>17:00</td><td>16:45</td><td>16:45</td><td>17:00</td><td>16:45</td><td>16:45</td><td>17:00</td></tr>
+      <tr><td>Balıklı</td><td>18:00</td><td>17:45</td><td>17:45</td><td>18:00</td><td>17:45</td><td>17:45</td><td>18:00</td></tr>
+      <tr class="font-semibold"><td>Erdek</td><td>19:30</td><td>19:15</td><td>19:15</td><td>19:30</td><td>19:15</td><td>19:15</td><td>19:30</td></tr>
+      <tr><td>Balıklı</td><td>20:30</td><td>20:15</td><td>20:15</td><td>20:30</td><td>20:15</td><td>20:15</td><td>-</td></tr>
+      <tr><td>Marmara</td><td>21:30</td><td>21:15</td><td>21:15</td><td>21:30</td><td>21:15</td><td>21:15</td><td>21:00</td></tr>
+      <tr><td>Ekinlik</td><td>22:00</td><td>-</td><td>-</td><td>22:00</td><td>21:45</td><td>-</td><td>-</td></tr>
+      <tr class="font-semibold"><td>Avşa (varış)</td><td>22:15</td><td>22:00</td><td>22:00</td><td>22:15</td><td>22:00</td><td>22:00</td><td>21:45</td></tr>
+    </tbody>
+  </table></div>
+  <p>"-" işareti, o gün o durakta sefer olmadığını gösterir.</p>
+
+  <h2 id="oku">Tabloyu nasıl okursun?</h2>
+  <p>Tablo yukarıdan aşağıya geminin gün içindeki rotasını izler. Her satır bir durak, saat o duraktaki kalkış saatidir (son satırdaki "Avşa (varış)" ise günün son varış saatidir).</p>
+  <ul>
+    <li><strong>Avşa'dan Erdek'e (sabah):</strong> Avşa'dan 06:00'da kalkar. Marmara ve Balıklı'ya uğrar; pazartesi ve perşembe Ekinlik'e de uğrar.</li>
+    <li><strong>Erdek'ten Avşa'ya (öğle):</strong> Erdek 11:00, Balıklı 12:00, Avşa 13:00. Her gün aynı. Yaklaşık 2 saat sürer.</li>
+    <li><strong>Avşa'dan Erdek'e (öğleden sonra):</strong> Avşa'dan 16:45 (salı, çarşamba, cuma, cumartesi) veya 17:00 (pazartesi, perşembe, pazar) kalkar ve Balıklı üzerinden Erdek'e gider.</li>
+    <li><strong>Erdek'ten Avşa'ya (akşam):</strong> Erdek 19:15 veya 19:30. Balıklı ve Marmara'ya uğrar, Avşa'ya 22:00 ile 22:15 arasında (pazar 21:45) varır.</li>
+  </ul>
+  <p>Yani GESTAŞ'ın tarifesinde Erdek–Avşa seferleri Balıklı (Paşalimanı) üzerinden yapılıyor. Seferin hangi duraklara uğrayacağını bilet alırken doğrula.</p>
+
+  <h2 id="ucretler">GESTAŞ ücretleri (Haziran 2026 tarifesi)</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Tür</th><th>Ücret (tek yön)</th></tr></thead>
+    <tbody>
+      <tr><td>Yolcu</td><td>120 TL</td></tr>
+      <tr><td>Öğrenci / 65 yaş üstü</td><td>60 TL</td></tr>
+      <tr><td>Otomobil</td><td>1.330 TL</td></tr>
+      <tr><td>Motosiklet</td><td>630 TL</td></tr>
+      <tr><td>Kamyon</td><td>3.255 TL</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ücretler tek yön ve iskele geçiş ücreti hariçtir. Kış döneminde değişmiş olabilir, güncel tutarı şirketten teyit et. Diğer şirketle karşılaştırma için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfamıza bak.</p>
+
+  <h2 id="bilet">Bilet nasıl alınır?</h2>
+  <ul>
+    <li><strong>Online:</strong> online.gdu.com.tr</li>
+    <li><strong>Telefon:</strong> 444 0 752</li>
+    <li><strong>İskelede:</strong> Erdek iskelesindeki gişeden</li>
+  </ul>
+  <p>Araçla geçeceksen cuma akşamı, hafta sonu ve bayram dönemlerinde araçlı biletler hızlı tükenir, önceden almanı öneririz.</p>
+
+  <h2 id="ipuclari">İpuçları</h2>
+  <ul>
+    <li>Yola çıkmadan şirketin tarife sayfasındaki iptal ve ek sefer bilgisine bak.</li>
+    <li>Sabah 06:00 seferine binecekseniz gece konaklamanızı iskeleye yakın seçmek işi kolaylaştırır. <a href="/iskeleye-yakin-konaklama/">İskeleye yakın konaklama</a> sayfasına bak.</li>
+    <li>Hava durumuna göre seferler değişebilir; <a href="/avsa-feribot-seferleri-iptal/">feribot seferleri iptal olursa ne yapılır</a> sayfasını oku.</li>
+    <li>Marmara RoRo seferleri için <a href="/marmara-roro-erdek-avsa/">Marmara RoRo Erdek–Avşa</a> sayfasına bak.</li>
+  </ul>
+</InfoLayout>
