@@ -1,4 +1,5 @@
 ---
+import VideoKutu from "../components/VideoKutu.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
 import StayLinks from "../components/StayLinks.astro";
 import { stays } from "../data/stays";
@@ -19,6 +20,7 @@ const toc = [
   { id: "genel-bakis", label: "Avşa plajlarına genel bakış" },
   { id: "avsali-tavsiye", label: "Avşa'lı gözüyle tavsiyeler" },
   { id: "koylar", label: "Plaj ve koy rehberi" },
+  { id: "videolar", label: "Plaj videoları" },
   { id: "aileler", label: "Çocuklu aileler için plajlar" },
   { id: "plaj-kulupleri", label: "Plaj kulüpleri ve ücretsiz plajlar" },
   { id: "sakin-koylar", label: "Sakin ve kalabalıktan uzak koylar" },
@@ -33,7 +35,7 @@ const beaches = [
   { id: "altinkum", name: "Altınkum Koyu", where: "Yiğitler Köyü yanı", time: "Merkezden minibüsle yaklaşık 10 dk", text: "Yiğitler Köyü'nün hemen yanındaki Altınkum, adanın en çok anılan koylarından biri. Üç plaj işletmesi (beach club) bulunuyor; bunların yanında ücretsiz halk plajı da var. Kalabalık bir koy olduğundan müzik, bar ve şezlong düzeniyle \"plajda canlı bir gün\" arayanlara uygun." },
   { id: "karadut", name: "Karadut Koyu", where: "Altınkum ve Yiğitler çevresi", time: "Altınkum'a yakın", text: "Uzun bir sahile sahip Karadut'ta giriş ücretsiz ve deniz sığ. İki büyük çay bahçesi var; şezlong ve şemsiye plaj restoranlarından kiralanıyor. Çocuklu aileler için sakin ve güvenli bir seçenek." },
   { id: "tavsanli", name: "Tavşanlı Koyu", where: "Yiğitler ve Kadınlar Plajı yönü", time: "Merkezden minibüs veya araçla (süre kaynaklarda net değil)", text: "Adını karşısındaki küçük adacıktan alan Tavşanlı, kaynaklara göre berrak ve genellikle dalgasız sulu, doğal yapısını koruyan sakin bir koy. Kaynaklar olanaklar konusunda farklı şeyler söylüyor: bazıları çevrede yalnızca temel ihtiyaçlara yönelik küçük işletmeler olduğunu, bazıları hiç tesis bulunmadığını yazıyor. Bu yüzden şemsiye, su ve atıştırmalık götürmek en güvenlisi. Avşa'lı tavsiyem: sabah 10:00-11:00 arası ve lodoslu günlerde Tavşanlı'ya git." },
-  { id: "kadinlar", name: "Kadınlar Plajı", where: "Tavşanlı ve Altınkum çevresi", time: "Yiğitler'den yürüme mesafesi", text: "Yalnızca kadınlara ayrılmış, ücretsiz ve sığ sulu bir plaj. Anneler çocuklarıyla gidebiliyor, erkekler giremiyor. Plajın üzerinde kafe, işletme ya da tuvalet gibi olanaklar yok; su, atıştırmalık ve gölgelik getirmek gerekiyor. Sessiz, rahat ve serbest bir plaj günü isteyen kadınlar için." },
+  { id: "kadinlar", name: "Kadınlar Plajı", where: "Tavşanlı ve Altınkum çevresi", time: "Yiğitler'den yürüme mesafesi", text: "Yalnızca kadınlara ayrılmış, ücretsiz ve sığ sulu bir plaj. Anneler çocuklarıyla gidebiliyor, erkekler giremiyor (erkek çocuklar için yaş sınırı 12). Plajın üzerinde kafe, işletme ya da tuvalet gibi olanaklar yok; su, atıştırmalık ve gölgelik getirmek gerekiyor. Sessiz, rahat ve serbest bir plaj günü isteyen kadınlar için." },
   { id: "cinar", name: "Çınar Koyu", where: "Adanın en geniş plajı", time: "Merkezden yaklaşık 10-15 dk", text: "Berrak deniziyle bilinen Çınar Koyu adanın en büyük plajı. Hem ücretsiz plaj alanı hem de şemsiye ve şezlongun ücretli olduğu plaj işletmeleri bulunuyor. Merkezden minibüs saatlik kalkıyor ve yaklaşık 20:00'ye kadar çalışıyor." },
   { id: "mavi-koy", name: "Mavi Koy", where: "Kuzey kıyısı", time: "Merkezden minibüsle yaklaşık 5 dk", text: "Merkeze en yakın koylardan biri. Çevresinde restoran ve kafeler sıralanıyor, şezlong ve şemsiye işletmelerden kiralanıyor. Yemek ve plaj arasında mesafe istemeyenler için kolay bir tercih." },
   { id: "merkez", name: "Merkez Sahili", where: "İskele çevresi", time: "Yürüme mesafesi", text: "Yaklaşık 3 km uzunluğundaki merkez sahilinde denize girilebiliyor. Buradan tekne kiralayıp diğer koylara geçmek de mümkün. Merkezde kalıyorsan ilk plaj durağın burası." },
@@ -72,7 +74,7 @@ const faq = [
   { q: "Avşa'nın en güzel plajı hangisi?", a: "Zevke göre değişiyor: geniş ve berrak bir plaj için Çınar Koyu, sığ ve sakin deniz için Karadut ve Kadınlar Plajı, canlı bir plaj günü için Altınkum, restoran ve kafelere yakınlık için Mavi Koy tercih ediliyor." },
   { q: "Avşa plajları ücretli mi?", a: "Çoğu koyda hem ücretsiz halk plajı hem de şemsiye ve şezlongun ücretli olduğu plaj işletmeleri bulunuyor. Karadut ve Kadınlar Plajı'nda giriş ücretsiz; şezlong gerekiyorsa yakındaki işletmelerden kiralanıyor." },
   { q: "Çocuklu aileler için hangi plaj uygun?", a: "Avşa'lı tercihe göre önce Altınkum (deniz sığ) ve Çınar Koyu (geniş sahil, orta derecede sığ deniz, aile lokantaları), üçüncü olarak Karadut Koyu. Kadınlar Plajı'na anneler çocuklarıyla gidebiliyor, erkekler giremiyor. Kumtur'da deniz daha derin olduğu için çocuklarla dikkatli olunmalı." },
-  { q: "Avşa'da yalnızca kadınlara ait plaj var mı?", a: "Evet, Kadınlar Plajı yalnızca kadınlara ayrılmış, giriş ücretsiz; anneler çocuklarıyla gidebiliyor, erkekler giremiyor. Üzerinde işletme olmadığı için su ve yiyecek getirmek gerekiyor." },
+  { q: "Avşa'da yalnızca kadınlara ait plaj var mı?", a: "Evet, Kadınlar Plajı yalnızca kadınlara ayrılmış, giriş ücretsiz; anneler çocuklarıyla gidebiliyor, erkekler giremiyor (erkek çocuklar için yaş sınırı 12). Üzerinde işletme olmadığı için su ve yiyecek getirmek gerekiyor." },
   { q: "Merkezden plajlara nasıl gidilir?", a: "Çınar Koyu, Altınkum, Mavi Koy ve Kumtur'a merkezden minibüs kalkıyor; süreler 5 ile 20 dakika arasında. Çınar Koyu hattı saatlik seferle yaklaşık 20:00'ye kadar çalışıyor. Merkezden motosiklet, tekne ve ATV kiralamak da mümkün." },
   { q: "Avşa'da plajlar ne zaman açık?", a: "Plaj işletmelerinin çoğu yaz sezonunda hizmet veriyor. Açılış ve kapanış tarihleri işletmeye göre değiştiği için gitmeden önce aramak en sağlıklısı." },
 ];
@@ -132,6 +134,12 @@ const faq = [
       </section>
     ))}
   </div>
+
+  <h2 id="videolar">Plaj videoları</h2>
+  <p>Bu plajları kanalımda da çektim. Videoları buradan izleyebilirsin.</p>
+  <VideoKutu v="altinkum" />
+  <VideoKutu v="beyazsaray" />
+  <VideoKutu v="karadut" />
 
   <h2 id="aileler">Çocuklu aileler için plajlar</h2>
   <p>Çocukla plaj tatilinde en önemli ölçüt denizin sığ olması ve ihtiyaçlara yakınlık. Avşa'lı tercihim sırasıyla şöyle: <strong>Altınkum</strong>'da deniz sığ olduğu için çocuklar güvenle yüzebiliyor ve plaj işletmelerinin şezlong, şemsiye ve yemek hizmetleri ailelerin işini kolaylaştırıyor. <strong>Çınar Koyu</strong>'nda sahil geniş, deniz orta derecede sığ; aile lokantaları, iskeleleri ve gün batımıyla ailelere çok uygun. Üçüncü tercih <strong>Karadut Koyu</strong>: deniz sığ, giriş ücretsiz ve çay bahçeleri sayesinde yiyecek içecek bulmak kolay. Anneler çocuklarıyla <strong>Kadınlar Plajı</strong>'na da gidebiliyor, ancak plaja erkekler giremiyor. Kumtur gibi daha derin koylarda çocukları suda yalnız bırakmamak gerekiyor.</p>
