@@ -16,6 +16,7 @@ const galeri = [
 
 const toc = [
   { id: "genel", label: "Avşa'nın mutfağına giriş" },
+  { id: "avsali-tavsiye", label: "Avşa'lı gözüyle yemek tavsiyeleri" },
   { id: "deniz-urunleri", label: "Balık ve deniz ürünleri" },
   { id: "meze", label: "Zeytinyağlılar ve mezeler" },
   { id: "sokak", label: "Sokak lezzetleri" },
@@ -44,7 +45,7 @@ const restoranLd = restoranlar.length
         "@type": "ListItem",
         position: i + 1,
         item: {
-          "@type": "Restaurant",
+          "@type": r.schemaType ?? "Restaurant",
           name: r.name,
           ...(r.servesCuisine ? { servesCuisine: r.servesCuisine } : {}),
           ...(r.phone ? { telephone: r.phone } : {}),
@@ -97,6 +98,18 @@ const faq = [
         <figcaption class="px-3 py-2 text-xs text-slate-600">{g.cap}</figcaption>
       </figure>
     ))}
+  </div>
+
+  <h2 id="avsali-tavsiye">Avşa'lı gözüyle yemek tavsiyeleri</h2>
+  <p>Avşa'da doğdum, adaya ilk kez gelen biri bana "ne yiyelim" diye sorduğunda şunları söylerim. Bunlar kişisel tercihlerimdir; çalışma saatleri ve fiyatlar sezona göre değişir, sezon dışında bazı mekânlar kapalı olabilir. Yazan: <a href="/yazar/zafer-baris/">Zafer Barış</a>.</p>
+  <div class="not-prose my-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-sm leading-relaxed text-slate-800">
+    <ul class="list-disc space-y-3 pl-5">
+      <li><strong>Deniz ürünleri:</strong> Avşa merkezdeki balık restoranlarında deniz ürünleri yemelisin. Balık için güvenilir bulduğum mekân <strong>Lakerda</strong>, iskele yakınında.</li>
+      <li><strong>Midye tava:</strong> Altınkum plajındaki <strong>Şahin Tepesi Restoran</strong>'da.</li>
+      <li><strong>Et ve mangal:</strong> Çınar Koyu'nda <strong>İsmet'in Yeri</strong>'nde.</li>
+      <li><strong>Pide:</strong> Avşa merkez Barlar Caddesi'ndeki Karadeniz pide çeşitlerini tatmalısın.</li>
+      <li><strong>Kahvaltı:</strong> Barlar Caddesi'nde <strong>Tamburger</strong>'ın açık büfe kahvaltısı. Börek ve poğaça için iskele meydanındaki <strong>Özlem Pastanesi</strong>.</li>
+    </ul>
   </div>
 
   <h2 id="deniz-urunleri">Balık ve deniz ürünleri</h2>

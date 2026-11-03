@@ -1,7 +1,7 @@
 ---
 import InfoLayout from "../layouts/InfoLayout.astro";
 
-const title = "Avşa Adası'na Ne Zaman Gidilir? Aylara Göre | avsaadasi.net";
+const title = "Avşa Adası'na Ne Zaman Gidilir? 2027 Aylara Göre | avsaadasi.net";
 const description =
   "Avşa'ya ne zaman gidilir? Avşa Adası'nda Mayıs'tan Ekim'e aylara göre hava, deniz suyu sıcaklığı, kalabalık ve rüzgar; Haziran-Eylül ve Temmuz-Ağustos kıyası.";
 
@@ -13,6 +13,7 @@ const galeri = [
 
 const toc = [
   { id: "ozet", label: "Kısaca: en iyi zaman" },
+  { id: "avsali-tavsiye", label: "Avşa'lı gözüyle mevsim tavsiyeleri" },
   { id: "tablo", label: "Aylara göre tablo" },
   { id: "mayis", label: "Mayıs" },
   { id: "haziran", label: "Haziran" },
@@ -66,6 +67,17 @@ const faq = [
       <img src={galeri[2].src} alt={galeri[2].alt} width={galeri[2].w} height={galeri[2].h} loading="lazy" decoding="async" class="aspect-[5/2] w-full object-cover" />
       <figcaption class="px-3 py-2 text-xs text-slate-600">{galeri[2].cap}</figcaption>
     </figure>
+  </div>
+
+  <h2 id="avsali-tavsiye">Avşa'lı gözüyle mevsim tavsiyeleri</h2>
+  <p>Avşa'da doğdum, hangi ayda gelinir diye sorulduğunda şöyle cevap veririm (<a href="/yazar/zafer-baris/">Zafer Barış</a>):</p>
+  <div class="not-prose my-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-sm leading-relaxed text-slate-800">
+    <ul class="list-disc space-y-3 pl-5">
+      <li><strong>Haziran, eylül ve ekim:</strong> Daha uygun fiyatla konaklama arayanlar ve daha sakin, kalabalığı sevmeyen kişiler için uygun tarihlerdir.</li>
+      <li><strong>Temmuz ve ağustos:</strong> Hareket ve eğlence sevenler için en güzel aylardır.</li>
+      <li><strong>Mayıs:</strong> Bahar tazeliğinin olduğu ay olduğu için idealdir.</li>
+      <li><strong>Kış:</strong> Avşa'ya kafa dinlemek, herkesten uzaklaşmak isteyenler gelebilir. Bildiğim kadarıyla kışın 3 işletme açıktır. İskele meydanında lokantalar ve kahvehaneler açıktır; geceleri bazı alkollü mekânlar canlı müzik eşliğinde hizmet vermektedir. Kış seferleri için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasına bak.</li>
+    </ul>
   </div>
 
   <h2 id="tablo">Aylara göre özet tablo</h2>
