@@ -12,5 +12,6 @@ export const videolar = {
   arabayla: { id: "hKdr_-ZJiCA", baslik: "Arabayla Avşa'ya Gidilir mi? Araçlı Feribot Rehberi" },
   iptal: { id: "CDDHgK9w-LY", baslik: "Avşa Feribot Seferleri İptal Olursa Ne Yapılır? 2027" },
   roro: { id: "3cvReUxQWV8", baslik: "Marmara RoRo ile Avşa'ya Gitmek: Kış Tarifesi (2027)" },
+  drone: { id: "nvFeoPcknyY", baslik: "Avşa Adası Havadan: Drone ile Tüm Ada" },
 } as const;
 export type VideoKey = keyof typeof videolar;

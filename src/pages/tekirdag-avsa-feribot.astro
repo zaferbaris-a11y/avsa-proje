@@ -1,0 +1,80 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Tekirdağ Avşa Feribot Seferleri 2027: Kış Tarifesi | avsaadasi.net";
+const description =
+  "Tekirdağ'dan Avşa'ya feribot: Marmara RoRo'nun 1 Kasım 2026 kış tarifesine göre cuma ve pazar 16:00 seferi, Marmara iskelesi üzerinden gidiş, dönüş saati, alternatifler.";
+
+const toc = [
+  { id: "ozet", label: "Kısaca" },
+  { id: "tarife", label: "Kış tarifesi" },
+  { id: "yol", label: "Yolculuk nasıl işliyor?" },
+  { id: "plan", label: "Hafta sonu planı" },
+  { id: "alternatif", label: "Seferler yoksa" },
+  { id: "teyit", label: "Teyit ve iletişim" },
+];
+
+const faq = [
+  { q: "Tekirdağ'dan Avşa'ya feribot var mı?", a: "Evet, ama sınırlı. Marmara RoRo'nun 01/11/2026 kış tarifesine göre Tekirdağ'dan Avşa'ya cuma ve pazar günleri 16:00'da sefer var. Diğer günlerde bu tarifede Avşa yok." },
+  { q: "Tekirdağ–Avşa seferi direkt mi?", a: "Hayır. Tarifeye göre gemi Tekirdağ'dan çıkıp Marmara Adası'ndaki Marmara iskelesi üzerinden Avşa'ya geliyor." },
+  { q: "Tekirdağ'dan Avşa'ya kaç saat sürer?", a: "Varış saati tarifede yazmıyor. Kaynaklarda yolculuk için yaklaşık 3 saat veriliyor; gitmeden şirketten teyit al." },
+  { q: "Avşa'dan Tekirdağ'a dönüş saati nedir?", a: "Kış tarifesinde Avşa'dan Tekirdağ yönüne cuma ve pazar günleri 19:00'da sefer görünüyor; gemi Marmara iskelesinden 19:40'ta kalkıp Tekirdağ'a gidiyor." },
+  { q: "Hafta içi Tekirdağ'dan Avşa'ya nasıl giderim?", a: "Tekirdağ seferleri hafta içi Avşa'ya uğramıyor. Erdek'e karayoluyla gidip GESTAŞ'ın her gün kalkan seferini kullanabilirsin." },
+  { q: "Bu tarife ne zamana kadar geçerli?", a: "Tarifede bitiş tarihi yazmıyor; haziran 2027'ye kadar uygulanması bekleniyor. Yaz düzeni açıklandığında saatler değişebilir." },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "Trip",
+  name: "Tekirdağ – Avşa Adası feribot yolculuğu (kış tarifesi)",
+  description: "Marmara RoRo'nun 01/11/2026 kış tarifesine göre cuma ve pazar günleri Tekirdağ Ceyport'tan 16:00'da kalkan, Marmara iskelesi üzerinden Avşa'ya giden sefer.",
+  touristType: "Tatilciler",
+};
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Tekirdağ'dan Avşa'ya Feribot (Kış Tarifesi 2027)"
+  intro="Tekirdağ'dan Avşa'ya feribot kışın yalnızca cuma ve pazar günleri var: Marmara RoRo'nun 1 Kasım 2026 tarifesine göre 16:00'da kalkıyor ve Marmara iskelesi üzerinden Avşa'ya geliyor."
+  crumb="Tekirdağ–Avşa feribot"
+  toc={toc}
+  faq={faq}
+  updated="6 Kasım 2026"
+  published="2026-11-06"
+  extraLd={[ld]}
+>
+  <h2 id="ozet">Kısaca: Tekirdağ'dan Avşa'ya nasıl gidilir?</h2>
+  <p>Trakya ve Avrupa yakasından gelenler için Tekirdağ Ceyport'tan kalkan Marmara RoRo seferi var. Kış tarifesinde bu sefer yalnızca cuma ve pazar günleri yapılıyor. Diğer günler için en pratik yol Erdek'e karayoluyla gidip GESTAŞ'ın günlük seferine binmek.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Saatler Marmara RoRo'nun 01/11/2026 tarihli kış tarifesinden alındı. Tarifede bitiş tarihi yok, haziran 2027'ye kadar uygulanması bekleniyor. Hava şartlarına göre seferler iptal olabilir; yola çıkmadan şirketten teyit al.
+  </div>
+
+  <h2 id="tarife">Kış tarifesi: Tekirdağ – Avşa</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yön</th><th>Günler</th><th>Kalkış</th></tr></thead>
+    <tbody>
+      <tr><td>Tekirdağ (Ceyport) → Marmara → Avşa</td><td>Cuma, pazar</td><td>16:00 (Marmara iskelesinden 18:20)</td></tr>
+      <tr><td>Avşa → Marmara → Tekirdağ</td><td>Cuma, pazar</td><td>19:00 (Marmara iskelesinden 19:40)</td></tr>
+    </tbody>
+  </table></div>
+  <p>Tekirdağ'a ve Avşa'ya varış saatleri tarifede yazmıyor. Kaynaklarda yolculuk için yaklaşık 3 saat veriliyor.</p>
+
+  <h2 id="yol">Yolculuk nasıl işliyor?</h2>
+  <p>Sefer doğrudan değil. Gemi Tekirdağ Ceyport'tan kalkıyor, Marmara Adası'ndaki Marmara iskelesine uğruyor, oradan Avşa'ya geliyor. Dönüşte aynı güzergâh tersine: Avşa'dan 19:00'da kalkıp Marmara iskelesinden 19:40'ta Tekirdağ'a gidiyor. Aynı tarifede Avşa'dan Erdek'e 19:00 seferi de var; Erdek'e dönecek olanlar o gemiye biniyor.</p>
+  <p>İstanbul'dan Tekirdağ'a yol, sitedeki <a href="/istanbuldan-avsaya/#tekirdag">İstanbul rehberinde</a> yazdığımız gibi yaklaşık 160 km, kaynaklara göre 1,5-2 saat.</p>
+
+  <h2 id="plan">Hafta sonu planı</h2>
+  <p>Kışın hafta sonu gelmek zaten önerdiğimiz düzen. Cuma 16:00 seferiyle Tekirdağ'dan çıkıp akşam Avşa'ya varabilir, pazar 19:00 seferiyle dönebilirsin. Bu planda iki şeye dikkat et:</p>
+  <ul>
+    <li>Gemi akşam saatinde Avşa'ya ulaşıyor; konaklayacağın yere geç varacağını önceden söyle.</li>
+    <li>Pazar 19:00 seferini kaçırırsan Tekirdağ yönüne bir sonraki sefer yok, çünkü tarifede Avşa yalnızca cuma ve pazar görünüyor. O durumda GESTAŞ ile Erdek'e dönmen gerekir; bu yüzden pazar günü iskeleye erken git.</li>
+  </ul>
+  <p>Araçla gidiyorsan adada LPG olmadığını unutma. Ücretler için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfamıza bak.</p>
+
+  <h2 id="alternatif">Tekirdağ seferi olmayan günlerde</h2>
+  <p>Hafta içi ya da cuma-pazar dışındaki günlerde seçenek Erdek: karayoluyla Erdek'e gidip GESTAŞ'ın her gün 11:00'de kalkan seferini kullanabilirsin (yaklaşık 2 saat). Ayrıntılar için <a href="/gestas-erdek-avsa/">GESTAŞ Erdek–Avşa</a>, <a href="/kisin-avsa-adasi/">kışın Avşa</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına bak. Seferler iptal olursa <a href="/avsa-feribot-seferleri-iptal/">ne yapılacağını</a> da yazdık.</p>
+
+  <h2 id="teyit">Teyit ve iletişim</h2>
+  <p>Marmara RoRo: <strong>+90 541 960 99 33</strong>, <a href="https://marmararoro.com" rel="nofollow noopener" target="_blank">marmararoro.com</a>. Şirketin ayrıntılı tarifesi ve ücretleri için <a href="/marmara-roro-erdek-avsa/">Marmara RoRo sayfamıza</a> bak.</p>
+</InfoLayout>

@@ -1,0 +1,43 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import VideoKutu from "../components/VideoKutu.astro";
+
+const title = "Avşa Adası Havadan: Drone ile Tüm Ada Videosu | avsaadasi.net";
+const description =
+  "Avşa Adası'nı drone ile havadan izle. Tüm adanın kıyılarını, koylarını ve köylerini tek videoda gör; plaj ve gezi rehberlerine buradan geç.";
+
+const toc = [
+  { id: "video", label: "Drone videosu" },
+  { id: "rehberler", label: "Videoyu izledikten sonra" },
+];
+
+const faq = [
+  { q: "Avşa Adası havadan nasıl görünüyor?", a: "Bu sayfadaki drone videosunda adanın kıyılarını, koylarını ve köylerini havadan izleyebilirsin. Video Avşa'lı Zafer Barış'ın kanalında yayında." },
+  { q: "Videodaki koyların plajları hakkında nereden bilgi alabilirim?", a: "Plajların konumu, denizi ve kime uygun olduğu için Avşa Adası plajları ve koyları sayfasına bak." },
+];
+---
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Havadan: Drone ile Tüm Ada"
+  intro="Avşa'nın nasıl bir ada olduğunu görmenin en kolay yolu havadan bakmak. Aşağıdaki videoda adayı drone ile çekilmiş görüntülerle izleyebilirsin."
+  crumb="Avşa havadan"
+  toc={toc}
+  faq={faq}
+  updated="6 Kasım 2026"
+  published="2026-11-06"
+>
+  <h2 id="video">Drone videosu</h2>
+  <p>Video, <a href="/yazar/zafer-baris/">Zafer Barış</a>'ın "Avşa Adası Rehberi" kanalında yayında. Oynatmak için kapak görselinin üzerine tıkla.</p>
+  <VideoKutu v="drone" />
+
+  <h2 id="rehberler">Videoyu izledikten sonra</h2>
+  <p>Havadan gördüğün yerlerin ayrıntısı için şu sayfalara bak:</p>
+  <ul>
+    <li><a href="/plajlar/">Avşa Adası plajları ve koyları</a>: her koyun karakteri ve kime uygun olduğu</li>
+    <li><a href="/avsa-adasi-gezi-rotasi/">Gezi rotası</a>: 1, 2 ve 3 günlük örnek rotalar</li>
+    <li><a href="/gezilecek-yerler/">Gezilecek yerler</a></li>
+    <li><a href="/avsa-adasi/">Avşa Adası genel rehber</a></li>
+    <li><a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir?</a></li>
+  </ul>
+</InfoLayout>
