@@ -27,7 +27,7 @@ export const rehberPages: RehberPage[] = [
   { path: "/gestas-erdek-avsa/", label: "GESTAŞ Erdek–Avşa", icon: "🚢", short: "GESTAŞ seferleri, bilet ve ücretler", chip: false },
   { path: "/marmara-roro-erdek-avsa/", label: "Marmara RoRo Erdek–Avşa", icon: "🚢", short: "Marmara RoRo yaz ve kış tarifesi, Tekirdağ hattı", chip: false },
   { path: "/tekirdag-avsa-feribot/", label: "Tekirdağ–Avşa Feribot", icon: "⛴️", short: "Kış tarifesi: cuma ve pazar seferleri", chip: false },
-  { path: "/avsa-adasi-havadan/", label: "Avşa Havadan", icon: "🚁", short: "Drone ile çekilmiş tüm ada videosu", chip: false },
+  { path: "/avsa-adasi-havadan/", label: "Havadan Avşa", icon: "🚁", short: "Drone ile çekilmiş tüm ada videosu" },
   { path: "/kisin-avsa-adasi/", label: "Kışın Avşa", icon: "❄️", short: "Kış feribot seferleri, açık işletmeler ve ipuçları", chip: false },
   { path: "/avsa-feribot-seferleri-iptal/", label: "Sefer İptali", icon: "🌬️", short: "Feribot seferi iptal mi? Nereden öğrenilir, ne yapılır", chip: false },
   { path: "/bilet-fiyatlari/", label: "Bilet Fiyatları", icon: "🎟️", short: "Yolcu ve araç feribot bilet ücretleri" },
@@ -37,16 +37,11 @@ export const rehberPages: RehberPage[] = [
 // Tarifelerin derlendiği tarih (sayfalarda "son kontrol" olarak gösterilir)
 export const TARIFE_KONTROL = "24 Ekim 2026";
 
-// Ana sayfadaki rehber şeridinde gösterilen sayfalar (en güncel 10; sıra burada belirlenir)
+// Ana sayfadaki hızlı bağlantı şeridi (hava durumu butonundan sonra gelir; sıra burada belirlenir)
 export const homeChipPaths = [
-  "/istanbuldan-avsaya",
-  "/avsa-adasina-ne-zaman-gidilir",
   "/avsa-adasi-gezi-rotasi",
   "/yigitler-konaklama",
-  "/avsa-merkez-konaklama",
-  "/plajlar",
-  "/altinkum-plaji",
-  "/cinar-koyu",
-  "/kadinlar-plaji",
-  "/avsa-sarabi-saraphaneler",
+  "/avsa-feribot-seferleri-iptal",
+  "/kisin-avsa-adasi",
+  "/avsa-adasi-havadan",
 ];

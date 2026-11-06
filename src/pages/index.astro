@@ -6,7 +6,14 @@ import Logo from "../components/Logo.astro";
 import Header from "../components/Header.astro";
 import { WHATSAPP, INSTAGRAM, YOUTUBE_AVSA } from "../data/site";
 import { rehberPages, homeChipPaths } from "../data/rehber";
-const homeChips = homeChipPaths.map((p) => rehberPages.find((r) => r.path === p)).filter((r): r is NonNullable<typeof r> => Boolean(r));
+const chipEtiket: Record<string, string> = {
+  "/yigitler-konaklama": "Yiğitler Köyü",
+  "/avsa-feribot-seferleri-iptal": "Sefer İptalleri",
+};
+const homeChips = homeChipPaths
+  .map((p) => rehberPages.find((r) => r.path.replace(/\/$/, "") === p))
+  .filter((r): r is NonNullable<typeof r> => Boolean(r))
+  .map((r) => ({ ...r, label: chipEtiket[r.path.replace(/\/$/, "")] ?? r.label }));
 
 const title = "Avşa Adası 2027: Oteller, Pansiyonlar, Plajlar ve Gezi Rehberi";
 const description =
@@ -167,6 +174,9 @@ const steps = [
       <!-- Avşa rehberi çipleri -->
       <nav aria-label="Avşa rehberi" class="border-b border-slate-200 bg-white">
         <div class="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 py-4 sm:flex-wrap sm:justify-center">
+          <a href="/avsa-adasina-ne-zaman-gidilir/" id="hava-btn" class="flex shrink-0 items-center gap-2 rounded-full border border-deniz-600 bg-sky-50 px-4 py-2 text-sm font-semibold text-deniz-900 transition hover:bg-white hover:shadow" aria-label="Avşa hava durumu ve ne zaman gidilir">
+            <span aria-hidden="true">🌡️</span><span id="hava-txt">Hava</span>
+          </a>
           {homeChips.map((r) => (
             <a href={r.path + "/"} class="flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-deniz-900 transition hover:border-deniz-600 hover:bg-white hover:shadow">
               <span aria-hidden="true">{r.icon}</span>{r.label}
@@ -362,6 +372,18 @@ const steps = [
       <a href="/iletisim/" class="mb-2 mr-4 inline-block font-semibold text-deniz-900 hover:text-deniz-600">İletişim</a><a href="/cerez-politikasi/" class="mb-2 mr-4 inline-block font-semibold text-deniz-900 hover:text-deniz-600">Çerez Politikası</a><a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" class="mb-2 inline-block font-semibold text-deniz-900 hover:text-pink-600">Instagram: @avsaadasi</a><br />
       © {new Date().getFullYear()} avsaadasi.net. Tüm hakları saklıdır.
     </footer>
+
+    <script>
+      (async () => {
+        try {
+          const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=40.50&longitude=27.52&current=temperature_2m&timezone=auto");
+          const j = await r.json();
+          const t = j?.current?.temperature_2m;
+          const el = document.getElementById("hava-txt");
+          if (el && typeof t === "number") el.textContent = "Hava " + Math.round(t) + "°";
+        } catch (e) { /* hava bilgisi alınamazsa buton "Hava" olarak kalır */ }
+      })();
+    </script>
 
     <script>
       const typeBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".filter-btn"));
