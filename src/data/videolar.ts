@@ -11,5 +11,6 @@ export const videolar = {
   gestasroro: { id: "8jsnfGfnghk", baslik: "Erdek Avşa Feribot Saatleri 2027: GESTAŞ ve Marmara RoRo" },
   arabayla: { id: "hKdr_-ZJiCA", baslik: "Arabayla Avşa'ya Gidilir mi? Araçlı Feribot Rehberi" },
   iptal: { id: "CDDHgK9w-LY", baslik: "Avşa Feribot Seferleri İptal Olursa Ne Yapılır? 2027" },
+  roro: { id: "3cvReUxQWV8", baslik: "Marmara RoRo ile Avşa'ya Gitmek: Kış Tarifesi (2027)" },
 } as const;
 export type VideoKey = keyof typeof videolar;

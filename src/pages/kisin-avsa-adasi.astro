@@ -1,0 +1,66 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import VideoKutu from "../components/VideoKutu.astro";
+
+const title = "Kışın Avşa Adası: Neler Açık, Nasıl Gidilir? | avsaadasi.net";
+const description =
+  "Kışın Avşa Adası nasıl? Kış feribot seferleri, açık işletmeler, konaklama ve kafa dinlemek isteyenler için Avşa'lı gözüyle pratik rehber.";
+
+const toc = [
+  { id: "ozet", label: "Kışın Avşa kimlere göre?" },
+  { id: "ulasim", label: "Kışın feribot ve ulaşım" },
+  { id: "acik", label: "Kışın neler açık?" },
+  { id: "konaklama", label: "Kışın konaklama" },
+  { id: "ipuclari", label: "Kışın gelenlere ipuçları" },
+];
+
+const faq = [
+  { q: "Kışın Avşa'ya feribot var mı?", a: "Var ama sefer sayısı azalıyor. GESTAŞ tablosuna göre Erdek'ten 11:00'de kalkan sefer Avşa'ya 13:00'te varıyor ve her gün yapılıyor. Marmara RoRo'nun 01/11/2026 kış tarifesinde Avşa iskelesi yalnızca cuma ve pazar günleri görünüyor. Saatleri yola çıkmadan firmadan teyit et." },
+  { q: "Kışın Avşa'ya hafta içi mi hafta sonu mu gidilir?", a: "Avşa'lı Zafer Barış'a göre kışın hafta sonu, yazın hafta içi gitmek daha uygun. Kışın Marmara RoRo seferleri cuma ve pazar günleri olduğu için hafta sonu plan yapmak daha kolay." },
+  { q: "Kışın Avşa'da yiyecek içecek yeri açık mı?", a: "Zafer Barış'ın bildiğine göre iskele meydanında lokantalar ve kahvehaneler açık, geceleri bazı mekânlar canlı müzikle hizmet veriyor. Açık yerler değişebileceği için gitmeden önce tesis ya da işletmeye sor." },
+  { q: "Kışın Avşa'da kalacak yer bulunur mu?", a: "Kışın açık tesis sayısı çok az. Rezervasyon yapmadan önce tesisle doğrudan görüşüp kışın açık olduğunu ve hizmet verdiğini teyit et." },
+  { q: "Kışın Avşa'ya kimler gelmeli?", a: "Kafa dinlemek, kalabalıktan ve gürültüden uzaklaşmak isteyenler. Yaz hareketini arayanlar için en uygun dönem temmuz ve ağustos." },
+];
+---
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Kışın Avşa Adası: Neler Açık, Nasıl Gidilir?"
+  intro="Avşa'da yaz sezonunun dışında ada sakinleşir. Kışın gelenler plaj değil huzur arıyor: kafa dinlemek, kalabalıktan uzaklaşmak. Bu sayfada kış feribot seferlerini, kışın açık olan yerleri ve gelmeden önce bilinmesi gerekenleri Avşa'lı gözüyle anlattık."
+  crumb="Kışın Avşa"
+  toc={toc}
+  faq={faq}
+  updated="5 Kasım 2026"
+  published="2026-11-05"
+>
+  <h2 id="ozet">Kışın Avşa kimlere göre?</h2>
+  <p>Avşa'da doğan site editörü <a href="/yazar/zafer-baris/">Zafer Barış</a>'a göre kışın Avşa'ya kafa dinlemek, herkesten uzaklaşmak isteyenler gelebilir. Hareket ve eğlence arayanlar için en güzel aylar temmuz ve ağustos; kalabalığı sevmeyenler için haziran, eylül ve ekim daha uygun. Aylara göre ayrıntı için <a href="/avsa-adasina-ne-zaman-gidilir/">Avşa'ya ne zaman gidilir?</a> sayfasına bak.</p>
+
+  <h2 id="ulasim">Kışın feribot ve ulaşım</h2>
+  <p>Kışın sefer sayısı azalıyor ve tarifeler şirketten şirkete farklı:</p>
+  <ul>
+    <li><strong>GESTAŞ:</strong> Erdek'ten sabah 11:00'de kalkan sefer Avşa'ya 13:00'te varıyor, her gün. Sefer Balıklı (Paşalimanı), Marmara ve Ekinlik üzerinden gittiği için yolculuk yaklaşık iki saat sürüyor. Ayrıntı: <a href="/gestas-erdek-avsa/">GESTAŞ Erdek–Avşa</a>.</li>
+    <li><strong>Marmara RoRo:</strong> 01/11/2026 kış tarifesinde Avşa iskelesi yalnızca cuma ve pazar günleri sefer alıyor. Erdek'ten 17:00'de kalkıyor, Avşa'dan dönüş 19:00. Ayrıntı: <a href="/marmara-roro-erdek-avsa/">Marmara RoRo Erdek–Avşa</a>.</li>
+  </ul>
+  <div class="not-prose my-4 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Kışın deniz ve hava durumuna göre seferler iptal olabiliyor. Yola çıkmadan şirketten teyit et ve dönüş gününe bir gün tampon bırak. Nereden öğrenileceği için <a href="/avsa-feribot-seferleri-iptal/">sefer iptali</a> sayfasına bak. Tüm saatler için <a href="/feribot-saatleri/">feribot saatleri</a> sayfasındaki tabloyu kullan.
+  </div>
+  <VideoKutu v="roro" />
+
+  <p>Avşa'lı tavsiyem: kışın hafta sonu gel. Marmara RoRo seferleri cuma ve pazar günleri olduğu için plan yapmak daha kolay olur.</p>
+
+  <h2 id="acik">Kışın neler açık?</h2>
+  <p>Zafer Barış'ın bildiğine göre iskele meydanında lokantalar ve kahvehaneler kışın da açık. Geceleri bazı alkollü mekânlar canlı müzik eşliğinde hizmet veriyor. Kışın açık işletme sayısı yazla kıyaslanamayacak kadar az; bildiğim kadarıyla kışın üç işletme açık. Açık olan yerler değişebildiği için gitmeden önce ilgili işletmeye sormanı öneririz.</p>
+
+  <h2 id="konaklama">Kışın konaklama</h2>
+  <p>Kışın çoğu tesis kapalı olduğu için kalacak yeri önceden ayarlamak gerekiyor. Rezervasyon yapmadan önce tesisle doğrudan görüşüp kışın açık olduğunu, ısınma ve yemek gibi olanakları sor. Tesis listesi için <a href="/avsa-otelleri/">Avşa otelleri</a> sayfasına bak. Uzun süre kalacaksan yıllık ve dönemlik kiralık seçeneklerimizi <a href="/kiralik-evler/">kiralık evler</a> sayfasında bulabilirsin.</p>
+
+  <h2 id="ipuclari">Kışın gelenlere ipuçları</h2>
+  <ul>
+    <li>Gitmeden önce feribot gününü ve saatini firmadan teyit et.</li>
+    <li>Dönüş gününe bir gün tampon bırak, iptal ihtimali var.</li>
+    <li>Kalacağın yerin kışın açık ve hizmet veriyor olduğunu rezervasyondan önce teyit et.</li>
+    <li>Kış hizmetleri sezon dışında sınırlı olabilir. Yerel halka sorarak plan yap.</li>
+    <li>Araçlı geliyorsan adada LPG satışı olmadığını unutma, Erdek'te doldur.</li>
+  </ul>
+</InfoLayout>

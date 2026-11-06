@@ -50,6 +50,7 @@ const staticPages = [
   { path: "/avsa-butik-oteller/", changefreq: "weekly", priority: 0.8 },
   { path: "/gestas-erdek-avsa/", changefreq: "monthly", priority: 0.7 },
   { path: "/marmara-roro-erdek-avsa/", changefreq: "monthly", priority: 0.7 },
+  { path: "/kisin-avsa-adasi/", changefreq: "monthly", priority: 0.7 },
   { path: "/avsa-feribot-seferleri-iptal/", changefreq: "monthly", priority: 0.7 },
 ];
 
