@@ -1,0 +1,79 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "İDO Avşa Seferleri: Son Sefer 22 Kasım 2026 | avsaadasi.net";
+const description =
+  "İDO Yenikapı–Avşa deniz otobüsü: son seferler 13, 15, 20 ve 22 Kasım 2026, kışın nisana kadar sefer yok, nisandan itibaren cuma gidiş pazar dönüş. Alternatif yollar.";
+
+const toc = [
+  { id: "ozet", label: "Kısaca" },
+  { id: "tablo", label: "Seferler ve tarihler" },
+  { id: "kis", label: "Kış arasında nasıl gidilir?" },
+  { id: "nisan", label: "Nisandan itibaren" },
+  { id: "teyit", label: "Teyit" },
+];
+
+const faq = [
+  { q: "İDO Yenikapı–Avşa seferleri ne zamana kadar var?", a: "Avşa'dan edindiğimiz bilgiye göre son seferler 13 Kasım cuma, 15 Kasım pazar, 20 Kasım cuma ve 22 Kasım pazar 2026'da yapılacak. Eylül'den beri seferler haftada bir yapılıyor." },
+  { q: "İDO kışın Avşa'ya sefer yapıyor mu?", a: "Hayır. 22 Kasım'daki son seferden sonra nisana kadar İDO'nun Avşa seferi yok." },
+  { q: "İDO Avşa seferleri ne zaman yeniden başlıyor?", a: "Nisan ayının ikinci haftasından sonra haftada bir sefer yapılıyor: cuma günü İstanbul'dan Avşa'ya gidiş, pazar günü Avşa'dan dönüş. Kesin ilk tarih İDO'nun duyurusuyla netleşir." },
+  { q: "Kasım sonrasında İstanbul'dan Avşa'ya nasıl giderim?", a: "Karayoluyla Erdek'e gidip GESTAŞ'ın her gün 11:00'de kalkan seferini kullanabilirsin. Cuma ve pazar günleri Marmara RoRo seferleri de var. Tekirdağ'dan da cuma ve pazar 16:00'da sefer yapılıyor." },
+  { q: "İDO Avşa seferleri araç alıyor mu?", a: "Hayır, İDO deniz otobüsü yalnızca yolcu taşıyor. Araçla gidecekler Erdek hattını kullanmalı." },
+  { q: "13 Kasım İDO Avşa seferi kaçta?", a: "13 Kasım 2026 cuma günü sefer Bostancı'dan 18:30'da, Yenikapı'dan 19:30'da kalkıyor; İDO'nun sefer listesine göre Avşa'ya 22:35'te varıyor. Diğer seferlerin saatleri için İDO'nun resmî sitesi ido.com.tr en güvenli kaynak." },
+  { q: "Yenikapı mı Bostancı mı?", a: "İkisinden de binilebiliyor: gemi önce Bostancı'dan (18:30), sonra Yenikapı'dan (19:30) kalkıyor. Sana yakın olan iskeleyi seç; bilet alırken kalkış iskelesini kontrol et." },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "Trip",
+  name: "İDO Yenikapı / Bostancı – Avşa Adası deniz otobüsü seferleri",
+  description: "İstanbul (Yenikapı ve Bostancı) ile Avşa Adası arasında cuma gidiş, pazar dönüş düzeniyle yapılan İDO deniz otobüsü seferleri; 22 Kasım 2026'dan sonra nisana kadar sefer yok.",
+  touristType: "Tatilciler",
+};
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="İDO Yenikapı ve Bostancı–Avşa Seferleri: Son Seferler ve Kış Arası"
+  intro="İDO'nun İstanbul (Yenikapı ve Bostancı) – Avşa seferlerinin sonuncusu 22 Kasım 2026 pazar günü. Ondan sonra nisan ayına kadar sefer yok; nisanın ikinci haftasından sonra haftada bir cuma gidiş, pazar dönüş yapılıyor."
+  crumb="İDO Avşa seferleri"
+  toc={toc}
+  faq={faq}
+  updated="10 Kasım 2026"
+  published="2026-11-10"
+  extraLd={[ld]}
+>
+  <h2 id="ozet">Kısaca: İDO Avşa seferleri</h2>
+  <p>Avşa'dan edindiğimiz bilgiye göre İDO'nun İstanbul–Avşa deniz otobüsü Eylül'den bu yana haftada bir sefer yapıyor. Sezonun son seferleri kasım ayında: iki cuma gidiş, iki pazar dönüş. Ardından nisan ayına kadar İDO'nun Avşa seferi yok. Kışın İstanbul'dan Avşa'ya gidecekler için en pratik yol Erdek.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Tarihler Avşa'dan edindiğimiz bilgiye dayanıyor; 13 Kasım seferinin saatleri İDO'nun sefer listesinden (ido.com.tr, 10 Kasım 2026) alındı. Diğer seferlerin saatini doğrulamadığımız için yazmadık. Yola çıkmadan İDO'nun sitesinden kontrol et.
+  </div>
+
+  <h2 id="tablo">Seferler ve tarihler</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Tarih</th><th>Gün</th><th>Yön</th><th>Saat</th></tr></thead>
+    <tbody>
+      <tr><td>13 Kasım 2026</td><td>Cuma</td><td>İstanbul → Avşa</td><td>Bostancı 18:30, Yenikapı 19:30, Avşa'ya varış 22:35</td></tr>
+      <tr><td>15 Kasım 2026</td><td>Pazar</td><td>Avşa → İstanbul</td><td>İDO sitesinden bak</td></tr>
+      <tr><td>20 Kasım 2026</td><td>Cuma</td><td>İstanbul → Avşa</td><td>İDO sitesinden bak</td></tr>
+      <tr><td>22 Kasım 2026</td><td>Pazar</td><td>Avşa → İstanbul (son sefer)</td><td>İDO sitesinden bak</td></tr>
+    </tbody>
+  </table></div>
+  <p>Bu seferler yalnızca yolcu taşıyor, araç alınmıyor. 13 Kasım seferi önce Bostancı'dan 18:30'da, ardından Yenikapı'dan 19:30'da kalkıyor ve İDO'nun sefer listesine göre Avşa'ya 22:35'te varıyor. Bostancı'dan binenler için yolculuk yaklaşık 4 saat 5 dakika, Yenikapı'dan binenler için yaklaşık 3 saat 5 dakika sürüyor. Daha ayrıntılı bilgi için <a href="/istanbuldan-avsaya/#ido">İstanbul'dan Avşa'ya</a> sayfamıza bak.</p>
+
+  <h2 id="kis">Kış arasında nasıl gidilir?</h2>
+  <p>22 Kasım'dan nisana kadar İDO ile Avşa'ya gidilemiyor. Alternatifler:</p>
+  <ul>
+    <li><strong>GESTAŞ Erdek–Avşa:</strong> Her gün Erdek'ten 11:00'de kalkıyor, Avşa'ya yaklaşık 2 saatte varıyor. <a href="/gestas-erdek-avsa/">GESTAŞ sayfası</a></li>
+    <li><strong>Marmara RoRo:</strong> 01/11/2026 kış tarifesine göre Avşa seferleri cuma ve pazar günleri. <a href="/marmara-roro-erdek-avsa/">Marmara RoRo sayfası</a></li>
+    <li><strong>Tekirdağ hattı:</strong> Cuma ve pazar 16:00, Marmara iskelesi üzerinden. <a href="/tekirdag-avsa-feribot/">Tekirdağ–Avşa</a></li>
+  </ul>
+  <p>İstanbul'dan Erdek'e araçla yaklaşık 3 saat. Kışın Avşa'ya gitmeyi planlayanlar için hepsini <a href="/kisin-avsa-adasi/">Kışın Avşa Adası</a> sayfasında topladık.</p>
+
+  <h2 id="nisan">Nisandan itibaren</h2>
+  <p>Nisan ayının ikinci haftasından sonra İDO haftada bir sefer yapıyor: cuma günü İstanbul'dan Avşa'ya gidiş, pazar günü Avşa'dan dönüş. Yaz sezonu yaklaştıkça sefer sayısı artıyor; Avcılar hattı yalnızca yaz sezonunda çalışıyor. 2027 tarifesi İDO tarafından açıklandığında bu sayfayı güncelleyeceğiz.</p>
+
+  <h2 id="teyit">Teyit</h2>
+  <p>Saat, bilet ve doluluk bilgisi için İDO'nun resmî sitesi <strong>ido.com.tr</strong> ve çağrı hattı en güvenilir kaynak. Hava şartlarında seferler iptal edilebilir; <a href="/avsa-feribot-seferleri-iptal/">sefer iptal olursa ne yapılacağını</a> da yazdık. Tüm hatların saatleri için <a href="/feribot-saatleri/">feribot saatleri</a> sayfamıza bak.</p>
+</InfoLayout>

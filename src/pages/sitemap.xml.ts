@@ -52,6 +52,7 @@ const staticPages = [
   { path: "/marmara-roro-erdek-avsa/", changefreq: "monthly", priority: 0.7 },
   { path: "/kisin-avsa-adasi/", changefreq: "monthly", priority: 0.7 },
   { path: "/tekirdag-avsa-feribot/", changefreq: "monthly", priority: 0.7 },
+  { path: "/ido-avsa-seferleri/", changefreq: "monthly", priority: 0.7 },
   { path: "/avsa-adasi-havadan/", changefreq: "monthly", priority: 0.7 },
   { path: "/avsa-feribot-seferleri-iptal/", changefreq: "monthly", priority: 0.7 },
 ];

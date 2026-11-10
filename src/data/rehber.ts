@@ -26,6 +26,7 @@ export const rehberPages: RehberPage[] = [
   { path: "/avsada-ne-yenir/", label: "Avşa'da Ne Yenir?", icon: "🐟", short: "Yöresel lezzetler, deniz ürünleri ve yeme-içme rehberi", chip: false },
   { path: "/gestas-erdek-avsa/", label: "GESTAŞ Erdek–Avşa", icon: "🚢", short: "GESTAŞ seferleri, bilet ve ücretler", chip: false },
   { path: "/marmara-roro-erdek-avsa/", label: "Marmara RoRo Erdek–Avşa", icon: "🚢", short: "Marmara RoRo yaz ve kış tarifesi, Tekirdağ hattı", chip: false },
+  { path: "/ido-avsa-seferleri/", label: "İDO Avşa Seferleri", icon: "🚤", short: "Son seferler 22 Kasım, nisana kadar sefer yok", chip: false },
   { path: "/tekirdag-avsa-feribot/", label: "Tekirdağ–Avşa Feribot", icon: "⛴️", short: "Kış tarifesi: cuma ve pazar seferleri", chip: false },
   { path: "/avsa-adasi-havadan/", label: "Havadan Avşa", icon: "🚁", short: "Drone ile çekilmiş tüm ada videosu" },
   { path: "/kisin-avsa-adasi/", label: "Kışın Avşa", icon: "❄️", short: "Kış feribot seferleri, açık işletmeler ve ipuçları", chip: false },
