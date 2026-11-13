@@ -1,0 +1,67 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa Feribot Firmaları: GESTAŞ, Marmara RoRo, İDO | avsaadasi.net";
+const description =
+  "Avşa Adası'na sefer yapan feribot firmaları: GESTAŞ, Marmara RoRo, İDO ve Tekirdağ hattı. Kış durumu, hangi hat ne zaman çalışıyor, hangisini seçmeli?";
+
+const toc = [
+  { id: "ozet", label: "Kısaca" },
+  { id: "tablo", label: "Firmalar ve hatlar" },
+  { id: "kis", label: "Kış durumu" },
+  { id: "secim", label: "Hangisini seçmeli?" },
+];
+
+const faq = [
+  { q: "Avşa'ya hangi firmalar sefer yapıyor?", a: "Erdek–Avşa hattında GESTAŞ ve Marmara RoRo, İstanbul (Yenikapı ve Bostancı) hattında İDO, Tekirdağ hattında Marmara RoRo sefer yapıyor." },
+  { q: "Kışın Avşa'ya hangi feribot çalışıyor?", a: "Marmara RoRo'nun 1 Kasım 2026 kış tarifesine göre Avşa'ya yalnız cuma ve pazar günleri sefer var. GESTAŞ Erdek'ten her gün 11:00'de kalkıp 13:00'te Avşa'ya varıyor. İDO'nun son seferleri 22 Kasım 2026'da, nisana kadar sefer yok." },
+  { q: "Araçla Avşa'ya hangi feribotla gidilir?", a: "Erdek'ten GESTAŞ ve Marmara RoRo araç alıyor. Güncel fiyatlar için bilet fiyatları sayfasına bak." },
+  { q: "Tekirdağ'dan Avşa'ya feribot var mı?", a: "Evet, Marmara RoRo kışın yalnızca cuma ve pazar günleri Tekirdağ'dan 16:00'da kalkıyor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası Feribot Firmaları ve Hatları"
+  intro="Avşa'ya sefer yapan firmalar: Erdek hattında GESTAŞ ve Marmara RoRo, İstanbul hattında İDO, Tekirdağ hattında Marmara RoRo. Kış tarifesi yaz tarifesinden çok farklı, bu yüzden hangi firmanın hangi gün çalıştığını bilmek önemli."
+  crumb="Feribot firmaları"
+  toc={toc}
+  faq={faq}
+  updated="13 Kasım 2026"
+  published="2026-11-13"
+>
+  <h2 id="ozet">Kısaca</h2>
+  <ul>
+    <li><strong>Erdek–Avşa:</strong> GESTAŞ ve Marmara RoRo. En kısa ve en çok kullanılan hat.</li>
+    <li><strong>İstanbul–Avşa:</strong> İDO (Yenikapı ve Bostancı). Sezonluk.</li>
+    <li><strong>Tekirdağ–Avşa:</strong> Marmara RoRo, sınırlı günlerde.</li>
+  </ul>
+
+  <h2 id="tablo">Firmalar ve hatlar</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Firma</th><th>Hat</th><th>Ayrıntı sayfası</th></tr></thead>
+    <tbody>
+      <tr><td>GESTAŞ</td><td>Erdek–Avşa</td><td><a href="/gestas-erdek-avsa/">GESTAŞ Erdek–Avşa</a></td></tr>
+      <tr><td>Marmara RoRo</td><td>Erdek–Avşa, Tekirdağ–Avşa</td><td><a href="/marmara-roro-erdek-avsa/">Marmara RoRo</a>, <a href="/tekirdag-avsa-feribot/">Tekirdağ–Avşa</a></td></tr>
+      <tr><td>İDO</td><td>Yenikapı ve Bostancı–Avşa</td><td><a href="/ido-avsa-seferleri/">İDO Avşa seferleri</a></td></tr>
+    </tbody>
+  </table></div>
+  <p>Tüm saatler için <a href="/feribot-saatleri/">feribot saatleri</a>, ücretler için <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfalarına bak.</p>
+
+  <h2 id="kis">Kış durumu (Kasım 2026)</h2>
+  <ul>
+    <li><strong>GESTAŞ:</strong> Erdek 11:00 → Avşa 13:00, her gün.</li>
+    <li><strong>Marmara RoRo:</strong> Avşa'ya yalnız cuma ve pazar. Erdek→Avşa 17:00, Avşa→Erdek 19:00. Tekirdağ'dan cuma ve pazar 16:00 (Marmara iskelesi üzerinden), dönüş 19:00.</li>
+    <li><strong>İDO:</strong> Son seferler 13, 15, 20 ve 22 Kasım 2026. Nisana kadar sefer yok, nisanın ikinci haftasından sonra haftada bir (cuma gidiş, pazar dönüş).</li>
+  </ul>
+  <p>Kış tarifesi hava ve operasyona göre değişebilir. İptal bilgisi için <a href="/avsa-feribot-seferleri-iptal/">seferler iptal oldu mu</a> sayfasına bak.</p>
+
+  <h2 id="secim">Hangisini seçmeli?</h2>
+  <ul>
+    <li><strong>Araçla gelenler:</strong> Erdek hattı (GESTAŞ veya Marmara RoRo).</li>
+    <li><strong>İstanbul'dan araçsız:</strong> İDO sezonunda, kış ve sezon dışında Erdek üzerinden. <a href="/istanbuldan-avsaya/">İstanbul'dan Avşa'ya</a>.</li>
+    <li><strong>Tekirdağ tarafından:</strong> Marmara RoRo, ama kışın yalnız cuma ve pazar.</li>
+  </ul>
+  <p>Adaya vardıktan sonra ulaşım için <a href="/avsa-ada-ici-ulasim/">ada içi ulaşım</a> sayfasına bak.</p>
+</InfoLayout>

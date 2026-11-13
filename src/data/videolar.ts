@@ -15,6 +15,8 @@ export const videolar = {
   cinar: { id: "LtrM7GGst70", baslik: "Avşa Adası Çınar Koyu Havadan: Drone Çekim" },
   altinkumdrone: { id: "fLaMl1CU04E", baslik: "Avşa Adası Altınkum Plajı Havadan: Drone Çekim" },
   kis: { id: "3TVf9kUNlVI", baslik: "Kışın Avşa’ya Nasıl Gidilir? Erdek, GESTAŞ ve Marmara RoRo (2027)" },
+  merkezplaj: { id: "HtkRX1y3n38", baslik: "Avşa Adası Merkez Plajları: Nerede? Denizi Nasıl? (2027 Rehberi)" },
+  tavsanli: { id: "FKv4-q0_RsQ", baslik: "Avşa Adası Tavşanlı Koyu Havadan: Drone Çekim" },
   drone: { id: "nvFeoPcknyY", baslik: "Avşa Adası Havadan: Tüm Plajlar ve Koylar (Drone Çekimi)" },
 } as const;
 export type VideoKey = keyof typeof videolar;

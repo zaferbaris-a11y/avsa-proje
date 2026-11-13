@@ -53,6 +53,13 @@ const staticPages = [
   { path: "/kisin-avsa-adasi/", changefreq: "monthly", priority: 0.7 },
   { path: "/tekirdag-avsa-feribot/", changefreq: "monthly", priority: 0.7 },
   { path: "/ido-avsa-seferleri/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-ada-ici-ulasim/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-kisin-acik-oteller/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-nerede-kalinir/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-pratik-bilgiler/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-adasi-etkinlikler/", changefreq: "monthly", priority: 0.7 },
+  { path: "/avsa-feribot-firmalari/", changefreq: "monthly", priority: 0.7 },
+  { path: "/erdek-gezilecek-yerler/", changefreq: "monthly", priority: 0.7 },
   { path: "/avsa-adasi-havadan/", changefreq: "monthly", priority: 0.7 },
   { path: "/avsa-feribot-seferleri-iptal/", changefreq: "monthly", priority: 0.7 },
 ];

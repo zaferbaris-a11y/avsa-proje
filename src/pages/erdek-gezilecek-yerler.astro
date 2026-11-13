@@ -1,0 +1,47 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Erdek'te Gezilecek Yerler: Avşa Öncesi Rota | avsaadasi.net";
+const description =
+  "Avşa feribotuna binmeden önce Erdek'te görülecekler: Kyzikos Antik Kenti, açık hava müzesi, Çuğra ve Ocaklar plajı, Zeytinli Ada ve Kapıdağ.";
+
+const toc = [
+  { id: "ozet", label: "Kısaca" },
+  { id: "liste", label: "Gezilecek yerler" },
+  { id: "plan", label: "Feribot öncesi plan" },
+];
+
+const faq = [
+  { q: "Avşa feribotu öncesi Erdek'te ne yapılır?", a: "Feribot saatine kalan süreye göre Erdek sahilinde yürüyüş, Kyzikos Antik Kenti ya da Çuğra Plajı'na bir uğrama yapılabilir." },
+  { q: "Erdek'ten Avşa'ya feribot ne zaman kalkıyor?", a: "Kış tarifesinde GESTAŞ 11:00'de, Marmara RoRo cuma ve pazar 17:00'de kalkıyor. Güncel saatler feribot saatleri sayfasında." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Erdek'te Gezilecek Yerler"
+  intro="Avşa'ya Erdek iskelesinden feribotla gidenler çoğu zaman feribot saatinden önce ya da sonra Erdek'te vakit geçiriyor. Bu sayfada Erdek'te görülebilecek başlıca yerleri topladık. Mesafeler yaklaşık değerdir."
+  crumb="Erdek'te gezilecek yerler"
+  toc={toc}
+  faq={faq}
+  updated="13 Kasım 2026"
+  published="2026-11-13"
+>
+  <h2 id="ozet">Kısaca</h2>
+  <p>Erdek, Kapıdağ Yarımadası'nda Marmara Denizi kıyısında bir ilçe. Avşa feribotları buradan kalkıyor. Sahil yürüyüşü, antik kent kalıntıları ve plajlar yarım günlük bir rota için yeterli.</p>
+
+  <h2 id="liste">Gezilecek yerler</h2>
+  <ul>
+    <li><strong>Kyzikos Antik Kenti:</strong> Erdek girişinde, Hadrian Tapınağı kalıntılarının bulunduğu antik kent.</li>
+    <li><strong>Erdek Açık Hava Müzesi:</strong> Kyzikos'tan çıkarılan sütun başlıklarını ve heykelleri sergileyen açık alan.</li>
+    <li><strong>Erdek sahili:</strong> Limandan Çuğra'ya uzanan, yürüyüşe uygun sahil şeridi.</li>
+    <li><strong>Çuğra Plajı:</strong> Palmiyelerle çevrili plaj, merkeze yaklaşık 3 km.</li>
+    <li><strong>Ocaklar Plajı:</strong> Kapıdağ Yarımadası'nın batı ucunda, merkeze yaklaşık 5 km.</li>
+    <li><strong>Zeytinli Ada:</strong> Erdek Limanı'nın açığında, manastır ve vaftizhane kalıntılarının bulunduğu ada.</li>
+    <li><strong>Paşalimanı Adası:</strong> Erdek'e bağlı, üzüm bağlarıyla bilinen ada. Erdek'ten feribotla gidiliyor.</li>
+  </ul>
+
+  <h2 id="plan">Feribot öncesi plan</h2>
+  <p>Feribottan önce vaktin varsa sahil yürüyüşü ve Çuğra Plajı yeterli. Kışın bazı yerler kapalı olabilir. Saat ve fiyat için <a href="/feribot-saatleri/">feribot saatleri</a>, <a href="/bilet-fiyatlari/">bilet fiyatları</a> ve <a href="/avsa-feribot-firmalari/">feribot firmaları</a> sayfalarına bak. Adaya vardıktan sonra <a href="/avsa-nerede-kalinir/">nerede kalınır</a> ve <a href="/plajlar/">plajlar</a> rehberleri hazır.</p>
+</InfoLayout>

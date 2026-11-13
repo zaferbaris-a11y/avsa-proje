@@ -1,0 +1,84 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa Adası Ada İçi Ulaşım: Minibüs ve Taksi | avsaadasi.net";
+const description =
+  "Avşa'da ada içi ulaşım: yaz sezonu minibüs hatları, saatleri, kalkış durağı, kışın Yiğitler seferleri ve 24 saat çalışan taksi. Plajlara nasıl gidilir?";
+
+const toc = [
+  { id: "ozet", label: "Kısaca" },
+  { id: "durak", label: "Duraklar nerede?" },
+  { id: "yaz", label: "Yaz sezonu minibüs hatları" },
+  { id: "kis", label: "Kışın ulaşım" },
+  { id: "taksi", label: "Taksi" },
+  { id: "diger", label: "Diğer seçenekler" },
+];
+
+const faq = [
+  { q: "Avşa'da minibüsler nereden kalkıyor?", a: "Minibüs durağı, Üzüm Heykeli ve belediye binasının yakınındaki durak çevresinde. Taksi durağı da aynı bölgede." },
+  { q: "Avşa'da minibüsler kaça kadar çalışıyor?", a: "Yaz sezonunda plaj hatları sabah 09:00'dan akşam 19:00'a kadar çalışıyor; Çınar Koyu hattının son seferi akşam 20:00. Yiğitler Köyü hattında seferler gece 24:00'e kadar sürüyor." },
+  { q: "Altınkum ve Çınar Koyu'na minibüs ne sıklıkla var?", a: "Yaz sezonunda Altınkum, Tavşanlı, Karadut, Yiğitler Köyü ve Mavi Koy hatları her yarım saatte bir kalkıyor. Kumtur, Beyazsaray ve Çınar Koyu hatları saat başı kalkıyor." },
+  { q: "Kışın Avşa'da minibüs var mı?", a: "Kışın yalnızca Yiğitler Köyü ile merkez arasında sefer var. Yiğitler'den 10:00, 12:00, 14:00, 16:00 ve 21:00'de, merkezden 11:00, 13:00, 15:00, 17:00 ve 22:00'de kalkıyor. Plaj hatları yaz sezonuna özel." },
+  { q: "Avşa'da taksi 24 saat çalışıyor mu?", a: "Evet, taksi 24 saat hizmet veriyor. Durak, Üzüm Heykeli ve belediye binası yakınında. Rehber sitelerinde İskele Meydanı taksi durağı için 0266 896 16 47 ve 0266 896 13 66 numaraları yayımlanıyor." },
+  { q: "Avşa'da minibüs ve taksi ücretleri ne kadar?", a: "Ücretler sezona ve mesafeye göre değiştiği için sayfada sabit fiyat yazmıyoruz. Binmeden önce sürücüye sormak en doğrusu." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası'nda Ada İçi Ulaşım: Minibüs, Taksi ve Saatler"
+  intro="Avşa'da minibüs ve taksiler Üzüm Heykeli ile belediye binası yakınındaki duraktan hareket ediyor. Yaz sezonunda plaj hatları sabah 09:00 ile akşam 19:00 arasında (Çınar Koyu 20:00'ye kadar), Yiğitler Köyü gece 24:00'e kadar çalışıyor. Kışın yalnızca Yiğitler Köyü hattı var. Taksi 24 saat hizmet veriyor."
+  crumb="Ada içi ulaşım"
+  toc={toc}
+  faq={faq}
+  updated="12 Kasım 2026"
+  published="2026-11-12"
+>
+  <h2 id="ozet">Kısaca: ada içinde nasıl dolaşılır?</h2>
+  <p>Avşa küçük bir ada ve iskele çevresinden hemen her koya minibüsle gidilebiliyor. Yaz sezonunda hatlar sık, kışın ise neredeyse yok. Taksi mevsim fark etmeksizin 24 saat çalışıyor. Aşağıdaki bilgiler Avşa'dan edindiğimiz bilgilere dayanıyor; saatler sezonla birlikte değişebilir.</p>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Minibüs sıklığı ve saatleri yaz sezonu içindir. Kış tarifesi farklı; dönüş saatini plajdan ayrılmadan sormak ve son seferi kaçırmamak önemli.
+  </div>
+
+  <h2 id="durak">Duraklar nerede?</h2>
+  <p>Taksi durağı ve minibüs durağı, Üzüm Heykeli ile belediye binasının yanında, iskeleye yürüme mesafesinde. Plaja ya da köye gidecek herkes buradan biniyor. Merkezde kalıyorsan durağa yürüyerek ulaşabilirsin. Merkez konaklama seçenekleri için <a href="/avsa-merkez-konaklama/">merkezde konaklama</a> sayfamıza bak.</p>
+
+  <h2 id="yaz">Yaz sezonu minibüs hatları</h2>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Hat</th><th>Sefer sıklığı</th><th>Merkezden süre</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/altinkum-plaji/">Altınkum</a></td><td>Her yarım saatte bir</td><td>Yaklaşık 10 dk</td></tr>
+      <tr><td><a href="/plajlar/#tavsanli">Tavşanlı</a></td><td>Her yarım saatte bir</td><td>Kaynaklarda net değil</td></tr>
+      <tr><td><a href="/plajlar/#karadut">Karadut</a></td><td>Her yarım saatte bir</td><td>Kaynaklarda net değil</td></tr>
+      <tr><td><a href="/yigitler-konaklama/">Yiğitler Köyü</a></td><td>Her yarım saatte bir</td><td>Yaklaşık 5-6 dk</td></tr>
+      <tr><td><a href="/plajlar/#mavi-koy">Mavi Koy</a></td><td>Her yarım saatte bir</td><td>Yaklaşık 5 dk</td></tr>
+      <tr><td><a href="/plajlar/#kumtur">Kumtur</a></td><td>Saat başı</td><td>Yaklaşık 20 dk</td></tr>
+      <tr><td><a href="/plajlar/#manastir">Beyazsaray</a></td><td>Saat başı</td><td>Kaynaklarda net değil</td></tr>
+      <tr><td><a href="/cinar-koyu/">Çınar Koyu</a></td><td>Saat başı</td><td>Yaklaşık 10-15 dk</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Çalışma saatleri:</strong> Plaj hatları sabah 09:00'dan akşam 19:00'a kadar çalışıyor; yalnızca Çınar Koyu hattının son seferi akşam 20:00. Yiğitler Köyü hattında seferler gece 24:00'e kadar sürüyor; akşam yemeğine ya da geceye Yiğitler'de kalanlar için bu önemli. Plaj günü planlarken son dönüş saatini mutlaka sor. Plajlar hakkında ayrıntı için <a href="/plajlar/">plajlar rehberine</a> bak.</p>
+
+  <h2 id="kis">Kışın ulaşım</h2>
+  <p>Kışın plaj hatları çalışmıyor. Yalnızca Yiğitler Köyü ile merkez arasında minibüs seferi var. Kış tarifesine göre seferler şöyle:</p>
+  <div class="overflow-x-auto"><table>
+    <thead><tr><th>Yön</th><th>Kalkış saatleri</th></tr></thead>
+    <tbody>
+      <tr><td>Yiğitler Köyü → Merkez</td><td>10:00, 12:00, 14:00, 16:00, 21:00</td></tr>
+      <tr><td>Merkez → Yiğitler Köyü</td><td>11:00, 13:00, 15:00, 17:00, 22:00</td></tr>
+    </tbody>
+  </table></div>
+  <p>Hava ve yolcu durumuna göre saatler değişebilir; gitmeden önce durakta sormak iyi olur. Kışın adaya gelenler için tesislerin çoğu kapalı, bu yüzden önce <a href="/kisin-avsa-adasi/">Kışın Avşa Adası</a> rehberine bak. Merkezden Yiğitler dışında bir yere gitmek isteyenler için taksi var.</p>
+
+  <h2 id="taksi">Taksi</h2>
+  <p>Taksi 24 saat hizmet veriyor, kış ve yaz fark etmiyor. Durak Üzüm Heykeli ve belediye binası yakınında. Rehber sitelerinde İskele Meydanı taksi durağı için <strong>0266 896 16 47</strong> ve <strong>0266 896 13 66</strong> numaraları yayımlanıyor. Numaralar zamanla değişebileceği için aramadan önce yerel bir kaynaktan ya da konakladığın tesisten teyit et. Gece iskeleye inen yolcular, kışın minibüs olmadığı saatlerde taksiyi kullanıyor. Ücret mesafeye göre değiştiği için binmeden önce sürücüye sor.</p>
+
+  <h2 id="diger">Diğer seçenekler</h2>
+  <ul>
+    <li><strong>Motosiklet, bisiklet ve ATV:</strong> Merkezden kiralanabiliyor. Beyazsaray'a iniş eğimli olduğu için ATV öneriliyor.</li>
+    <li><strong>Tekne:</strong> Merkezden tekne kiralayıp kıyıdaki koylara geçmek mümkün.</li>
+    <li><strong>Yürüyüş:</strong> Merkez sahili ve iskele çevresi yürümeye uygun.</li>
+  </ul>
+  <p>Adaya nasıl geleceğini planlıyorsan <a href="/avsa-adasina-nasil-gidilir/">Avşa'ya nasıl gidilir</a>, <a href="/feribot-saatleri/">feribot saatleri</a> ve <a href="/bilet-fiyatlari/">bilet fiyatları</a> sayfalarına bak. Gezi planı için <a href="/avsa-adasi-gezi-rotasi/">gezi rotası</a> da işe yarar.</p>
+</InfoLayout>

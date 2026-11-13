@@ -1,0 +1,74 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa Pratik Bilgiler: Eczane, Sağlık, Telefonlar | avsaadasi.net";
+const description =
+  "Avşa Adası'nda sağlık ocağı, eczane, hastane, belediye ve acil durum telefonları, marketler ve adaya gitmeden bilmen gereken pratik bilgiler.";
+
+const toc = [
+  { id: "saglik", label: "Sağlık ve acil durum" },
+  { id: "eczane", label: "Eczaneler" },
+  { id: "telefon", label: "Önemli telefonlar" },
+  { id: "market", label: "Market, pazar ve ATM" },
+  { id: "kis", label: "Kışın dikkat" },
+];
+
+const faq = [
+  { q: "Avşa'da hastane var mı?", a: "Adada tam donanımlı hastane yok, bir sağlık ocağı var. Ciddi durumlarda hastalar Erdek Devlet Hastanesi'ne sevk ediliyor. Acil durumda 112 aranır." },
+  { q: "Avşa Sağlık Ocağı nerede, kaça kadar açık?", a: "Merkezde Okullar Caddesi No:52'de. Rehber sitelerinde 08:30-17:30 arası ve pazar günleri kapalı olarak yazıyor; gitmeden telefonla teyit et: 0266 896 12 62." },
+  { q: "Avşa'da eczane var mı?", a: "Evet, merkezde en az iki eczane yayımlanıyor: Arslan Eczanesi ve Yaşa Eczanesi. Nöbetçi eczane bilgisi eczanelerin kapısında asılı." },
+  { q: "Avşa'da ATM var mı?", a: "Evet, İskele Meydanı'nda ATM'ler bulunuyor." },
+  { q: "Avşa'da Salı Pazarı nerede?", a: "Merkezde, Belediye Caddesi'nde. Kışın kurulup kurulmadığını önceden sormak iyi olur." },
+  { q: "Avşa'da market var mı?", a: "Merkezde Bim, Şok gibi zincir marketler ve yerel marketler var. Kışın bazı işletmeler kapanıyor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası'nda Pratik Bilgiler: Sağlık, Eczane ve Telefonlar"
+  intro="Avşa'ya gitmeden önce bilmen gereken pratik bilgiler: sağlık ocağı, eczaneler, hastane, belediye ve acil durum telefonları, marketler. Numaralar rehber sitelerinde yayımlanan kaynaklardan derlendi; zamanla değişebileceği için aramadan önce teyit et."
+  crumb="Pratik bilgiler"
+  toc={toc}
+  faq={faq}
+  updated="13 Kasım 2026"
+  published="2026-11-13"
+>
+  <div class="not-prose rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+    Telefon numaraları ve çalışma saatleri rehber sitelerinde yayımlanan bilgilerdir. Acil durumda 112'yi ara.
+  </div>
+
+  <h2 id="saglik">Sağlık ve acil durum</h2>
+  <p>Avşa'da tam donanımlı hastane yok. Merkezde Okullar Caddesi No:52'de <strong>Avşa Sağlık Ocağı</strong> var (0266 896 12 62). Rehber sitelerinde 08:30-17:30 arası ve pazar günleri kapalı olarak yazıyor. Ciddi durumlarda hastalar deniz yoluyla Erdek Devlet Hastanesi'ne sevk ediliyor. Acil durumda <strong>112</strong> aranır.</p>
+
+  <h2 id="eczane">Eczaneler</h2>
+  <table>
+    <thead><tr><th>Eczane</th><th>Adres</th><th>Telefon</th></tr></thead>
+    <tbody>
+      <tr><td>Arslan Eczanesi</td><td>Okullar Caddesi No:15, Avşa Mahallesi</td><td>0266 896 42 42</td></tr>
+      <tr><td>Yaşa Eczanesi</td><td>Meltem Sokak No:3, Avşa Mahallesi</td><td>0266 896 11 02</td></tr>
+    </tbody>
+  </table>
+  <p>Nöbetçi eczane bilgisi eczanelerin kapısında asılı. Kışın nöbet düzeni değişebilir.</p>
+
+  <h2 id="telefon">Önemli telefonlar</h2>
+  <table>
+    <thead><tr><th>Kurum</th><th>Telefon</th></tr></thead>
+    <tbody>
+      <tr><td>Acil çağrı</td><td>112</td></tr>
+      <tr><td>Avşa Sağlık Ocağı</td><td>0266 896 12 62</td></tr>
+      <tr><td>Avşa Belediyesi</td><td>0266 896 33 00</td></tr>
+      <tr><td>Jandarma</td><td>0266 896 12 70</td></tr>
+      <tr><td>PTT</td><td>0266 896 14 20</td></tr>
+      <tr><td>Elektrik arıza</td><td>0266 896 14 48</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="market">Market, pazar ve ATM</h2>
+  <p>Merkezde Bim, Şok gibi zincir marketler ve yerel marketler var. Çarşı iskeleye yürüme mesafesinde. Yiğitler Köyü'nde de küçük marketler bulunuyor. Plaja giderken gerekli olanları merkezden almak pratik olur.</p>
+  <p><strong>Salı Pazarı:</strong> Belediye Caddesi'nde, merkezde. Google işletme kaydında yayımlanan telefon: 0539 790 05 84. Kışın kurulup kurulmadığını önceden sor.</p>
+  <p><strong>ATM:</strong> İskele Meydanı'nda ATM'ler bulunuyor. Nakit ihtiyacını feribottan inince karşılayabilirsin.</p>
+
+  <h2 id="kis">Kışın dikkat</h2>
+  <p>Kışın marketler, eczaneler ve tesislerin bir kısmı sınırlı çalışıyor ya da kapalı. Ulaşım için <a href="/avsa-ada-ici-ulasim/">ada içi ulaşım</a>, kış planı için <a href="/kisin-avsa-adasi/">Kışın Avşa Adası</a> sayfalarına bak.</p>
+</InfoLayout>

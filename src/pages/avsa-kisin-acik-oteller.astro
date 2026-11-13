@@ -1,0 +1,55 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa'da Kışın Açık Oteller 2026-2027 | avsaadasi.net";
+const description =
+  "Avşa Adası'nda kışın açık olan oteller: Ados Otel, Blue Sea Otel, Buseyine Otel ve Işık Otel. Kış konaklaması için dikkat edilecekler ve ulaşım.";
+
+const toc = [
+  { id: "liste", label: "Kışın açık oteller" },
+  { id: "dikkat", label: "Gitmeden önce" },
+  { id: "ulasim", label: "Kış ulaşımı" },
+];
+
+const faq = [
+  { q: "Avşa'da kışın hangi oteller açık?", a: "Kış sezonunda açık olarak bilinen oteller: Ados Otel, Blue Sea Otel, Buseyine Otel ve Işık Otel. Açık olma durumu sezonla değişebildiği için gitmeden otelden teyit et." },
+  { q: "Kışın Avşa'da pansiyon açık mı?", a: "Kışın pansiyon ve apartların büyük bölümü kapalı. Açık olanlar için tesisleri arayıp sormak gerekiyor." },
+  { q: "Kışta Avşa'da otel fiyatları nasıl?", a: "Kış fiyatları yaz fiyatlarından farklı ve tesise göre değişiyor. Güncel fiyat için otelin WhatsApp numarasından sorabilirsin." },
+  { q: "Kışın havuz açık mı?", a: "Açık havuzlar kışın genelde kapalı. Havuz kullanmayı planlıyorsan otele önceden sor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası'nda Kışın Açık Oteller (2026-2027)"
+  intro="Avşa'da kışın tesislerin çoğu kapalı, ama birkaç otel kış sezonunda da misafir ağırlıyor. Bu sayfada kışın açık olarak bilinen otelleri topladık. Açık olma durumu ve fiyatlar değişebildiği için rezervasyondan önce otelden teyit et."
+  crumb="Kışın açık oteller"
+  toc={toc}
+  faq={faq}
+  updated="13 Kasım 2026"
+  published="2026-11-13"
+>
+  <h2 id="liste">Kışın açık oteller</h2>
+  <table>
+    <thead><tr><th>Otel</th><th>Bölge</th><th>Ayrıntı</th></tr></thead>
+    <tbody>
+      <tr><td><a href="/konaklama/ados-otel/">Ados Otel</a></td><td>Merkez</td><td>Denize sıfır</td></tr>
+      <tr><td><a href="/konaklama/blue-sea-otel/">Blue Sea Otel</a></td><td>Merkez, iskele meydanı</td><td>Denize sıfır, deniz manzaralı</td></tr>
+      <tr><td><a href="/konaklama/buseyine-otel/">Buseyine Otel</a></td><td>Merkez</td><td>Havuzlu otel (havuz kışın kapalı olabilir)</td></tr>
+      <tr><td>Işık Otel</td><td>Merkez</td><td>Kışın açık oteller arasında anılıyor</td></tr>
+    </tbody>
+  </table>
+  <p>Fiyatlar tarihe ve odaya göre değişiyor. Her otelin sayfasında WhatsApp numarası var.</p>
+
+  <h2 id="dikkat">Gitmeden önce</h2>
+  <ul>
+    <li>Otele önceden telefon ya da WhatsApp ile yaz, açık olduğunu ve odanın boş olduğunu teyit et.</li>
+    <li>Isıtma, sıcak su ve kahvaltının kışın nasıl işlediğini sor. Kahvaltı bazı otellerde kış döneminde isteğe bağlı olabiliyor.</li>
+    <li>Havuz, restoran ve bar gibi hizmetlerin açık olup olmadığını sor.</li>
+    <li>Kışın marketler ve eczaneler sınırlı çalışıyor, bkz. <a href="/avsa-pratik-bilgiler/">pratik bilgiler</a>.</li>
+  </ul>
+
+  <h2 id="ulasim">Kış ulaşımı</h2>
+  <p>Kışın feribot seferleri az. GESTAŞ Erdek'ten her gün 11:00'de kalkıyor, Marmara RoRo yalnız cuma ve pazar çalışıyor, İDO'nun son seferleri 22 Kasım'da bitiyor. Ayrıntı için <a href="/avsa-feribot-firmalari/">feribot firmaları</a> ve <a href="/feribot-saatleri/">feribot saatleri</a> sayfalarına bak. Ada içinde kışın yalnızca Yiğitler hattında minibüs var, taksi 24 saat çalışıyor: <a href="/avsa-ada-ici-ulasim/">ada içi ulaşım</a>. Genel plan için <a href="/kisin-avsa-adasi/">Kışın Avşa Adası</a>.</p>
+</InfoLayout>

@@ -1,0 +1,77 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+import { stays } from "../data/stays";
+
+const title = "Avşa'da Nerede Kalınır? Bölge Rehberi | avsaadasi.net";
+const description =
+  "Avşa Adası'nda nerede kalınır? Merkez, Yiğitler ve diğer bölgeler, otel, apart, pansiyon ve motel farkı, bütçe ve ihtiyaca göre doğru seçimi bul.";
+
+const say = (f: (s: (typeof stays)[number]) => boolean) => stays.filter(f).length;
+const merkez = say((s) => s.area === "Merkez");
+const yigitler = say((s) => s.area === "Yiğitler");
+
+const toc = [
+  { id: "ozet", label: "Kısaca" },
+  { id: "bolge", label: "Bölgeye göre" },
+  { id: "tur", label: "Tesis türüne göre" },
+  { id: "ihtiyac", label: "İhtiyacına göre" },
+  { id: "kis", label: "Kışın nerede kalınır?" },
+];
+
+const faq = [
+  { q: "Avşa'da ilk kez gidenler nerede kalmalı?", a: "İlk kez gidenler için merkez en kolay seçenek: iskele, çarşı, restoranlar ve Barlar Sokağı yürüme mesafesinde. Gürültüden rahatsız olanlar Yiğitler Köyü'nü düşünebilir." },
+  { q: "Avşa'da merkez mi Yiğitler mi daha iyi?", a: "Merkez hareketli ve her şeye yakın, Yiğitler sakin köy havasında. Yiğitler merkeze yaklaşık 5-6 dakika uzaklıkta; yaz sezonunda minibüsle de gidilebiliyor." },
+  { q: "Avşa'da ucuz konaklama nerede?", a: "Pansiyon, motel ve apartlar genelde otellerden daha uygun. Fiyatlar tarihe ve odaya göre değiştiği için tesisin WhatsApp numarasından güncel fiyat sorulmalı." },
+  { q: "Avşa'da denize sıfır konaklama var mı?", a: "Evet. Denize yakın ve denize sıfır tesisleri ayrı bir sayfada topladık." },
+  { q: "Kışın Avşa'da nerede kalınır?", a: "Kışın tesislerin çoğu kapalı olduğu için önceden telefonla teyit etmek gerekiyor. Kış rehberimizde ulaşım ve kalacak yer bilgilerini topladık." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası'nda Nerede Kalınır? Bölgeye ve İhtiyaca Göre Rehber"
+  intro="Avşa'da nerede kalınacağı üç şeye göre değişiyor: hareket mi sakinlik mi istediğin, bütçen ve kimlerle gittiğin. Merkez iskeleye ve gece hayatına yakın, Yiğitler köy havasında sakin. Aşağıda bölgeleri, tesis türlerini ve doğru seçimi nasıl yapacağını anlattık."
+  crumb="Nerede kalınır?"
+  toc={toc}
+  faq={faq}
+  updated="13 Kasım 2026"
+  published="2026-11-13"
+>
+  <h2 id="ozet">Kısaca</h2>
+  <ul>
+    <li><strong>Hareket ve kolaylık:</strong> merkez. Feribot iskelesi, çarşı ve Barlar Sokağı yakın.</li>
+    <li><strong>Sakin tatil:</strong> Yiğitler Köyü. Altınkum, Karadut ve Kadınlar Plajı'na yakın.</li>
+    <li><strong>Bütçe:</strong> pansiyon, motel ve apart genelde otelden uygun.</li>
+    <li><strong>Havuz, kahvaltı, aile:</strong> otel ve butik otel seçenekleri.</li>
+  </ul>
+  <p>Sitemizde şu an merkezde {merkez}, Yiğitler'de {yigitler} tesis listeleniyor. Fiyatlar işletmeden öğrenilir, bu yüzden her tesis sayfasında WhatsApp numarası var.</p>
+
+  <h2 id="bolge">Bölgeye göre nerede kalınır?</h2>
+  <h3>Merkez</h3>
+  <p>Feribot iskelesine, çarşıya, restoranlara ve <a href="/barlar-sokagi/">Barlar Sokağı</a>'na yürüyerek ulaşılan bölge. Merkez sahili yaklaşık 3 km uzunluğunda ve denize girilebiliyor. Gece hareketli olduğu için ses hassasiyeti olanlar odanın cephesini sormalı. Ayrıntı: <a href="/avsa-merkez-konaklama/">Avşa merkezde konaklama</a>, <a href="/iskeleye-yakin-konaklama/">iskeleye yakın konaklama</a>.</p>
+  <h3>Yiğitler Köyü</h3>
+  <p>Köy havasında, sakin bir bölge. Merkeze yaklaşık 5-6 dakika uzaklıkta. Yaz sezonunda minibüs seferleri var, kışın da Yiğitler hattı çalışıyor. Ayrıntı: <a href="/yigitler-konaklama/">Yiğitler'de konaklama</a>, <a href="/avsa-ada-ici-ulasim/">ada içi ulaşım</a>.</p>
+
+  <h2 id="tur">Tesis türüne göre</h2>
+  <ul>
+    <li><a href="/avsa-otelleri/">Oteller</a>: resepsiyon, kahvaltı ve çoğunda havuz. <a href="/avsa-havuzlu-oteller/">Havuzlu oteller</a>.</li>
+    <li><a href="/avsa-butik-oteller/">Butik oteller</a>: daha küçük ve kişisel hizmet.</li>
+    <li><a href="/avsa-apartlari/">Apartlar</a>: aileler ve gruplar için, bazılarında <a href="/avsa-mutfakli-apartlar/">mutfak</a> var.</li>
+    <li><a href="/avsa-pansiyonlari/">Pansiyonlar</a> ve <a href="/avsa-motelleri/">moteller</a>: bütçe dostu, basit ve temiz.</li>
+    <li><a href="/kiralik-evler/">Kiralık evler</a>: uzun kalış için.</li>
+  </ul>
+
+  <h2 id="ihtiyac">İhtiyacına göre seçim</h2>
+  <ul>
+    <li>Çocuklu aile: <a href="/avsa-cocuklu-aile-konaklama/">çocuklu aile konaklama</a></li>
+    <li>Denize yakınlık: <a href="/avsa-denize-sifir-konaklama/">denize sıfır konaklama</a></li>
+    <li>Bütçe: <a href="/avsa-uygun-fiyatli-konaklama/">uygun fiyatlı konaklama</a>, <a href="/avsa-adasi-tatil-maliyeti/">tatil maliyeti</a></li>
+    <li>Gece hayatı: <a href="/barlar-sokagina-yakin-konaklama/">Barlar Sokağı'na yakın konaklama</a></li>
+    <li>Kalabalık grup: <a href="/avsa-kalabalik-grup-konaklama/">grup konaklama</a></li>
+    <li>Kahvaltı: <a href="/avsa-kahvalti-dahil-oteller/">kahvaltı dahil oteller</a></li>
+  </ul>
+
+  <h2 id="kis">Kışın nerede kalınır?</h2>
+  <p>Kışın tesislerin çoğu kapalı. Gitmeden önce tesisi arayıp açık olduğunu, ısıtma ve kahvaltı durumunu sormak gerekiyor. Açık oteller için <a href="/avsa-kisin-acik-oteller/">kışın açık oteller</a>, kış ulaşımı ve genel bilgiler için <a href="/kisin-avsa-adasi/">Kışın Avşa Adası</a> rehberine bak.</p>
+</InfoLayout>

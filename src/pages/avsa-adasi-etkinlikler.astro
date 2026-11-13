@@ -1,0 +1,56 @@
+---
+import InfoLayout from "../layouts/InfoLayout.astro";
+
+const title = "Avşa Adası Festival ve Etkinlikler | avsaadasi.net";
+const description =
+  "Avşa Adası'nda her yıl yapılan festival ve etkinlikler: Adakarası bağ bozumu, 30 Ağustos kutlamaları, 8 Mart ve diğerleri. Hangi ay ne var?";
+
+const toc = [
+  { id: "ozet", label: "Takvim özeti" },
+  { id: "bag", label: "Bağ bozumu festivali" },
+  { id: "diger", label: "Diğer etkinlikler" },
+  { id: "plan", label: "Tatili etkinliğe göre planla" },
+];
+
+const faq = [
+  { q: "Avşa'da bağ bozumu festivali ne zaman?", a: "Adakarası üzümü bağ bozumu festivali her yıl Eylül ayında yapılıyor. 2025'te 11-13 Eylül'dü. Sonraki yıl tarihleri belediye açıkladıkça güncellenir." },
+  { q: "Avşa'da 30 Ağustos'ta ne oluyor?", a: "Belediye 30 Ağustos'u konser, fener alayı ve gündüz deniz etkinlikleriyle kutluyor." },
+  { q: "Festivaller her yıl yapılıyor mu?", a: "Tarihler ve program yıldan yıla değişiyor, bazı yıllar bazı etkinlikler yapılmayabiliyor. Gitmeden önce güncel duyuruya bakmak gerekiyor." },
+];
+---
+
+<InfoLayout
+  title={title}
+  description={description}
+  h1="Avşa Adası'nda Festival ve Etkinlikler"
+  intro="Avşa'da yılın belli dönemlerinde yapılan festival ve etkinlikler: Adakarası üzümü bağ bozumu festivali, 30 Ağustos kutlamaları ve 8 Mart. Tarihler her yıl değişebildiği için bu sayfada tipik zamanları veriyoruz. Yeni yıl programı açıklandığında güncelleriz."
+  crumb="Festival ve etkinlikler"
+  toc={toc}
+  faq={faq}
+  updated="13 Kasım 2026"
+  published="2026-11-13"
+>
+  <h2 id="ozet">Takvim özeti</h2>
+  <table>
+    <thead><tr><th>Etkinlik</th><th>Tipik zamanı</th></tr></thead>
+    <tbody>
+      <tr><td>8 Mart kutlaması</td><td>Her yıl 8 Mart</td></tr>
+      <tr><td>30 Ağustos kutlamaları</td><td>Her yıl 30 Ağustos</td></tr>
+      <tr><td>Adakarası bağ bozumu festivali</td><td>Eylül (2025'te 11-13 Eylül)</td></tr>
+    </tbody>
+  </table>
+  <p>Programlar yıldan yıla değişiyor. 2025'te adada ilk kez bisiklet festivali de yapıldı; 2026 programı rehber sitelerinde net olarak duyurulmamıştı.</p>
+
+  <h2 id="bag">Adakarası üzümü bağ bozumu festivali</h2>
+  <p>Avşa'nın simgelerinden biri Adakarası üzümü. Festival her yıl Eylül'de, üzüm hasadı döneminde yapılıyor ve birkaç gün sürüyor. Bağ bozumu, konser ve meydanda üzüm sıkma gibi etkinlikler yer alıyor. Adaya yazın son haftalarında gitmek isteyenler için iyi bir fırsat, ama tesisler dolabildiği için erken rezervasyon önemli.</p>
+
+  <h2 id="diger">Diğer etkinlikler</h2>
+  <ul>
+    <li><strong>30 Ağustos:</strong> Belediye konser, fener alayı ve gündüz deniz etkinlikleriyle kutlama yapıyor.</li>
+    <li><strong>8 Mart:</strong> Belediye adada yaşayan kadınlar için kutlama düzenliyor.</li>
+    <li><strong>Konserler:</strong> Yaz sezonunda eğlence mekanlarında konserler oluyor. Gece hayatı için <a href="/gece-hayati/">gece hayatı</a> ve <a href="/barlar-sokagi/">Barlar Sokağı</a> sayfalarına bak.</li>
+  </ul>
+
+  <h2 id="plan">Tatili etkinliğe göre planla</h2>
+  <p>Eylül, Avşa'da deniz hâlâ sıcakken kalabalığın azaldığı bir dönem; bağ bozumu bu ayın bir parçası. Ne zaman gidileceğine karar vermek için <a href="/avsa-adasina-ne-zaman-gidilir/">Avşa'ya ne zaman gidilir</a> sayfasına, kalacak yer için <a href="/avsa-nerede-kalinir/">nerede kalınır</a> sayfasına bak.</p>
+</InfoLayout>
