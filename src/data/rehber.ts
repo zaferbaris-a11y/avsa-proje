@@ -33,7 +33,7 @@ export const rehberPages: RehberPage[] = [
   { path: "/avsa-feribot-firmalari/", label: "Feribot Firmaları", icon: "⛴️", short: "GESTAŞ, Marmara RoRo, İDO ve hatlar", chip: false },
   { path: "/erdek-gezilecek-yerler/", label: "Erdek'te Gezilecek Yerler", icon: "🏛️", short: "Feribot öncesi Erdek rotası", chip: false },
   { path: "/avsa-ada-ici-ulasim/", label: "Ada İçi Ulaşım", icon: "🚐", short: "Minibüs hatları, saatleri, durak ve taksi", chip: false },
-  { path: "/ido-avsa-seferleri/", label: "İDO Avşa Seferleri", icon: "🚤", short: "Son seferler 22 Kasım, nisana kadar sefer yok", chip: false },
+  { path: "/ido-avsa-seferleri/", label: "İDO Avşa Seferleri", icon: "🚤", short: "20 ve 22 Kasım seferleri iptal, nisana kadar sefer yok", chip: false },
   { path: "/tekirdag-avsa-feribot/", label: "Tekirdağ–Avşa Feribot", icon: "⛴️", short: "Kış tarifesi: cuma ve pazar seferleri", chip: false },
   { path: "/avsa-adasi-havadan/", label: "Havadan Avşa", icon: "🚁", short: "Drone ile çekilmiş tüm ada videosu" },
   { path: "/kisin-avsa-adasi/", label: "Kışın Avşa", icon: "❄️", short: "Kış feribot seferleri, açık işletmeler ve ipuçları", chip: false },

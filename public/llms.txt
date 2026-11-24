@@ -1,0 +1,36 @@
+# avsaadasi.net
+
+> Avşa Adası (Marmara Denizi, Balıkesir) için bağımsız Türkçe tatil rehberi. Konaklama, feribot ve ulaşım, plajlar, yeme-içme ve kiralık ev bilgileri. Editör: Zafer Barış (Avşa'lı). Site bir rezervasyon aracısı değildir; tesislerle doğrudan iletişim yönlendirilir ve komisyon alınmaz. Fiyat ve saat bilgileri değişebilir; yola çıkmadan işletmeden ya da feribot firmasından teyit edin.
+
+## Ulaşım
+- [Feribot saatleri](https://www.avsaadasi.net/feribot-saatleri/): Erdek, Tekirdağ ve İstanbul hatları, güncel kış tarifesi
+- [İDO Avşa seferleri](https://www.avsaadasi.net/ido-avsa-seferleri/): İDO deniz otobüsü durumu
+- [GESTAŞ Erdek–Avşa](https://www.avsaadasi.net/gestas-erdek-avsa/)
+- [Marmara RoRo Erdek–Avşa](https://www.avsaadasi.net/marmara-roro-erdek-avsa/)
+- [Tekirdağ–Avşa feribot](https://www.avsaadasi.net/tekirdag-avsa-feribot/)
+- [Feribot bilet fiyatları](https://www.avsaadasi.net/bilet-fiyatlari/)
+- [Avşa Adası'na nasıl gidilir](https://www.avsaadasi.net/avsa-adasina-nasil-gidilir/)
+- [İstanbul'dan Avşa'ya](https://www.avsaadasi.net/istanbuldan-avsaya/)
+- [Ada içi ulaşım: minibüs ve taksi](https://www.avsaadasi.net/avsa-ada-ici-ulasim/)
+
+## Konaklama
+- [Otel fiyatları](https://www.avsaadasi.net/avsa-adasi-otel-fiyatlari/)
+- [Pansiyon fiyatları](https://www.avsaadasi.net/avsa-adasi-pansiyon-fiyatlari/)
+- [Apart fiyatları](https://www.avsaadasi.net/avsa-adasi-apart-fiyatlari/)
+- [Uygun fiyatlı konaklama](https://www.avsaadasi.net/avsa-uygun-fiyatli-konaklama/)
+- [Kiralık ev ve daireler](https://www.avsaadasi.net/kiralik-evler/): yıllık ve dönemlik, komisyonsuz
+- [Kışın açık oteller](https://www.avsaadasi.net/avsa-kisin-acik-oteller/)
+
+## Rehber
+- [Kışın Avşa Adası](https://www.avsaadasi.net/kisin-avsa-adasi/)
+- [Avşa'ya ne zaman gidilir](https://www.avsaadasi.net/avsa-adasina-ne-zaman-gidilir/)
+- [Plajlar](https://www.avsaadasi.net/plajlar/)
+- [Avşa'da ne yenir](https://www.avsaadasi.net/avsada-ne-yenir/)
+- [Barlar Sokağı](https://www.avsaadasi.net/barlar-sokagi/)
+- [Gece hayatı](https://www.avsaadasi.net/gece-hayati/)
+- [Tarihi ve plajları](https://www.avsaadasi.net/avsa-adasi-tarihi-ve-plajlari/)
+
+## Site hakkında
+- [Hakkımızda](https://www.avsaadasi.net/hakkimizda/)
+- [İletişim](https://www.avsaadasi.net/iletisim/)
+- [Site haritası](https://www.avsaadasi.net/sitemap.xml)

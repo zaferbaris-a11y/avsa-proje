@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import ChatWidget from "../components/ChatWidget.astro";
+import { stays } from "../data/stays";
+import { WHATSAPP } from "../data/site";
 
 interface Props {
   title: string;
@@ -11,6 +13,15 @@ interface Props {
 const { title, description, image, stickyCta = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://www.avsaadasi.net"); // alan adını astro.config.mjs içinde `site` olarak tanımla
 const ogImage = new URL(image ?? "/img/hero.webp", canonical).href; // og:image mutlak URL olmalı
+
+// GA4 olay takibi için numara -> tesis eşlemesi (WhatsApp ve telefon tıklamasında hangi tesis olduğu bilinsin)
+const tesisHarita: Record<string, [string, string]> = { [WHATSAPP]: ["avsaadasi.net (genel)", "genel"] };
+for (const s of stays) {
+  for (const n of [s.whatsapp, s.phone]) {
+    const d = (n ?? "").replace(/\D/g, "");
+    if (d) tesisHarita[d] = [s.name, s.slug];
+  }
+}
 
 // Sadece kullanılan ağırlıklar yüklenir
 const FONTS =
@@ -85,6 +96,7 @@ const FONTS =
       </div>
     </div>
 
+    <script type="application/json" id="tesis-harita" set:html={JSON.stringify(tesisHarita)} />
     <script is:inline>
       (function () {
         var KEY = 'avsa_cerez';
@@ -110,6 +122,20 @@ const FONTS =
           if (bar) bar.hidden = false;
         });
 
+        // Tıklanan WhatsApp/telefon numarasından tesisi bul (hangi tesis, hangi sayfa)
+        var harita = {};
+        try { harita = JSON.parse(document.getElementById('tesis-harita').textContent) || {}; } catch (err) {}
+        function tesisBilgi(tur, href) {
+          var m = tur === 'wa' ? href.match(/wa\.me\/(\d+)/) : null;
+          var num = m ? m[1] : (tur === 'tel' ? href.replace(/\D/g, '') : '');
+          var t = harita[num];
+          return {
+            facility_name: t ? t[0] : 'bilinmiyor',
+            facility_slug: t ? t[1] : 'bilinmiyor',
+            source_page: location.pathname
+          };
+        }
+
         // GA4 olay takibi: yalnızca rıza verildiyse WhatsApp ve telefon tıklamalarını gönder
         document.addEventListener('click', function (e) {
           var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
@@ -118,9 +144,9 @@ const FONTS =
           if (a.hasAttribute('data-share')) {
             gtag('event', 'share', { method: 'whatsapp' });
           } else if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
-            gtag('event', 'whatsapp_click');
+            gtag('event', 'whatsapp_click', tesisBilgi('wa', href));
           } else if (href.indexOf('tel:') === 0) {
-            gtag('event', 'phone_click');
+            gtag('event', 'phone_click', tesisBilgi('tel', href));
           }
         });
       })();
